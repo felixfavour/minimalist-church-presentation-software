@@ -21,9 +21,9 @@
         <div class="overlay-gradient absolute inset-0"></div>
         <div class="heading p-3 absolute z-1 inset-0">
           <h5 class="font-semibold text-white">
-            {{ liveSlide?.name }}
+            {{ liveSlide?.name || "No Live Slide" }}
           </h5>
-          <LiveSlideIndicator visible class="mr-4 mt-4" />
+          <LiveSlideIndicator :visible="liveSlide?.name" class="mr-4 mt-4" />
         </div>
       </div>
     </div>
@@ -80,14 +80,4 @@ const takeSlideLive = (slide) => {
 }
 </script>
 
-<style scoped>
-.overlay-gradient {
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0) 50%,
-    rgba(0, 0, 0, 0.4) 70%,
-    rgba(0, 0, 0, 0.9) 100%
-  );
-}
-</style>
+<style scoped></style>
