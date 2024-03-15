@@ -3,6 +3,7 @@
     <div class="main">
       <UInput
         icon="i-heroicons-magnifying-glass-20-solid"
+        variant="outline"
         placeholder="Search actions"
       />
       <div class="actions-ctn mt-2">
@@ -26,7 +27,7 @@ const actions = [
   {
     icon: "i-bx-music",
     name: "Display Lyrics",
-    desc: "Find lyrics to contemporary and familiar songs ",
+    desc: "Find lyrics to any song, native too",
   },
   {
     icon: "i-bx-slideshow",

@@ -9,10 +9,11 @@
           :key="slide.name"
           :slide="slide"
           grid-type
-          @click="takeSlideLive(slide)"
+          @click="makeSlideActive(slide)"
         />
       </div>
     </div>
+    <EditLiveContent :slide="activeSlide" />
   </AppSection>
 </template>
 
@@ -59,10 +60,10 @@ const slides = ref([
     type: slideTypes.misc,
   },
 ])
-const liveSlide = ref()
+const activeSlide = ref()
 
-const takeSlideLive = (slide) => {
-  liveSlide.value = slide
+const makeSlideActive = (slide) => {
+  activeSlide.value = slide
 }
 </script>
 

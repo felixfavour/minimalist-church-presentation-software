@@ -4,6 +4,7 @@
   font-family: Inter;
 }
 
+/* TRANSITIONS START */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s ease;
@@ -17,6 +18,42 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+  -webkit-transform: translateX(30px);
+  -moz-transform: translateX(30px);
+  -ms-transform: translateX(30px);
+  -o-transform: translateX(30px);
+}
+
+.list-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+  -webkit-transform: translateX(-30px);
+  -moz-transform: translateX(-30px);
+  -ms-transform: translateX(-30px);
+  -o-transform: translateX(-30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
+  top: 0.9rem;
+}
+/* TRANSITIONS END */
 
 .overlay-gradient {
   background: linear-gradient(
