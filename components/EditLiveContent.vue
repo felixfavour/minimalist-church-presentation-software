@@ -12,22 +12,23 @@
           <h4 class="font-medium ws-nowrap">{{ slide?.name }}</h4>
           <SlideChip
             :slide-type="slide?.type"
-            class="text-primary-900 bg-primary text-primary-100"
+            class="text-primary-900 bg-primary text-white"
           />
         </div>
       </TransitionGroup>
       <div class="actions flex items-center">
         <div
+          v-if="slide?.type === slideTypes?.bible"
           class="button-group bg-primary-200 rounded-md mx-1 flex items-center gap-1"
         >
           <UTooltip text="Previous verse" :popper="{ arrow: true }">
             <UButton variant="ghost" icon="i-bx-chevron-left" />
           </UTooltip>
           <UInput
-            placeholder="Enter Bible verse"
+            placeholder="Bible verse"
             size="xs"
             variant="none"
-            inputClass="bg-white border-0 shadow-none outline-none"
+            inputClass="bg-white border-0 shadow-none outline-none w-[16ch] text-center"
           />
           <UTooltip text="Next verse" :popper="{ arrow: true }">
             <UButton variant="ghost" icon="i-bx-chevron-right" />

@@ -3,7 +3,6 @@
     <div class="main">
       <UInput
         icon="i-heroicons-magnifying-glass-20-solid"
-        variant="outline"
         placeholder="Search actions"
       />
       <div class="actions-ctn mt-2">

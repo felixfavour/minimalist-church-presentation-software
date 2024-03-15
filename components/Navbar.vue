@@ -5,7 +5,7 @@
     <div class="logo">
       <h1 class="text-md font-semibold">Cloud of Worshippers</h1>
     </div>
-    <div class="actions">Some links</div>
+    <div class="actions">Links + Auth info here</div>
   </div>
 </template>
 
