@@ -10,5 +10,10 @@ export default defineNuxtConfig({
   ],
   ui: {
     global: true
+  },
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag: string) => false
+    }
   }
 })
