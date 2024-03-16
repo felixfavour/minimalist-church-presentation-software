@@ -4,7 +4,8 @@ export default defineNuxtConfig({
     preference: 'light',
   },
   modules: [
-    '@nuxt/ui'
+    '@nuxt/ui',
+    'nuxt-tiptap-editor'
   ], css: [
     '~/assets/css/main.css',
   ],
@@ -15,5 +16,8 @@ export default defineNuxtConfig({
     compilerOptions: {
       isCustomElement: (tag: string) => false
     }
-  }
+  },
+  tiptap: {
+    prefix: "Tiptap",
+  },
 })

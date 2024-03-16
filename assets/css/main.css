@@ -51,7 +51,7 @@
    animations can be calculated correctly. */
 .list-leave-active {
   position: absolute;
-  top: 0.9rem;
+  top: 0.8rem;
 }
 /* TRANSITIONS END */
 
@@ -63,4 +63,108 @@
     rgba(0, 0, 0, 0.4) 70%,
     rgba(0, 0, 0, 0.9) 100%
   );
+}
+
+/* TIPTAP STYLES */
+.tiptap {
+  padding: 0.75rem;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+.tiptap:focus-within {
+  outline-color: #a855f7;
+}
+.tiptap > * + * {
+  margin-top: 0.75em;
+}
+
+.tiptap ul {
+  padding: 0 1rem;
+  list-style-type: initial;
+}
+
+.tiptap ol {
+  padding: 0 1rem;
+  list-style-type: decimal;
+}
+
+.tiptap h1,
+.tiptap h2,
+.tiptap h3,
+.tiptap h4,
+.tiptap h5,
+.tiptap h6 {
+  line-height: 1.1;
+  font-weight: 600;
+}
+
+.tiptap h1 {
+  font-size: 2.125rem;
+}
+
+.tiptap h2 {
+  font-size: 1.875rem;
+}
+
+.tiptap h3 {
+  font-size: 1.5rem;
+}
+
+.tiptap h4 {
+  font-size: 1.25rem;
+}
+
+.tiptap h5 {
+  font-size: 1rem;
+}
+
+.tiptap h6 {
+  font-size: 0.75rem;
+}
+
+.tiptap code {
+  background-color: rgba(97, 97, 97, 0.1);
+  color: #616161;
+}
+
+.tiptap pre {
+  background: #0d0d0d;
+  color: #fff;
+  font-family: "JetBrainsMono", monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.tiptap pre code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.8rem;
+}
+
+.tiptap img {
+  max-width: 100%;
+  height: auto;
+}
+
+.tiptap blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid rgba(13, 13, 13, 0.1);
+}
+
+.tiptap hr {
+  border: none;
+  border-top: 2px solid rgba(13, 13, 13, 0.1);
+  margin: 2rem 0;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }

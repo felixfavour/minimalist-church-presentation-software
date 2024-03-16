@@ -50,6 +50,9 @@
         </UTooltip>
       </div>
     </div>
+
+    <!-- CONTENT -->
+    <TipTap />
   </div>
 </template>
 
