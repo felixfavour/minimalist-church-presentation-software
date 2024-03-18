@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "@nuxt/ui": "npm:@nuxt/ui-edge@latest",
+    "@pinia/nuxt": "^0.5.1",
     "@tiptap/extension-placeholder": "^2.2.4",
     "@tiptap/extension-text-align": "^2.2.4",
     "fuzzysort": "^2.0.4",
     "nuxt": "^3.10.3",
     "nuxt-tiptap-editor": "^1.1.0",
+    "pinia": "^2.1.7",
+    "pinia-shared-state": "^0.5.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   }

@@ -5,7 +5,8 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxt/ui',
-    'nuxt-tiptap-editor'
+    'nuxt-tiptap-editor',
+    '@pinia/nuxt'
   ], css: [
     '~/assets/css/main.css',
   ],
@@ -19,5 +20,8 @@ export default defineNuxtConfig({
   },
   tiptap: {
     prefix: "Tiptap",
+  },
+  pinia: {
+    storesDirs: ['./stores/**']
   },
 })

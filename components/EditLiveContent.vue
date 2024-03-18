@@ -51,15 +51,27 @@
       </div>
     </div>
 
+    <!-- <div>
+      {{ $pinia }}
+    </div> -->
+
+    <UButton @click="appStore.setActiveSlide('Emmanuel')"
+      >Testing Stuff</UButton
+    >
+
     <!-- CONTENT -->
-    <TipTap />
+    <TipTap @update="appStore.setActiveSlide($event)" />
   </div>
 </template>
 
 <script setup>
+import { useAppStore } from "@/store/app.ts"
 const props = defineProps({
   slide: Object,
 })
+
+const appStore = useAppStore()
+const { activeSlide } = storeToRefs(appStore)
 
 const slides = computed(() => {
   return [props.slide]

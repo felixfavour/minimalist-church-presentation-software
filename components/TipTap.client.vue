@@ -119,6 +119,7 @@
 <script setup>
 import TiptapTextAlign from "@tiptap/extension-text-align"
 import TiptapPlaceholder from "@tiptap/extension-placeholder"
+const emit = defineEmits(["update"])
 const editor = useEditor({
   content: "",
   extensions: [
@@ -131,5 +132,8 @@ const editor = useEditor({
       placeholder: "Write something...",
     }),
   ],
+  onUpdate: ({ editor }) => {
+    emit("update", editor.getHTML())
+  },
 })
 </script>
