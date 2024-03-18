@@ -1,139 +1,104 @@
 <template>
-  <div>
-    <div v-if="editor" class="my-2 flex gap-1 w-[100%] overflow-auto">
-      <UButton
-        @click="editor.chain().focus().toggleBold().run()"
-        :disabled="!editor.can().chain().focus().toggleBold().run()"
-        :class="{ 'bg-primary text-white': editor.isActive('bold') }"
-        icon="i-bx-bold"
-        variant="ghost"
-      />
-      <UButton
-        @click="editor.chain().focus().toggleItalic().run()"
-        :disabled="!editor.can().chain().focus().toggleItalic().run()"
-        :class="{ 'bg-primary text-white': editor.isActive('italic') }"
-        icon="i-bx-italic"
-        variant="ghost"
-      />
-      <UButton
-        @click="editor.chain().focus().toggleStrike().run()"
-        :disabled="!editor.can().chain().focus().toggleStrike().run()"
-        :class="{ 'bg-primary text-white': editor.isActive('strike') }"
-        icon="i-bx-strikethrough"
-        variant="ghost"
-      />
-      <UButton
-        @click="editor.chain().focus().toggleCode().run()"
-        :disabled="!editor.can().chain().focus().toggleCode().run()"
-        :class="{ 'bg-primary text-white': editor.isActive('code') }"
-        icon="i-bx-code"
-        variant="ghost"
-      />
-      <div
-        class="button-group bg-primary-100 rounded-md mx-1 p-1 flex items-center gap-1"
-      >
-        <UButton
-          v-for="headingSize in 6"
-          :key="`heading-size-${headingSize}`"
-          @click="
-            editor.chain().focus().toggleHeading({ level: headingSize }).run()
-          "
-          :class="{
-            'bg-primary text-white': editor.isActive('heading', {
-              level: headingSize,
-            }),
-          }"
-          :icon="`i-lucide-heading-${headingSize}`"
-          variant="ghost"
-        />
-      </div>
-      <UButton
-        @click="editor.chain().focus().setParagraph().run()"
-        :class="{ 'bg-primary text-white': editor.isActive('paragraph') }"
-        icon="i-bx-paragraph"
-        variant="ghost"
-      />
-      <UButton
-        @click="editor.chain().focus().toggleBulletList().run()"
-        :class="{ 'bg-primary text-white': editor.isActive('bulletList') }"
-        icon="i-bx-list-ul"
-        variant="ghost"
-      />
-      <UButton
-        @click="editor.chain().focus().toggleOrderedList().run()"
-        :class="{ 'bg-primary text-white': editor.isActive('orderedList') }"
-        icon="i-bx-list-ol"
-        variant="ghost"
-      />
-      <div
-        class="button-group bg-primary-100 rounded-md mx-1 p-1 flex items-center gap-1"
-      >
-        <UButton
-          @click="editor.chain().focus().setTextAlign('left').run()"
-          :class="{
-            'bg-primary text-white': editor.isActive({ textAlign: 'left' }),
-          }"
-          icon="i-bi-text-left"
-          variant="ghost"
-        />
-        <UButton
-          @click="editor.chain().focus().setTextAlign('center').run()"
-          :class="{
-            'bg-primary text-white': editor.isActive({ textAlign: 'center' }),
-          }"
-          icon="i-bi-text-center"
-          variant="ghost"
-        />
-        <UButton
-          @click="editor.chain().focus().setTextAlign('right').run()"
-          :class="{
-            'bg-primary text-white': editor.isActive({ textAlign: 'right' }),
-          }"
-          icon="i-bi-text-right"
-          variant="ghost"
-        />
-      </div>
-      <UButton
-        @click="editor.chain().focus().toggleCodeBlock().run()"
-        :class="{ 'bg-primary text-white': editor.isActive('codeBlock') }"
-        icon="i-bx-code-curly"
-        variant="ghost"
-      />
-      <UButton
-        @click="editor.chain().focus().toggleBlockquote().run()"
-        :class="{ 'bg-primary text-white': editor.isActive('blockquote') }"
-        icon="i-bx-bxs-quote-right"
-        variant="ghost"
-      />
-    </div>
+  <div
+    v-if="layout === slideLayoutTypes.heading_sub"
+    class="flex flex-col gap-2 h-[88%] mt-4 justify-center rounded-md px-12"
+  >
+    <!-- <TipTapToolbar :editor="editorOne" /> -->
+    <TiptapEditorContent :editor="editorOne" />
 
-    <!-- MAIN EDITOR -->
-    <TiptapEditorContent
-      :editor="editor"
-      class="h-[500px]"
-      placeholder="Start writing..."
-    />
+    <!-- <TipTapToolbar :editor="editorTwo" /> -->
+    <TiptapEditorContent :editor="editorTwo" />
+  </div>
+  <div
+    v-else-if="layout === slideLayoutTypes.full_text"
+    class="flex flex-col gap-2 h-[88%] mt-4 justify-center rounded-md px-12"
+  >
+    <!-- <TipTapToolbar :editor="editorTwo" /> -->
+    <TiptapEditorContent :editor="editorTwo" />
+  </div>
+  <div
+    v-else
+    class="grid grid-cols-2 gap-2 h-[88%] mt-4 justify-center rounded-md px-12"
+  >
+    <!-- <TipTapToolbar :editor="editorTwo" /> -->
+    <TiptapEditorContent :editor="editorTwo" />
+
+    <!-- <TipTapToolbar :editor="editorThree" /> -->
+    <TiptapEditorContent :editor="editorThree" />
   </div>
 </template>
 
 <script setup>
 import TiptapTextAlign from "@tiptap/extension-text-align"
 import TiptapPlaceholder from "@tiptap/extension-placeholder"
-const emit = defineEmits(["update"])
-const editor = useEditor({
-  content: "",
-  extensions: [
-    TiptapStarterKit,
-    TiptapPlaceholder,
-    TiptapTextAlign.configure({
-      types: ["heading", "paragraph"],
-    }),
-    TiptapPlaceholder.configure({
-      placeholder: "Write something...",
-    }),
-  ],
-  onUpdate: ({ editor }) => {
-    emit("update", editor.getHTML())
+
+const props = defineProps({
+  layout: {
+    type: String,
+    default: slideLayoutTypes.heading_sub,
   },
 })
+
+console.log(props.layout)
+
+const emit = defineEmits(["update"])
+const editorOne = ref(
+  useEditor({
+    content: "",
+    extensions: [
+      TiptapStarterKit,
+      TiptapTextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      TiptapPlaceholder.configure({
+        placeholder: "Your title here",
+      }),
+    ],
+    onCreate: ({ editor }) => {
+      editor.chain().focus().toggleHeading({ level: 1 }).run()
+    },
+    onUpdate: ({ editor }) => {
+      emit("update", editor.getHTML())
+      if (!editor.getHTML().includes("<h1>")) {
+        editor.chain().focus().toggleHeading({ level: 1 }).run()
+      }
+    },
+  })
+)
+// editorOne.value.chain().focus().toggleHeading({ level: 1 }).run()
+const editorTwo = ref(
+  useEditor({
+    content: "",
+    extensions: [
+      TiptapStarterKit,
+      TiptapTextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      TiptapPlaceholder.configure({
+        placeholder: "Full content goes here",
+      }),
+    ],
+    onUpdate: ({ editor }) => {
+      emit("update", editor.getHTML())
+    },
+  })
+)
+// editorOne.value.chain().focus().toggleHeading({ level: 1 }).run()
+const editorThree = ref(
+  useEditor({
+    content: "",
+    extensions: [
+      TiptapStarterKit,
+      TiptapTextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      TiptapPlaceholder.configure({
+        placeholder: "Full content goes here",
+      }),
+    ],
+    onUpdate: ({ editor }) => {
+      emit("update", editor.getHTML())
+    },
+  })
+)
 </script>

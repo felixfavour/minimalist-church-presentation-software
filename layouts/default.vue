@@ -5,6 +5,10 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+useHead({
+  title: "Cloud of Worshippers",
+})
+</script>
 
 <style scoped></style>

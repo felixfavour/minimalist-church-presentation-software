@@ -73,9 +73,10 @@
   -moz-border-radius: 8px;
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
+  border: 1px solid #f3e8ff;
 }
 .tiptap:focus-within {
-  outline-color: #a855f7;
+  outline-color: #e9d5ff;
 }
 .tiptap > * + * {
   margin-top: 0.75em;
@@ -162,6 +163,14 @@
 }
 
 .tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.tiptap h1::before {
   color: #adb5bd;
   content: attr(data-placeholder);
   float: left;

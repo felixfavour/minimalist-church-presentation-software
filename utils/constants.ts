@@ -5,3 +5,9 @@ export const slideTypes = {
   bible: 'bible',
   misc: 'miscellaneous'
 }
+
+export const slideLayoutTypes = {
+  heading_sub: 'heading-and-subtitle',
+  full_text: 'full-text',
+  two_column: 'two-column',
+}

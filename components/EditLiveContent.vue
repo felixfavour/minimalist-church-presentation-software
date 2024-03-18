@@ -1,5 +1,5 @@
 <template>
-  <div class="main relative">
+  <div class="main relative h-[calc(100vh-390px-160px)]">
     <div
       class="toolbar w-[100%] p-2 px-4 bg-primary-100 rounded-md flex items-center justify-between overflow-hidden"
     >
@@ -42,25 +42,38 @@
             <UButton variant="ghost" icon="i-mdi-format-font-size-decrease" />
           </UTooltip>
         </div>
-        <UTooltip text="Add background image" :popper="{ arrow: true }">
-          <UButton variant="ghost" icon="i-bx-image-add" />
-        </UTooltip>
-        <UTooltip text="Add background video" :popper="{ arrow: true }">
-          <UButton variant="ghost" icon="i-bx-film" />
-        </UTooltip>
+        <UPopover v-model:open="layoutPopoverOpen">
+          <UTooltip text="Switch slide layout" :popper="{ arrow: true }">
+            <UButton variant="ghost" icon="i-mingcute-layout-3-line" />
+          </UTooltip>
+          <template #panel>
+            <SlideLayoutSelection
+              :value="selectedLayout"
+              @select="
+                (data) => {
+                  selectedLayout = data
+                  layoutPopoverOpen = false
+                }
+              "
+            />
+          </template>
+        </UPopover>
+        <div class="button-group bg-primary-200 rounded-md mx-1">
+          <UTooltip text="Add background image" :popper="{ arrow: true }">
+            <UButton variant="ghost" icon="i-bx-image-add" />
+          </UTooltip>
+          <UTooltip text="Add background video" :popper="{ arrow: true }">
+            <UButton variant="ghost" icon="i-bx-film" />
+          </UTooltip>
+        </div>
       </div>
     </div>
 
-    <!-- <div>
-      {{ $pinia }}
-    </div> -->
-
-    <UButton @click="appStore.setActiveSlide('Emmanuel')"
-      >Testing Stuff</UButton
-    >
-
     <!-- CONTENT -->
-    <TipTap @update="appStore.setActiveSlide($event)" />
+    <TipTap
+      @update="appStore.setActiveSlide($event)"
+      :layout="selectedLayout"
+    />
   </div>
 </template>
 
@@ -72,6 +85,8 @@ const props = defineProps({
 
 const appStore = useAppStore()
 const { activeSlide } = storeToRefs(appStore)
+const selectedLayout = ref(slideLayoutTypes.heading_sub)
+const layoutPopoverOpen = ref(false)
 
 const slides = computed(() => {
   return [props.slide]

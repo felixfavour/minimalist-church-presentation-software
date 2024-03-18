@@ -15,7 +15,7 @@
       class="heading p-3 absolute z-1 inset-0"
     >
       <h5 class="font-semibold text-white">
-        <!-- {{ slide?.name || "No Live Slide" }} -->
+        {{ slide?.name || "No Live Slide" }}
         <span v-html="activeSlide"></span>
       </h5>
       <LiveSlideIndicator :visible="!!slide?.name" class="mr-4 mt-4" />
