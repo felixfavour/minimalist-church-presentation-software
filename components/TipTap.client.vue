@@ -18,7 +18,7 @@
   </div>
   <div
     v-else
-    class="grid grid-cols-2 gap-2 h-[88%] mt-4 justify-center rounded-md px-12"
+    class="grid grid-cols-2 gap-2 h-[88%] mt-4 items-center rounded-md px-12"
   >
     <!-- <TipTapToolbar :editor="editorTwo" /> -->
     <TiptapEditorContent :editor="editorTwo" />
@@ -75,7 +75,7 @@ const editorTwo = ref(
         types: ["heading", "paragraph"],
       }),
       TiptapPlaceholder.configure({
-        placeholder: "Full content goes here",
+        placeholder: "Full (richtext) content goes here",
       }),
     ],
     onUpdate: ({ editor }) => {
@@ -93,7 +93,7 @@ const editorThree = ref(
         types: ["heading", "paragraph"],
       }),
       TiptapPlaceholder.configure({
-        placeholder: "Full content goes here",
+        placeholder: "Full (richtext) content goes here",
       }),
     ],
     onUpdate: ({ editor }) => {

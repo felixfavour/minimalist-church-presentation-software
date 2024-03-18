@@ -60,20 +60,39 @@
         </UPopover>
         <div class="button-group bg-primary-200 rounded-md mx-1">
           <UTooltip text="Add background image" :popper="{ arrow: true }">
-            <UButton variant="ghost" icon="i-bx-image-add" />
+            <UButton variant="ghost" class="px-1.5" icon="i-bx-image-add" />
           </UTooltip>
           <UTooltip text="Add background video" :popper="{ arrow: true }">
-            <UButton variant="ghost" icon="i-bx-film" />
+            <UButton variant="ghost" class="px-1.5" icon="i-bx-film" />
+          </UTooltip>
+          <UTooltip text="Add background color" :popper="{ arrow: true }">
+            <UButton
+              variant="ghost"
+              class="px-1.5"
+              icon="i-mdi-square-rounded"
+            />
           </UTooltip>
         </div>
       </div>
     </div>
 
     <!-- CONTENT -->
-    <TipTap
-      @update="appStore.setActiveSlide($event)"
-      :layout="selectedLayout"
-    />
+    <div
+      v-if="!slide"
+      class="h-[88%] mt-4 flex flex-col items-center justify-center gap-4 text-gray-500"
+    >
+      <IconWrapper name="i-bx-slideshow" size="14" />
+      <h2 class="text-md font-semibold max-w-[150px] text-center">
+        Select slide above to start editing
+      </h2>
+    </div>
+    <Transition name="fade">
+      <TipTap
+        v-if="slide"
+        @update="appStore.setActiveSlide($event)"
+        :layout="selectedLayout"
+      />
+    </Transition>
   </div>
 </template>
 
@@ -84,7 +103,6 @@ const props = defineProps({
 })
 
 const appStore = useAppStore()
-const { activeSlide } = storeToRefs(appStore)
 const selectedLayout = ref(slideLayoutTypes.heading_sub)
 const layoutPopoverOpen = ref(false)
 
