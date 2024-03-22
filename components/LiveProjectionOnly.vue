@@ -1,10 +1,7 @@
 <template>
   <div
     class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-cover bg-no-repeat"
-    :class="{ 'h-[100vh] rounded-none border-none': fullScreen }"
-    style="
-      background-image: url(https://media.istockphoto.com/id/1333460374/photo/african-megacity-lagos-nigeria.jpg?s=612x612&w=0&k=20&c=Gu5TRHGNLRRF43YFMlDFnpkk7TBz00U8olxUqsoeiw8=);
-    "
+    :class="{ 'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen }"
   >
     <div
       v-if="!fullScreen || slideLabel"
@@ -21,9 +18,7 @@
       <LiveSlideIndicator :visible="!!slide?.name" class="mr-4 mt-4" />
     </div>
 
-    <div class="live-content">
-      <div class="test" v-html="slide"></div>
-    </div>
+    <LiveContent :slide="slide" :class="{ 'min-h-[220px]': !fullScreen }" />
   </div>
 </template>
 

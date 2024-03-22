@@ -6,7 +6,7 @@ import { Slide } from '~/types/index'
 export const useAppStore = defineStore('app', {
   state: () => {
     return {
-      liveOutputSlides: [],
+      liveOutputSlides: [] as Array<Slide>,
       liveSlide: null as Slide | null
     }
   },

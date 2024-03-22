@@ -93,6 +93,7 @@
         :slide="slide"
         @update="onUpdateSlideContent"
         :layout="slide.layout"
+        editable
       />
     </Transition>
   </div>
@@ -130,6 +131,7 @@ const onUpdateSlideContent = (editorIndex: number, content: string) => {
     contents: [...slideContents.value],
   }
   emit("slide-update", tempSlide)
+  // emit("update-live-output-slides")
 }
 </script>
 

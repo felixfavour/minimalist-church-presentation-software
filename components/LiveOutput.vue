@@ -13,7 +13,7 @@
           @click="appStore.setLiveSlide(slide)"
         />
       </div>
-      <LiveProjectionOnly slide-label :slide="liveSlide" />
+      <LiveProjectionOnly slide-label :slide="liveSlide" :full-screen="false" />
     </div>
   </AppSection>
 </template>
@@ -22,5 +22,5 @@
 import { useAppStore } from "~/store/app"
 
 const appStore = useAppStore()
-const { liveOutputSlides, liveSLide } = storeToRefs(appStore)
+const { liveOutputSlides, liveSlide } = storeToRefs(appStore)
 </script>

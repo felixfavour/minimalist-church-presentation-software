@@ -15,7 +15,8 @@
   <!-- LIST TYPE CARD -->
   <button
     v-else
-    class="slide-card flex w-[100%] text-left gap-3 p-2 border-t first:border-t-0 border-gray-100 hover:rounded-md hover:bg-primary-50 transition-all cursor-pointer relative"
+    class="slide-card flex w-[100%] text-left gap-3 p-2 border-t first:border-t-0 border-gray-100 rounded-md hover:bg-primary-50 transition-all cursor-pointer relative"
+    :class="{ 'bg-red-100': live }"
     @click="$emit('click')"
   >
     <div class="slide-preview w-24 min-w-24 h-16 bg-gray-100 rounded-md"></div>

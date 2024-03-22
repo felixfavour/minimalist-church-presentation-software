@@ -35,6 +35,7 @@ import type { Slide } from "~/types"
 
 const props = defineProps<{
   slide: Slide
+  editable: boolean
 }>()
 
 const emit = defineEmits(["update"])
@@ -54,6 +55,7 @@ watch(
 const editorOne = ref(
   useEditor({
     content: props.slide.contents[0] || "",
+    editable: props.editable,
     extensions: [
       TiptapStarterKit,
       TiptapTextAlign.configure({
@@ -78,6 +80,7 @@ const editorOne = ref(
 const editorTwo = ref(
   useEditor({
     content: props.slide.contents[1] || "",
+    editable: props.editable,
     extensions: [
       TiptapStarterKit,
       TiptapTextAlign.configure({
@@ -96,6 +99,7 @@ const editorTwo = ref(
 const editorThree = ref(
   useEditor({
     content: props.slide.contents[2] || "",
+    editable: props.editable,
     extensions: [
       TiptapStarterKit,
       TiptapTextAlign.configure({

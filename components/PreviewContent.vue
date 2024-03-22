@@ -17,11 +17,7 @@
         />
       </div>
     </div>
-    <EditLiveContent
-      :slide="activeSlide"
-      @slide-update="onUpdateSlide"
-      @update-live-output-slides="updateLiveOutput"
-    />
+    <EditLiveContent :slide="activeSlide" @slide-update="onUpdateSlide" />
   </AppSection>
 </template>
 
@@ -142,11 +138,11 @@ const onUpdateSlide = (slide: Slide) => {
     (slideInner: Slide) => slide.id === slideInner.id
   )
   slides.value.splice(slideIndex, 1, slide)
-  appStore.setLiveOutputSlides(slides.value)
+  updateLiveOutput()
 }
 
 const updateLiveOutput = () => {
-  // DO nothing
+  appStore.setLiveOutputSlides(slides.value)
 }
 </script>
 
