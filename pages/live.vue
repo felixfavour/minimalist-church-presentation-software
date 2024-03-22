@@ -11,10 +11,6 @@
 import { useAppStore } from "@/store/app"
 const appStore = useAppStore()
 const { liveSlide } = storeToRefs(appStore)
-
-watch(liveSlide, () => {
-  console.log("content", liveSlide.value.contents?.at(1))
-})
 </script>
 
 <style scoped></style>

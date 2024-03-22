@@ -4,6 +4,7 @@
       <UInput
         icon="i-heroicons-magnifying-glass-20-solid"
         placeholder="Search actions"
+        color="gray"
       />
       <div class="actions-ctn mt-2">
         <ActionCard

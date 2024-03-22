@@ -138,11 +138,17 @@ const onUpdateSlide = (slide: Slide) => {
     (slideInner: Slide) => slide.id === slideInner.id
   )
   slides.value.splice(slideIndex, 1, slide)
-  updateLiveOutput()
+
+  updateLiveOutput(slide)
 }
 
-const updateLiveOutput = () => {
+const updateLiveOutput = (updatedSlide: Slide) => {
   appStore.setLiveOutputSlides(slides.value)
+
+  // If the current slide in the live output is being edited, then update LiveOutput immediately
+  if (updatedSlide.id === appStore.liveSlide?.id) {
+    appStore.setLiveSlide(updatedSlide)
+  }
 }
 </script>
 

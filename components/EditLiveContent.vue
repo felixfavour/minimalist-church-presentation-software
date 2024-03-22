@@ -88,13 +88,15 @@
       </h2>
     </div>
     <Transition name="fade">
-      <TipTap
-        v-if="slide"
-        :slide="slide"
-        @update="onUpdateSlideContent"
-        :layout="slide.layout"
-        editable
-      />
+      <div class="h-[100%]">
+        <TipTap
+          v-if="slide"
+          :slide="slide"
+          @update="onUpdateSlideContent"
+          :layout="slide.layout"
+          editable
+        />
+      </div>
     </Transition>
   </div>
 </template>
@@ -112,7 +114,10 @@ const layoutPopoverOpen = ref<boolean>(false)
 const slideContents = ref<Array<string>>([])
 
 const animatedSlides = computed(() => {
-  return [props.slide]
+  if (props.slide) {
+    return [props.slide]
+  }
+  return null
 })
 
 const onSelectLayout = (data: string) => {

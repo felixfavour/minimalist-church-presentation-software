@@ -26,6 +26,7 @@ const getIconBySlideType = (slideType) => {
     case slideTypes.carousel:
       return "i-bx-carousel"
   }
+  return ""
 }
 </script>
 
