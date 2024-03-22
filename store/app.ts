@@ -1,16 +1,21 @@
 import { defineStore } from 'pinia'
+import { Slide } from '~/types/index'
 
 // console.log(usePinia())
 
 export const useAppStore = defineStore('app', {
   state: () => {
     return {
-      activeSlide: null
+      liveOutputSlides: [],
+      liveSlide: null as Slide | null
     }
   },
   actions: {
-    setActiveSlide(slide: Object) {
-      this.activeSlide = slide
+    setLiveOutputSlides(slides: Array<Slide>) {
+      this.liveOutputSlides = slides
+    },
+    setLiveSlide(slide: Slide) {
+      this.liveSlide = slide
     }
   },
   share: {

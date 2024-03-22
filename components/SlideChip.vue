@@ -1,6 +1,6 @@
 <template>
   <p
-    class="text-xs font-medium rounded-full bg-gray-100 px-3 py-1 flex gap-1 capitalize"
+    class="text-xs font-medium rounded-full bg-gray-100 px-2 py-1 flex gap-1 capitalize"
     :class="{ 'bg-white text-black': darkMode }"
   >
     <IconWrapper :name="getIconBySlideType(slideType)" size="4" />

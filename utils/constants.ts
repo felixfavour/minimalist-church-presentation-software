@@ -11,3 +11,10 @@ export const slideLayoutTypes = {
   full_text: 'full-text',
   two_column: 'two-column',
 }
+
+export const backgroundTypes = {
+  solid: 'solid',
+  gradient: 'gradient',
+  image: 'image',
+  video: 'video'
+}

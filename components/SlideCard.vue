@@ -7,7 +7,7 @@
   >
     <div class="overlay-gradient absolute inset-0"></div>
     <div class="texts flex items-center gap-2 text-white absolute top-1">
-      <h4 class="font-medium ws-nowrap">{{ slide.name }}</h4>
+      <h4 class="font-medium ws-nowrap mt-1">{{ slide.name }}</h4>
       <SlideChip :slide-type="slide.type" dark-mode class="mt-1" />
     </div>
   </button>
@@ -27,12 +27,14 @@
   </button>
 </template>
 
-<script setup>
-const props = defineProps({
-  slide: Object,
-  live: Boolean,
-  gridType: Boolean,
-})
+<script setup lang="ts">
+import type { Slide } from "~/types"
+
+const props = defineProps<{
+  slide: Slide
+  live: boolean
+  gridType: boolean
+}>()
 </script>
 
 <style scoped></style>

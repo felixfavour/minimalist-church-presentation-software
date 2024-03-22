@@ -5,8 +5,8 @@
     >
       <TransitionGroup name="list">
         <div
-          v-for="slide in slides"
-          :key="slide?.name"
+          v-for="slide in animatedSlides"
+          :key="slide?.id"
           class="slide-name flex items-center gap-2 top-1 text-primary-900"
         >
           <h4 class="font-medium ws-nowrap">{{ slide?.name }}</h4>
@@ -48,13 +48,8 @@
           </UTooltip>
           <template #panel>
             <SlideLayoutSelection
-              :value="selectedLayout"
-              @select="
-                (data) => {
-                  selectedLayout = data
-                  layoutPopoverOpen = false
-                }
-              "
+              :value="slide.layout"
+              @select="onSelectLayout"
             />
           </template>
         </UPopover>
@@ -73,6 +68,12 @@
             />
           </UTooltip>
         </div>
+        <!-- <UButton
+          class="px-2 pr-3 ml-1 text-xs"
+          icon="i-bx-play-circle"
+          @click="$emit('update-live-output-slides')"
+          >Promote to Live</UButton
+        > -->
       </div>
     </div>
 
@@ -89,26 +90,47 @@
     <Transition name="fade">
       <TipTap
         v-if="slide"
-        @update="appStore.setActiveSlide($event)"
-        :layout="selectedLayout"
+        :slide="slide"
+        @update="onUpdateSlideContent"
+        :layout="slide.layout"
       />
     </Transition>
   </div>
 </template>
 
-<script setup>
-import { useAppStore } from "@/store/app.ts"
-const props = defineProps({
-  slide: Object,
-})
+<script setup lang="ts">
+import type { Slide } from "~/types"
 
-const appStore = useAppStore()
-const selectedLayout = ref(slideLayoutTypes.heading_sub)
-const layoutPopoverOpen = ref(false)
+const props = defineProps<{
+  slide: Slide
+}>()
 
-const slides = computed(() => {
+const emit = defineEmits(["slide-update", "update-live-output-slides"])
+
+const layoutPopoverOpen = ref<boolean>(false)
+const slideContents = ref<Array<string>>([])
+
+const animatedSlides = computed(() => {
   return [props.slide]
 })
+
+const onSelectLayout = (data: string) => {
+  layoutPopoverOpen.value = false
+  const tempSlide: Slide = {
+    ...props.slide,
+    layout: data,
+  }
+  emit("slide-update", tempSlide)
+}
+
+const onUpdateSlideContent = (editorIndex: number, content: string) => {
+  slideContents.value[editorIndex] = content
+  const tempSlide: Slide = {
+    ...props.slide,
+    contents: [...slideContents.value],
+  }
+  emit("slide-update", tempSlide)
+}
 </script>
 
 <style scoped></style>

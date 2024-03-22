@@ -16,7 +16,7 @@
     >
       <h5 class="font-semibold text-white">
         {{ slide?.name || "No Live Slide" }}
-        <span v-html="activeSlide"></span>
+        <!-- <span v-html="slide"></span> -->
       </h5>
       <LiveSlideIndicator :visible="!!slide?.name" class="mr-4 mt-4" />
     </div>
@@ -27,18 +27,29 @@
   </div>
 </template>
 
-<script setup>
-const props = defineProps({
-  slideLabel: {
-    type: Boolean,
-    default: true,
-  },
-  slide: Object,
-  fullScreen: {
-    type: Boolean,
-    default: false,
-  },
-})
+<script setup lang="ts">
+import type { Slide } from "~/types"
+import { backgroundTypes } from "~/utils/constants"
+
+const props = defineProps<{
+  slideLabel: Boolean
+  slide: Slide
+  fullScreen: Boolean
+}>()
+
+const getSlideBackground = () => {
+  switch (props.slide.backgroundType) {
+    case backgroundTypes.solid:
+      return `background-color: ${props.slide.background}`
+    case backgroundTypes.gradient:
+      return `background-color: ${props.slide.background}`
+    case backgroundTypes.image:
+      return `background-image: ${props.slide.background}`
+    case backgroundTypes.video:
+      return `VIDEO-TYPE`
+  }
+  return ""
+}
 </script>
 
 <style scoped></style>
