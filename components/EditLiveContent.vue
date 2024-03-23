@@ -121,7 +121,8 @@
       </h2>
     </div>
     <div
-      class="h-[100%] relative text-white bg-gray-500 bg-cover bg-no-repeat transition-all rounded-md overflow-hidden"
+      v-if="slide"
+      class="h-[100%] relative text-white bg-primary-900 bg-cover bg-no-repeat transition-all rounded-md overflow-hidden"
       :style="useSlideBackground(slide)"
     >
       <!-- VIDEO BACKGROUND -->
