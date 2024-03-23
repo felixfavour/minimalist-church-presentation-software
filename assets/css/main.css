@@ -289,3 +289,102 @@
   height: 0;
   pointer-events: none;
 }
+
+/* LIVE CONTENT LG PREVIEW */
+.lg-preview .slide-layout-ctn {
+  min-height: 220px;
+}
+.lg-preview .tiptap.live-content {
+  font-size: 0.8vw;
+  line-height: 1.1vw;
+}
+
+.lg-preview .tiptap.live-content h1,
+.lg-preview .tiptap.live-content h2,
+.lg-preview .tiptap.live-content h3,
+.lg-preview .tiptap.live-content h4,
+.lg-preview .tiptap.live-content h5,
+.lg-preview .tiptap.live-content h6 {
+  margin: 0.5vw 0;
+}
+
+.lg-preview .tiptap.live-content h1 {
+  font-size: 1.5vw;
+}
+
+.lg-preview .tiptap.live-content h2 {
+  font-size: 1.3vw;
+}
+
+.lg-preview .tiptap.live-content h3 {
+  font-size: 1.15vw;
+}
+
+.lg-preview .tiptap.live-content h4 {
+  font-size: 1vw;
+}
+
+/* LIVE CONTENT MD PREVIEW */
+.md-preview .slide-layout-ctn {
+  min-height: 120px;
+}
+.md-preview .tiptap.live-content {
+  font-size: 0.6vw;
+  line-height: 0.8vw;
+}
+
+.md-preview .tiptap.live-content h1,
+.md-preview .tiptap.live-content h2,
+.md-preview .tiptap.live-content h3,
+.md-preview .tiptap.live-content h4,
+.md-preview .tiptap.live-content h5,
+.md-preview .tiptap.live-content h6 {
+  margin: 0.4vw 0;
+}
+
+.md-preview .tiptap.live-content h1 {
+  font-size: 1vw;
+}
+
+.md-preview .tiptap.live-content h2 {
+  font-size: 0.85vw;
+}
+
+.md-preview .tiptap.live-content h3 {
+  font-size: 0.75vw;
+}
+
+.md-preview .tiptap.live-content h4 {
+  font-size: 0.65vw;
+}
+
+/* LIVE CONTENT SM PREVIEW */
+.sm-preview .tiptap.live-content {
+  font-size: 0.4vw;
+  line-height: 0.55vw;
+}
+
+.sm-preview .tiptap.live-content h1,
+.sm-preview .tiptap.live-content h2,
+.sm-preview .tiptap.live-content h3,
+.sm-preview .tiptap.live-content h4,
+.sm-preview .tiptap.live-content h5,
+.sm-preview .tiptap.live-content h6 {
+  margin: 0.4vw 0;
+}
+
+.sm-preview .tiptap.live-content h1 {
+  font-size: 0.8vw;
+}
+
+.sm-preview .tiptap.live-content h2 {
+  font-size: 0.7vw;
+}
+
+.sm-preview .tiptap.live-content h3 {
+  font-size: 0.6vw;
+}
+
+.sm-preview .tiptap.live-content h4 {
+  font-size: 0.5vw;
+}

@@ -1,25 +1,6 @@
 <template>
   <div class="live-content tiptap border-none h-[100%]">
-    <div
-      v-if="slide?.layout === slideLayoutTypes.heading_sub"
-      class="flex flex-col gap-2 h-[88%] justify-center px-12"
-    >
-      <div class="content" v-html="slide?.contents?.[0]"></div>
-      <div class="content" v-html="slide?.contents?.[1]"></div>
-    </div>
-    <div
-      v-else-if="slide?.layout === slideLayoutTypes.full_text"
-      class="flex flex-col gap-2 h-[88%] justify-center px-12"
-    >
-      <div class="content" v-html="slide?.contents?.[1]"></div>
-    </div>
-    <div v-else class="grid grid-cols-2 gap-4 h-[88%] items-center px-12">
-      <div
-        class="content border-r border-gray-100 pr-8"
-        v-html="slide?.contents?.[1]"
-      ></div>
-      <div class="content pl-8" v-html="slide?.contents?.[2]"></div>
-    </div>
+    <SlideContentByLayout :slide="slide" />
   </div>
 </template>
 
