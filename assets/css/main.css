@@ -296,7 +296,7 @@
 
 /* LIVE CONTENT LG PREVIEW */
 .lg-preview .slide-layout-ctn {
-  min-height: 220px;
+  min-height: calc(220px - 24px);
 }
 .lg-preview .tiptap.live-content {
   font-size: 0.8vw;
@@ -364,8 +364,8 @@
 
 /* LIVE CONTENT SM PREVIEW */
 .sm-preview .tiptap.live-content {
-  font-size: 0.4vw;
-  line-height: 0.55vw;
+  font-size: 0.2vw;
+  line-height: 0.3vw;
 }
 
 .sm-preview .tiptap.live-content h1,
@@ -374,21 +374,21 @@
 .sm-preview .tiptap.live-content h4,
 .sm-preview .tiptap.live-content h5,
 .sm-preview .tiptap.live-content h6 {
-  margin: 0.4vw 0;
+  margin: 0.2vw 0;
 }
 
 .sm-preview .tiptap.live-content h1 {
-  font-size: 0.6vw;
+  font-size: 0.4vw;
 }
 
 .sm-preview .tiptap.live-content h2 {
-  font-size: 0.55vw;
+  font-size: 0.35vw;
 }
 
 .sm-preview .tiptap.live-content h3 {
-  font-size: 0.5vw;
+  font-size: 0.3vw;
 }
 
 .sm-preview .tiptap.live-content h4 {
-  font-size: 0.45vw;
+  font-size: 0.25vw;
 }

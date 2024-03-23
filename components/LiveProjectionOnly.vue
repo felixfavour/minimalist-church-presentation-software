@@ -10,7 +10,7 @@
       :src="$props.slide.background"
       autoplay
       loop
-      class="h-[100vh] w-[100vw] object-cover absolute inset-0"
+      class="h-[100%] w-[100%] object-cover absolute inset-0"
     ></video>
 
     <div
