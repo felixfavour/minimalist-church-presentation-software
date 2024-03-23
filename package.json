@@ -21,5 +21,8 @@
     "pinia-shared-state": "^0.5.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@pinia-plugin-persistedstate/nuxt": "^1.0.0"
   }
 }

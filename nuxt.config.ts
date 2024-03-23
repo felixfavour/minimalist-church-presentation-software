@@ -1,12 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
   colorMode: {
     preference: 'light',
   },
   modules: [
     '@nuxt/ui',
     'nuxt-tiptap-editor',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt'
   ], css: [
     '~/assets/css/main.css',
   ],
@@ -23,5 +25,5 @@ export default defineNuxtConfig({
   },
   pinia: {
     storesDirs: ['./stores/**']
-  },
+  }
 })

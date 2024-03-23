@@ -6,7 +6,7 @@ import { Slide } from '~/types/index'
 export const useAppStore = defineStore('app', {
   state: () => {
     return {
-      liveOutputSlides: [] as Array<Slide>,
+      liveOutputSlides: null as Array<Slide> | null,
       liveSlide: null as Slide | null
     }
   },
@@ -17,6 +17,9 @@ export const useAppStore = defineStore('app', {
     setLiveSlide(slide: Slide) {
       this.liveSlide = slide
     }
+  },
+  persist: {
+    storage: persistedState.localStorage
   },
   share: {
     enable: true,
