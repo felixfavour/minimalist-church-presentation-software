@@ -1,10 +1,11 @@
 <template>
   <div class="slide-layout-selection flex p-2 gap-2">
     <UButton
-      v-for="layout in layouts"
+      v-for="layout in slideLayouts"
       :key="layout"
       @click="$emit('select', layout)"
       class="group/item w-[80px] h-[80px] overflow-hidden text-black shadow-none bg-gray-100 hover:bg-primary-100 transition"
+      :class="{ 'bg-primary-100': layout === value }"
     >
       <div
         v-if="layout === slideLayoutTypes.heading_sub"
@@ -12,9 +13,11 @@
       >
         <p
           class="h-4 w-[100%] bg-gray-300 rounded-md group-hover/item:bg-primary-300 group-active/item:bg-primary-300"
+          :class="{ 'bg-primary-300': layout === value }"
         ></p>
         <p
           class="h-9 w-[100%] bg-gray-300 rounded-md group-hover/item:bg-primary-300 group-active/item:bg-primary-300"
+          :class="{ 'bg-primary-300': layout === value }"
         ></p>
       </div>
       <div
@@ -23,28 +26,28 @@
       >
         <p
           class="h-14 w-[100%] bg-gray-300 rounded-md group-hover/item:bg-primary-300 group-active/item:bg-primary-300"
+          :class="{ 'bg-primary-300': layout === value }"
         ></p>
       </div>
       <div v-else class="text-center w-[100%] flex gap-1">
         <p
           class="h-14 w-[100%] bg-gray-300 rounded-md group-hover/item:bg-primary-300 group-active/item:bg-primary-300"
+          :class="{ 'bg-primary-300': layout === value }"
         ></p>
         <p
           class="h-14 w-[100%] bg-gray-300 rounded-md group-hover/item:bg-primary-300 group-active/item:bg-primary-300"
+          :class="{ 'bg-primary-300': layout === value }"
         ></p>
       </div>
     </UButton>
   </div>
 </template>
 
-<script setup>
-const layouts = Object.values(slideLayoutTypes)
-const props = defineProps({
-  value: {
-    type: String,
-    default: slideLayoutTypes.heading_sub,
-  },
-})
+<script setup lang="ts">
+const slideLayouts = Object.values(slideLayoutTypes)
+defineProps<{
+  value: string
+}>()
 </script>
 
 <style scoped></style>

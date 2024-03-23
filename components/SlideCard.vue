@@ -6,10 +6,12 @@
     @click="$emit('click')"
   >
     <div class="slide-preview text-white overflow-hidden md-preview">
-      <LiveContent :slide="slide" />
+      <LiveContent :slide="slide" padding="0" />
     </div>
     <div class="overlay-gradient absolute inset-0"></div>
-    <div class="texts flex items-center gap-2 text-white absolute top-1">
+    <div
+      class="texts flex items-center gap-2 text-white absolute top-1 right-2 left-2"
+    >
       <h4 class="font-medium ws-nowrap mt-1">{{ slide.name }}</h4>
       <SlideChip :slide-type="slide.type" dark-mode class="mt-1" />
     </div>
@@ -25,7 +27,7 @@
     <div
       class="slide-preview w-24 min-w-24 h-16 bg-primary-600 text-white rounded-md overflow-hidden sm-preview"
     >
-      <LiveContent :slide="slide" />
+      <LiveContent :slide="slide" padding="0" />
     </div>
     <div class="texts flex-col justify-between">
       <h4 class="font-medium mt-2">{{ slide.name }}</h4>

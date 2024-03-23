@@ -1,6 +1,6 @@
 <template>
   <div class="live-content tiptap border-none h-[100%]">
-    <SlideContentByLayout :slide="slide" />
+    <SlideContentByLayout :slide="slide" :padding="padding" />
   </div>
 </template>
 
@@ -9,6 +9,7 @@ import type { Slide } from "~/types"
 
 const props = defineProps<{
   slide: Slide
+  padding: string
 }>()
 
 const emit = defineEmits(["slide-update", "update-live-output-slides"])

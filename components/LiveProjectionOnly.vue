@@ -1,8 +1,18 @@
 <template>
   <div
-    class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-cover bg-no-repeat"
+    class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-cover bg-no-repeat transition-all"
     :class="{ 'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen }"
+    :style="getSlideBackground()"
   >
+    <!-- VIDEO BACKGROUND -->
+    <video
+      v-if="$props.slide.backgroundType === backgroundTypes.video"
+      :src="$props.slide.background"
+      autoplay
+      loop
+      class="h-[100vh] w-[100vw] object-cover absolute inset-0"
+    ></video>
+
     <div
       v-if="!fullScreen || slideLabel"
       class="overlay-gradient absolute inset-0"
@@ -13,12 +23,17 @@
     >
       <h5 class="font-semibold text-white">
         {{ slide?.name || "No Live Slide" }}
-        <!-- <span v-html="slide"></span> -->
       </h5>
       <LiveSlideIndicator :visible="!!slide?.name" class="mr-4 mt-4" />
     </div>
 
-    <LiveContent :slide="slide" :class="{ 'min-h-[220px]': !fullScreen }" />
+    <!-- MAIN FOREGROUND CONTENT -->
+    <LiveContent
+      :slide="slide"
+      class="relative"
+      :class="fullScreen ? '' : 'min-h-[220px]'"
+      :padding="fullScreen ? '6' : '0'"
+    />
   </div>
 </template>
 
@@ -39,11 +54,9 @@ const getSlideBackground = () => {
     case backgroundTypes.gradient:
       return `background-color: ${props.slide.background}`
     case backgroundTypes.image:
-      return `background-image: ${props.slide.background}`
-    case backgroundTypes.video:
-      return `VIDEO-TYPE`
+      return `background-image: url(${props.slide.background})`
   }
-  return ""
+  return "#000000"
 }
 </script>
 

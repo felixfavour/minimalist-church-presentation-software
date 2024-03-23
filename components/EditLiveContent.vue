@@ -1,82 +1,126 @@
 <template>
   <div class="main relative h-[calc(100vh-390px-160px)]">
-    <div
-      class="toolbar w-[100%] p-2 px-4 bg-primary-100 rounded-md flex items-center justify-between overflow-hidden"
-    >
-      <TransitionGroup name="list">
+    <Transition name="fade">
+      <div v-if="slide">
         <div
-          v-for="slide in animatedSlides"
-          :key="slide?.id"
-          class="slide-name flex items-center gap-2 top-1 text-primary-900"
+          class="toolbar w-[100%] p-2 px-4 bg-primary-100 rounded-md flex items-center justify-between overflow-hidden"
         >
-          <h4 class="font-medium ws-nowrap">{{ slide?.name }}</h4>
-          <SlideChip
-            :slide-type="slide?.type"
-            class="text-primary-900 bg-primary text-white"
-          />
-        </div>
-      </TransitionGroup>
-      <div class="actions flex items-center">
-        <div
-          v-if="slide?.type === slideTypes?.bible"
-          class="button-group bg-primary-200 rounded-md mx-1 flex items-center gap-1"
-        >
-          <UTooltip text="Previous verse" :popper="{ arrow: true }">
-            <UButton variant="ghost" icon="i-bx-chevron-left" />
-          </UTooltip>
-          <UInput
-            placeholder="Bible verse"
-            size="xs"
-            variant="none"
-            inputClass="bg-white border-0 shadow-none outline-none w-[16ch] text-center"
-          />
-          <UTooltip text="Next verse" :popper="{ arrow: true }">
-            <UButton variant="ghost" icon="i-bx-chevron-right" />
-          </UTooltip>
-        </div>
-        <div class="button-group bg-primary-200 rounded-md mx-1">
-          <UTooltip text="Increase font size" :popper="{ arrow: true }">
-            <UButton variant="ghost" icon="i-mdi-format-font-size-increase" />
-          </UTooltip>
-          <UTooltip text="Decrease font size" :popper="{ arrow: true }">
-            <UButton variant="ghost" icon="i-mdi-format-font-size-decrease" />
-          </UTooltip>
-        </div>
-        <UPopover v-model:open="layoutPopoverOpen">
-          <UTooltip text="Switch slide layout" :popper="{ arrow: true }">
-            <UButton variant="ghost" icon="i-mingcute-layout-3-line" />
-          </UTooltip>
-          <template #panel>
-            <SlideLayoutSelection
-              :value="slide.layout"
-              @select="onSelectLayout"
-            />
-          </template>
-        </UPopover>
-        <div class="button-group bg-primary-200 rounded-md mx-1">
-          <UTooltip text="Add background image" :popper="{ arrow: true }">
-            <UButton variant="ghost" class="px-1.5" icon="i-bx-image-add" />
-          </UTooltip>
-          <UTooltip text="Add background video" :popper="{ arrow: true }">
-            <UButton variant="ghost" class="px-1.5" icon="i-bx-film" />
-          </UTooltip>
-          <UTooltip text="Add background color" :popper="{ arrow: true }">
-            <UButton
-              variant="ghost"
-              class="px-1.5"
-              icon="i-mdi-square-rounded"
-            />
-          </UTooltip>
-        </div>
-        <!-- <UButton
+          <TransitionGroup name="list">
+            <div
+              v-for="slide in animatedSlides"
+              :key="slide?.id"
+              class="slide-name flex items-center gap-2 top-1 text-primary-900"
+            >
+              <h4 class="font-medium ws-nowrap">{{ slide?.name }}</h4>
+              <SlideChip
+                :slide-type="slide?.type"
+                class="text-primary-900 bg-primary text-white"
+              />
+            </div>
+          </TransitionGroup>
+          <div class="actions flex items-center">
+            <div
+              v-if="slide?.type === slideTypes?.bible"
+              class="button-group bg-primary-200 rounded-md mx-1 flex items-center gap-1"
+            >
+              <UTooltip text="Previous verse" :popper="{ arrow: true }">
+                <UButton variant="ghost" icon="i-bx-chevron-left" />
+              </UTooltip>
+              <UInput
+                placeholder="Bible verse"
+                size="xs"
+                variant="none"
+                inputClass="bg-white border-0 shadow-none outline-none w-[16ch] text-center"
+              />
+              <UTooltip text="Next verse" :popper="{ arrow: true }">
+                <UButton variant="ghost" icon="i-bx-chevron-right" />
+              </UTooltip>
+            </div>
+            <div class="button-group bg-primary-200 rounded-md mx-1">
+              <UTooltip text="Increase font size" :popper="{ arrow: true }">
+                <UButton
+                  variant="ghost"
+                  icon="i-mdi-format-font-size-increase"
+                />
+              </UTooltip>
+              <UTooltip text="Decrease font size" :popper="{ arrow: true }">
+                <UButton
+                  variant="ghost"
+                  icon="i-mdi-format-font-size-decrease"
+                />
+              </UTooltip>
+            </div>
+            <UPopover v-model:open="layoutPopoverOpen">
+              <UTooltip text="Switch slide layout" :popper="{ arrow: true }">
+                <UButton variant="ghost" icon="i-mingcute-layout-3-line" />
+              </UTooltip>
+              <template #panel>
+                <SlideLayoutSelection
+                  :value="slide.layout"
+                  @select="onSelectLayout"
+                />
+              </template>
+            </UPopover>
+            <div class="button-group flex bg-primary-200 rounded-md mx-1">
+              <UPopover v-model:open="bgEditBgPopoverOpen">
+                <UTooltip text="Style background" :popper="{ arrow: true }">
+                  <UButton variant="ghost" class="px-1.5" icon="i-bx-slider" />
+                </UTooltip>
+                <template #panel> Style background image or video </template>
+              </UPopover>
+              <UPopover v-model:open="bgImagePopoverOpen">
+                <UTooltip text="Add background image" :popper="{ arrow: true }">
+                  <UButton
+                    variant="ghost"
+                    class="px-1.5"
+                    icon="i-bx-image-add"
+                  />
+                </UTooltip>
+                <template #panel>
+                  <BgImageSelection
+                    :value="slide.background"
+                    @select="onSelectBackground(backgroundTypes.image, $event)"
+                  />
+                </template>
+              </UPopover>
+              <UPopover v-model:open="bgVideoPopoverOpen">
+                <UTooltip text="Add background video" :popper="{ arrow: true }">
+                  <UButton variant="ghost" class="px-1.5" icon="i-bx-film" />
+                </UTooltip>
+                <template #panel>
+                  <BgVideoSelection
+                    :value="slide.background"
+                    @select="onSelectBackground(backgroundTypes.video, $event)"
+                  />
+                </template>
+              </UPopover>
+              <UPopover v-model:open="bgColorPopoverOpen">
+                <UTooltip text="Add background color" :popper="{ arrow: true }">
+                  <UButton
+                    variant="ghost"
+                    class="px-1.5"
+                    icon="i-mdi-square-rounded"
+                  />
+                </UTooltip>
+                <template #panel>
+                  <BgColorSelection
+                    :value="slide.background"
+                    @select="onSelectBackground(backgroundTypes.solid, $event)"
+                  />
+                </template>
+              </UPopover>
+            </div>
+            <!-- <UButton
           class="px-2 pr-3 ml-1 text-xs"
           icon="i-bx-play-circle"
           @click="$emit('update-live-output-slides')"
           >Promote to Live</UButton
         > -->
+          </div>
+        </div>
+        <TipTapToolbar :editor="focusedEditor" />
       </div>
-    </div>
-    <TipTapToolbar :editor="focusedEditor" />
+    </Transition>
 
     <!-- CONTENT -->
     <div
@@ -88,18 +132,16 @@
         Select slide above to start editing
       </h2>
     </div>
-    <Transition name="fade">
-      <div class="h-[100%]">
-        <TipTap
-          v-if="slide"
-          :slide="slide"
-          @update="onUpdateSlideContent"
-          @change-focused-editor="focusedEditor = $event"
-          :layout="slide.layout"
-          editable
-        />
-      </div>
-    </Transition>
+    <div class="h-[100%]">
+      <TipTap
+        v-if="slide"
+        :slide="slide"
+        @update="onUpdateSlideContent"
+        @change-focused-editor="focusedEditor = $event"
+        :layout="slide.layout"
+        editable
+      />
+    </div>
   </div>
 </template>
 
@@ -116,6 +158,10 @@ const focusedEditor = ref<Editor | undefined>()
 const emit = defineEmits(["slide-update", "update-live-output-slides"])
 
 const layoutPopoverOpen = ref<boolean>(false)
+const bgEditBgPopoverOpen = ref<boolean>(false)
+const bgImagePopoverOpen = ref<boolean>(false)
+const bgVideoPopoverOpen = ref<boolean>(false)
+const bgColorPopoverOpen = ref<boolean>(false)
 const slideContents = ref<Array<string>>([])
 
 const animatedSlides = computed(() => {
@@ -130,6 +176,19 @@ const onSelectLayout = (data: string) => {
   const tempSlide: Slide = {
     ...props.slide,
     layout: data,
+  }
+  emit("slide-update", tempSlide)
+}
+
+const onSelectBackground = (backgroundType: string, data: string) => {
+  bgImagePopoverOpen.value = false
+  bgVideoPopoverOpen.value = false
+  bgColorPopoverOpen.value = false
+
+  const tempSlide: Slide = {
+    ...props.slide,
+    background: data,
+    backgroundType,
   }
   emit("slide-update", tempSlide)
 }
