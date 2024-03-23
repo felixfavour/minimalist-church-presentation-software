@@ -302,6 +302,9 @@
   font-size: 0.8vw;
   line-height: 1.1vw;
 }
+.tiptap.live-content p {
+  min-height: 2ch;
+}
 
 .lg-preview .tiptap.live-content h1,
 .lg-preview .tiptap.live-content h2,

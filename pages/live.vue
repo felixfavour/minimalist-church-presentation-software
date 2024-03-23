@@ -1,5 +1,5 @@
 <template>
-  <div class="main pointer-events-none max-h-[100vh] overflow-hidden">
+  <div class="main max-h-[100vh] overflow-hidden">
     <LiveProjectionOnly
       :full-screen="true"
       :slide="liveSlide"
