@@ -110,7 +110,7 @@
       <TipTapToolbar :editor="focusedEditor" />
     </div>
 
-    <!-- CONTENT -->
+    <!-- MAIN CONTENT -->
     <div
       v-if="!slide"
       class="h-[88%] mt-4 flex flex-col items-center justify-center gap-4 text-gray-500"
@@ -120,7 +120,16 @@
         Select slide above to start editing
       </h2>
     </div>
-    <div class="h-[100%]">
+    <div
+      class="h-[100%] relative text-white bg-gray-500 bg-cover bg-no-repeat transition-all rounded-md overflow-hidden"
+      :style="useSlideBackground(slide)"
+    >
+      <!-- VIDEO BACKGROUND -->
+      <video
+        v-if="slide?.backgroundType === backgroundTypes.video"
+        :src="slide?.background"
+        class="h-[100%] w-[100%] object-cover absolute inset-0"
+      ></video>
       <TipTap
         v-if="slide"
         :slide="slide"
@@ -153,7 +162,6 @@ const bgColorPopoverOpen = ref<boolean>(false)
 const slideContents = ref<Array<string>>([])
 
 const animatedSlides = computed(() => {
-  console.log("updated", props.slide?.id)
   if (props.slide) {
     return [props.slide]
   }

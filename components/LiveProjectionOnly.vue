@@ -2,12 +2,12 @@
   <div
     class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-cover bg-no-repeat transition-all"
     :class="{ 'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen }"
-    :style="getSlideBackground()"
+    :style="useSlideBackground(slide)"
   >
     <!-- VIDEO BACKGROUND -->
     <video
-      v-if="$props.slide.backgroundType === backgroundTypes.video"
-      :src="$props.slide.background"
+      v-if="slide.backgroundType === backgroundTypes.video"
+      :src="slide.background"
       autoplay
       loop
       class="h-[100%] w-[100%] object-cover absolute inset-0"
@@ -39,25 +39,12 @@
 
 <script setup lang="ts">
 import type { Slide } from "~/types"
-import { backgroundTypes } from "~/utils/constants"
 
 const props = defineProps<{
   slideLabel: Boolean
   slide: Slide
   fullScreen: Boolean
 }>()
-
-const getSlideBackground = () => {
-  switch (props.slide.backgroundType) {
-    case backgroundTypes.solid:
-      return `background-color: ${props.slide.background}`
-    case backgroundTypes.gradient:
-      return `background-color: ${props.slide.background}`
-    case backgroundTypes.image:
-      return `background-image: url(${props.slide.background})`
-  }
-  return "#000000"
-}
 </script>
 
 <style scoped></style>
