@@ -3,48 +3,46 @@
     v-if="slide.layout === slideLayoutTypes.heading_sub"
     class="flex flex-col gap-2 h-[88%] mt-4 justify-center rounded-md px-12"
   >
-    <!-- <TipTapToolbar :editor="editorOne" /> -->
-    <TiptapEditorContent :editor="editorOne" />
+    <!-- <TipTapToolbar :editor="focusedEditor" /> -->
 
-    <!-- <TipTapToolbar :editor="editorTwo" /> -->
+    <TiptapEditorContent :editor="editorOne" />
     <TiptapEditorContent :editor="editorTwo" />
   </div>
   <div
     v-else-if="slide.layout === slideLayoutTypes.full_text"
     class="flex flex-col gap-2 h-[88%] mt-4 justify-center rounded-md px-12"
   >
-    <!-- <TipTapToolbar :editor="editorTwo" /> -->
+    <!-- <TipTapToolbar :editor="focusedEditor" /> -->
+
     <TiptapEditorContent :editor="editorTwo" />
   </div>
   <div
     v-else
     class="grid grid-cols-2 gap-2 h-[88%] mt-4 items-center rounded-md px-12"
   >
-    <!-- <TipTapToolbar :editor="editorTwo" /> -->
-    <TiptapEditorContent :editor="editorTwo" />
+    <!-- <TipTapToolbar :editor="focusedEditor" /> -->
 
-    <!-- <TipTapToolbar :editor="editorThree" /> -->
+    <TiptapEditorContent :editor="editorTwo" />
     <TiptapEditorContent :editor="editorThree" />
   </div>
 </template>
 
 <script setup lang="ts">
+import type { Slide } from "~/types"
 import TiptapTextAlign from "@tiptap/extension-text-align"
 import TiptapPlaceholder from "@tiptap/extension-placeholder"
-import type { Slide } from "~/types"
 
 const props = defineProps<{
   slide: Slide
   editable: boolean
 }>()
 
-const emit = defineEmits(["update"])
+const emit = defineEmits(["update", "change-focused-editor"])
 
 watch(
   () => props.slide,
   (newVal, oldVal) => {
     if (newVal?.id !== oldVal?.id) {
-      // Retrieve most recent content on currentSlide
       editorOne.value?.commands.setContent(newVal?.contents[0])
       editorTwo.value?.commands.setContent(newVal?.contents[1])
       editorThree.value?.commands.setContent(newVal?.contents[2])
@@ -70,9 +68,12 @@ const editorOne = ref(
     },
     onUpdate: ({ editor }) => {
       emit("update", 0, editor.getHTML())
-      if (!editor.getHTML().includes("<h1>")) {
-        editor.chain().focus().toggleHeading({ level: 1 }).run()
-      }
+      // if (!editor.getHTML().includes("<h1>")) {
+      //   editor.chain().focus().toggleHeading({ level: 1 }).run()
+      // }
+    },
+    onFocus: ({ editor }) => {
+      emit("change-focused-editor", editor)
     },
   })
 )
@@ -93,6 +94,9 @@ const editorTwo = ref(
     onUpdate: ({ editor }) => {
       emit("update", 1, editor.getHTML())
     },
+    onFocus: ({ editor }) => {
+      emit("change-focused-editor", editor)
+    },
   })
 )
 // editorOne.value.chain().focus().toggleHeading({ level: 1 }).run()
@@ -111,6 +115,9 @@ const editorThree = ref(
     ],
     onUpdate: ({ editor }) => {
       emit("update", 2, editor.getHTML())
+    },
+    onFocus: ({ editor }) => {
+      emit("change-focused-editor", editor)
     },
   })
 )

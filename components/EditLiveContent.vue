@@ -76,6 +76,7 @@
         > -->
       </div>
     </div>
+    <TipTapToolbar :editor="focusedEditor" />
 
     <!-- CONTENT -->
     <div
@@ -93,6 +94,7 @@
           v-if="slide"
           :slide="slide"
           @update="onUpdateSlideContent"
+          @change-focused-editor="focusedEditor = $event"
           :layout="slide.layout"
           editable
         />
@@ -102,11 +104,14 @@
 </template>
 
 <script setup lang="ts">
+import type { Editor } from "@tiptap/core"
 import type { Slide } from "~/types"
 
 const props = defineProps<{
   slide: Slide
 }>()
+
+const focusedEditor = ref<Editor | undefined>()
 
 const emit = defineEmits(["slide-update", "update-live-output-slides"])
 
