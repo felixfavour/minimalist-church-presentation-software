@@ -66,7 +66,13 @@ const editorOne = ref(
     onCreate: ({ editor }) => {
       editor.chain().focus().toggleHeading({ level: 1 }).run()
     },
-    onUpdate: ({ editor }) => {
+    // onUpdate: ({ editor }) => {
+    //   emit("update", 0, editor.getHTML())
+    //   // if (!editor.getHTML().includes("<h1>")) {
+    //   //   editor.chain().focus().toggleHeading({ level: 1 }).run()
+    //   // }
+    // },
+    onBlur: ({ editor }) => {
       emit("update", 0, editor.getHTML())
       // if (!editor.getHTML().includes("<h1>")) {
       //   editor.chain().focus().toggleHeading({ level: 1 }).run()
@@ -91,7 +97,10 @@ const editorTwo = ref(
         placeholder: "Full (richtext) content goes here",
       }),
     ],
-    onUpdate: ({ editor }) => {
+    // onUpdate: ({ editor }) => {
+    //   emit("update", 1, editor.getHTML())
+    // },
+    onBlur: ({ editor }) => {
       emit("update", 1, editor.getHTML())
     },
     onFocus: ({ editor }) => {
@@ -113,7 +122,10 @@ const editorThree = ref(
         placeholder: "Full (richtext) content goes here",
       }),
     ],
-    onUpdate: ({ editor }) => {
+    // onUpdate: ({ editor }) => {
+    //   emit("update", 2, editor.getHTML())
+    // },
+    onBlur: ({ editor }) => {
       emit("update", 2, editor.getHTML())
     },
     onFocus: ({ editor }) => {
