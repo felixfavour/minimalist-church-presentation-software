@@ -1,13 +1,13 @@
 <template>
-  <div class="bg-image-selection p-2 gap-2 grid grid-cols-4">
+  <div class="bg-image-selection p-2 gap-2 grid grid-cols-3">
     <UButton
       v-for="video in backgroundVideos"
       :key="video"
       @click="$emit('select', video)"
-      class="w-[40px] h-[40px] p-0 text-black bg-cover transition-all overflow-hidden relative"
+      class="min-w-[80px] h-[60px] p-0 text-black bg-cover transition-all overflow-hidden relative"
     >
       <video
-        class="bg-image min-w-[40px] h-[40px] transition rounded-md opacity-100 hover:opacity-30 object-cover"
+        class="bg-image w-[100%] h-[100%] transition rounded-md opacity-100 hover:opacity-30 object-cover"
         :class="{ 'opacity-30': video === value }"
         :src="video"
         muted
