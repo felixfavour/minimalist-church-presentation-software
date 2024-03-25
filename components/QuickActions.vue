@@ -23,31 +23,37 @@ const actions = [
     icon: "i-bx-bible",
     name: "Display Bible",
     desc: "Select and open scriptures",
+    action: "new-bible",
   },
   {
     icon: "i-bx-music",
     name: "Display Lyrics",
     desc: "Find lyrics to any song, native too",
+    action: "new-lyrics",
   },
   {
     icon: "i-bx-slideshow",
     name: "Create Slide",
     desc: "Create slides for sermons and more",
+    action: "new-slide",
   },
   {
     icon: "i-bx-search",
     name: "Search Bible",
     desc: "Find scriptures with familiar words",
+    action: "new-bible-search",
   },
   {
     icon: "i-bx-carousel",
     name: "Add Slideshow/Carousel",
     desc: "Find scriptures with familiar words",
+    action: "new-carousel",
   },
   {
     icon: "i-bx-time",
     name: "Add Countdown Timer",
     desc: "Find scriptures with familiar words",
+    action: "new-timer",
   },
 ]
 </script>

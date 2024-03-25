@@ -1,12 +1,13 @@
 <template>
   <AppSection heading="Preview and Edit Content" class="flex-[2]">
     <div
-      class="slides-ctn overflow-auto mb-4 bg-primary-100 rounded-md"
-      :class="
-        windowHeight / 3 > 300 ? 'slides-ctn-3-rows' : 'slides-ctn-2-rows'
-      "
+      class="slides-ctn overflow-auto mb-4 rounded-md transition"
+      :class="[
+        windowHeight / 3 > 300 ? 'slides-ctn-3-rows' : 'slides-ctn-2-rows',
+        slides?.length === 0 ? 'bg-primary-100' : '',
+      ]"
     >
-      <div v-if="slides" class="grid grid-cols-3 gap-3">
+      <div v-if="slides?.length > 0" class="grid grid-cols-3 gap-3">
         <SlideCard
           v-for="slide in slides"
           :key="slide.id"
@@ -34,7 +35,7 @@ import type { Slide } from "~/types"
 const appStore = useAppStore()
 
 const windowHeight = ref<number>(0)
-const slides = ref<Array<Slide> | null>(appStore.liveOutputSlides)
+const slides = ref<Array<Slide>>([])
 const activeSlide = ref<Slide>()
 
 const makeSlideActive = (slide: Slide) => {
@@ -47,6 +48,29 @@ onMounted(() => {
     windowHeight.value = document.documentElement.offsetHeight
   })
 })
+
+// LISTEN TO EVENTS
+const emitter = appStore.emitter
+emitter.on("new-slide", () => {
+  createNewSlide()
+})
+
+const createNewSlide = () => {
+  // Update slide names to be correctly indexed
+  slides.value?.forEach((slide, index) => {
+    slide.id = (index + 1).toString()
+    slide.name = `Slide ${index + 1}`
+  })
+  const tempSlide: Slide = {
+    id: (slides.value?.length + 1 || 1).toString(),
+    name: `Slide ${slides.value?.length + 1 || 1}`,
+    type: slideTypes.text,
+    layout: slideLayoutTypes.heading_sub,
+    contents: [],
+  }
+  slides.value?.push(tempSlide)
+  makeSlideActive(tempSlide)
+}
 
 const onUpdateSlide = (slide: Slide) => {
   makeSlideActive(slide)

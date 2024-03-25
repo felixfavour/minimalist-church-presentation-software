@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { Slide } from '~/types/index'
+import { Emitter } from 'mitt'
 
 // console.log(usePinia())
 
@@ -8,7 +9,7 @@ export const useAppStore = defineStore('app', {
     return {
       liveOutputSlides: null as Array<Slide> | null,
       liveSlide: null as Slide | null,
-      emitter: null as Object | null
+      emitter: null as Emitter | null
     }
   },
   actions: {
@@ -18,7 +19,7 @@ export const useAppStore = defineStore('app', {
     setLiveSlide(slide: Slide) {
       this.liveSlide = slide
     },
-    setEmitter(emitter: Object) {
+    setEmitter(emitter: Emitter) {
       this.emitter = emitter
     }
   },

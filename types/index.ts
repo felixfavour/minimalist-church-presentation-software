@@ -7,3 +7,10 @@ export interface Slide {
   backgroundType?: string
   background?: string
 }
+
+export interface QuickAction {
+  icon: string,
+  name: string,
+  desc: string,
+  action: string,
+}

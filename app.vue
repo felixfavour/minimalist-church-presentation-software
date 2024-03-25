@@ -11,10 +11,6 @@ const appStore = useAppStore()
 
 const emitter = mitt()
 appStore.setEmitter(emitter)
-
-emitter.on("new-slide", (event) => {
-  console.log(event)
-})
 </script>
 
 <style>
