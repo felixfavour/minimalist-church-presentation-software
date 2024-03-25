@@ -8,6 +8,8 @@
           v-if="liveOutputSlides?.length === 0 || !liveOutputSlides"
           icon="i-bx-slideshow"
           sub="No slides yet"
+          action=""
+          action-text=""
         />
         <SlideCard
           v-else

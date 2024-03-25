@@ -7,7 +7,8 @@ export const useAppStore = defineStore('app', {
   state: () => {
     return {
       liveOutputSlides: null as Array<Slide> | null,
-      liveSlide: null as Slide | null
+      liveSlide: null as Slide | null,
+      emitter: null as Object | null
     }
   },
   actions: {
@@ -16,6 +17,9 @@ export const useAppStore = defineStore('app', {
     },
     setLiveSlide(slide: Slide) {
       this.liveSlide = slide
+    },
+    setEmitter(emitter: Object) {
+      this.emitter = emitter
     }
   },
   persist: {

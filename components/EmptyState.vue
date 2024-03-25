@@ -6,7 +6,7 @@
     <h2 class="text-md font-semibold max-w-[150px] text-center">
       {{ sub }}
     </h2>
-    <UButton :icon="actionIcon" v-if="action" @click="$emit(action)">
+    <UButton v-if="action" :icon="actionIcon" @click="useGlobalEmit(action)">
       {{ actionText }}
     </UButton>
   </div>
@@ -15,7 +15,6 @@
 <script setup lang="ts">
 const props = defineProps<{
   icon: string
-  header: string
   sub: string
   actionText: string
   action: string

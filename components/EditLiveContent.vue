@@ -115,6 +115,8 @@
       v-if="!slide"
       icon="i-bx-slideshow"
       sub="Select slide above to start editing"
+      action=""
+      action-text=""
     />
     <div
       v-else
