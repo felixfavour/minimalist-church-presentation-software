@@ -111,17 +111,13 @@
     </div>
 
     <!-- MAIN CONTENT -->
-    <div
+    <EmptyState
       v-if="!slide"
-      class="h-[88%] mt-4 flex flex-col items-center justify-center gap-4 text-gray-500"
-    >
-      <IconWrapper name="i-bx-slideshow" size="14" />
-      <h2 class="text-md font-semibold max-w-[150px] text-center">
-        Select slide above to start editing
-      </h2>
-    </div>
+      icon="i-bx-slideshow"
+      sub="Select slide above to start editing"
+    />
     <div
-      v-if="slide"
+      v-else
       class="h-[100%] relative text-white bg-primary-900 bg-cover bg-no-repeat transition-all rounded-md overflow-hidden"
       :style="useSlideBackground(slide)"
     >

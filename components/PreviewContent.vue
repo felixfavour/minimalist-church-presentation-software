@@ -1,12 +1,12 @@
 <template>
   <AppSection heading="Preview and Edit Content" class="flex-[2]">
-    <div class="main">
-      <div
-        class="slides-ctn grid grid-cols-3 gap-3 overflow-auto mb-4"
-        :class="
-          windowHeight / 3 > 300 ? 'slides-ctn-3-rows' : 'slides-ctn-2-rows'
-        "
-      >
+    <div
+      class="slides-ctn overflow-auto mb-4 bg-primary-100 rounded-md"
+      :class="
+        windowHeight / 3 > 300 ? 'slides-ctn-3-rows' : 'slides-ctn-2-rows'
+      "
+    >
+      <div v-if="slides" class="grid grid-cols-3 gap-3">
         <SlideCard
           v-for="slide in slides"
           :key="slide.id"
@@ -16,6 +16,13 @@
           @click="makeSlideActive(slide)"
         />
       </div>
+      <EmptyState
+        v-else
+        icon="i-tabler-device-desktop-plus"
+        sub="No slides yet"
+        action="new-slide"
+        action-text="Create new slide"
+      />
     </div>
     <EditLiveContent :slide="activeSlide" @slide-update="onUpdateSlide" />
   </AppSection>
@@ -43,16 +50,16 @@ onMounted(() => {
 
 const onUpdateSlide = (slide: Slide) => {
   makeSlideActive(slide)
-  const slideIndex = slides.value.findIndex(
+  const slideIndex = slides.value?.findIndex(
     (slideInner: Slide) => slide.id === slideInner.id
   )
-  slides.value.splice(slideIndex, 1, slide)
+  slides.value?.splice(slideIndex || 0, 1, slide)
 
   updateLiveOutput(slide)
 }
 
 const updateLiveOutput = (updatedSlide: Slide) => {
-  appStore.setLiveOutputSlides(slides.value)
+  appStore.setLiveOutputSlides(slides.value || [])
 
   // If the current slide in the live output is being edited, then update LiveOutput immediately
   if (updatedSlide.id === appStore.liveSlide?.id) {
