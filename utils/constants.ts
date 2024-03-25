@@ -3,7 +3,7 @@ export const slideTypes = {
   lyrics: 'lyrics',
   carousel: 'carousel',
   bible: 'bible',
-  misc: 'miscellaneous'
+  text: 'rich-text'
 }
 
 export const slideLayoutTypes = {

@@ -31,8 +31,8 @@ const actions = [
   },
   {
     icon: "i-bx-slideshow",
-    name: "Create Slides",
-    desc: "Create sermon slides and more",
+    name: "Create Slide",
+    desc: "Create slides for sermons and more",
   },
   {
     icon: "i-bx-search",

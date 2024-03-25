@@ -6,8 +6,8 @@
   >
     <!-- VIDEO BACKGROUND -->
     <video
-      v-if="slide.backgroundType === backgroundTypes.video"
-      :src="slide.background"
+      v-if="slide?.backgroundType === backgroundTypes.video"
+      :src="slide?.background"
       autoplay
       loop
       class="h-[100%] w-[100%] object-cover absolute inset-0"
