@@ -33,6 +33,7 @@
 import { useAppStore } from "~/store/app"
 import type { Slide } from "~/types"
 const appStore = useAppStore()
+const toast = useToast()
 
 const windowHeight = ref<number>(0)
 const slides = ref<Array<Slide>>([])
@@ -55,7 +56,11 @@ emitter.on("new-slide", () => {
   createNewSlide()
 })
 
-const createNewSlide = () => {
+emitter.on("new-bible", (data: string) => {
+  createNewBibleSlide(data)
+})
+
+const preSlideCreation = (): Slide => {
   // Update slide names to be correctly indexed
   slides.value?.forEach((slide, index) => {
     slide.id = (index + 1).toString()
@@ -68,8 +73,23 @@ const createNewSlide = () => {
     layout: slideLayoutTypes.heading_sub,
     contents: [],
   }
+  return tempSlide
+}
+
+const createNewSlide = () => {
+  const tempSlide = { ...preSlideCreation() }
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide)
+  toast.add({ title: "New Slide created", icon: "i-bx-slideshow" })
+}
+
+const createNewBibleSlide = (data: string) => {
+  const tempSlide = { ...preSlideCreation() }
+  tempSlide.type = slideLayoutTypes.bible
+  // slides.value?.push(tempSlide)
+  // makeSlideActive(tempSlide)
+  toast.add({ title: "Bible Slide created", icon: "i-bx-bible" })
+  toast.add({ title: data, icon: "i-bx-bible" })
 }
 
 const onUpdateSlide = (slide: Slide) => {

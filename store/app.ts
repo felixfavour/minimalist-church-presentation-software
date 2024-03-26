@@ -7,6 +7,8 @@ import { Emitter } from 'mitt'
 export const useAppStore = defineStore('app', {
   state: () => {
     return {
+      // activeSlides: [] as Array<Slide>,
+      // activeSlide: null as Slide | null,
       liveOutputSlides: null as Array<Slide> | null,
       liveSlide: null as Slide | null,
       emitter: null as Emitter | null

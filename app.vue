@@ -1,6 +1,7 @@
 <template>
   <NuxtLayout>
     <NuxtPage />
+    <UNotifications />
   </NuxtLayout>
 </template>
 
@@ -17,5 +18,10 @@ appStore.setEmitter(emitter)
 .text-2xs {
   font-size: 0.7rem;
   line-height: 0.9rem;
+}
+button:focus-visible {
+  /* background: #faf5ff;
+  border-radius: 0.375rem; */
+  outline: none;
 }
 </style>
