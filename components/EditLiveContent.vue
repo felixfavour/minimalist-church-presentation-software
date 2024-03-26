@@ -29,6 +29,7 @@
               placeholder="Bible verse"
               size="xs"
               variant="none"
+              v-model="bibleVerse"
               inputClass="bg-white border-0 shadow-none outline-none w-[16ch] text-center"
             />
             <UTooltip text="Next verse" :popper="{ arrow: true }">
@@ -159,6 +160,7 @@ const bgImagePopoverOpen = ref<boolean>(false)
 const bgVideoPopoverOpen = ref<boolean>(false)
 const bgColorPopoverOpen = ref<boolean>(false)
 const slideContents = ref<Array<string>>([])
+const bibleVerse = ref<string>(props.slide?.scripture)
 
 const animatedSlides = computed(() => {
   if (props.slide) {

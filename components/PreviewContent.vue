@@ -39,8 +39,12 @@ const windowHeight = ref<number>(0)
 const slides = ref<Array<Slide>>([])
 const activeSlide = ref<Slide>()
 
-const makeSlideActive = (slide: Slide) => {
+const makeSlideActive = (slide: Slide, goLive: boolean = false) => {
   activeSlide.value = slide
+  if (goLive) {
+    appStore.setLiveOutputSlides(slides.value)
+    appStore.setLiveSlide(activeSlide.value)
+  }
 }
 
 onMounted(() => {
@@ -57,7 +61,10 @@ emitter.on("new-slide", () => {
 })
 
 emitter.on("new-bible", (data: string) => {
-  createNewBibleSlide(data)
+  const bible = useBible(data)
+  if (bible) {
+    createNewBibleSlide(bible)
+  }
 })
 
 const preSlideCreation = (): Slide => {
@@ -83,13 +90,25 @@ const createNewSlide = () => {
   toast.add({ title: "New Slide created", icon: "i-bx-slideshow" })
 }
 
-const createNewBibleSlide = (data: string) => {
+const createNewBibleSlide = (bible: Object) => {
   const tempSlide = { ...preSlideCreation() }
-  tempSlide.type = slideLayoutTypes.bible
-  // slides.value?.push(tempSlide)
-  // makeSlideActive(tempSlide)
+  tempSlide.layout = slideLayoutTypes.bible
+  tempSlide.type = slideTypes.bible
+  tempSlide.scripture = bible?.shortFormat
+
+  // Calculate font-size of scripture content
+  let fontSize = useScreenFontSize(bible?.scripture)
+
+  tempSlide.contents = [
+    `<p class="scripture-content" style="font-size: ${fontSize}vw">${bible?.scripture}</>`,
+    `<p class="scripture-label"><b>${bible?.reference?.toUpperCase()}</b> • ${
+      bible?.version
+    }</p>`,
+  ]
+
+  slides.value?.push(tempSlide)
+  makeSlideActive(tempSlide, true)
   toast.add({ title: "Bible Slide created", icon: "i-bx-bible" })
-  toast.add({ title: data, icon: "i-bx-bible" })
 }
 
 const onUpdateSlide = (slide: Slide) => {

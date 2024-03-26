@@ -6,6 +6,7 @@ export interface Slide {
   contents: Array<string>
   backgroundType?: string
   background?: string
+  scripture: string
 }
 
 export interface QuickAction {

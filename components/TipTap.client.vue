@@ -1,29 +1,30 @@
 <template>
   <div
-    v-if="slide.layout === slideLayoutTypes.heading_sub"
-    class="flex flex-col gap-2 h-[88%] mt-4 justify-center rounded-md px-12"
+    v-if="slide?.layout === slideLayoutTypes.heading_sub"
+    class="slide-layout-ctn flex flex-col gap-2 h-[100%] justify-center rounded-md px-12"
   >
-    <!-- <TipTapToolbar :editor="focusedEditor" /> -->
-
     <TiptapEditorContent :editor="editorOne" />
     <TiptapEditorContent :editor="editorTwo" />
   </div>
   <div
-    v-else-if="slide.layout === slideLayoutTypes.full_text"
-    class="flex flex-col gap-2 h-[88%] mt-4 justify-center rounded-md px-12"
+    v-else-if="slide?.layout === slideLayoutTypes.full_text"
+    class="slide-layout-ctn flex flex-col gap-2 h-[100%] justify-center rounded-md px-12"
   >
-    <!-- <TipTapToolbar :editor="focusedEditor" /> -->
-
     <TiptapEditorContent :editor="editorTwo" />
   </div>
   <div
-    v-else
-    class="grid grid-cols-2 gap-2 h-[88%] mt-4 items-center rounded-md px-12"
+    v-else-if="slide?.layout === slideLayoutTypes.two_column"
+    class="slide-layout-ctn flex gap-4 h-[100%] justify-around items-center rounded-md px-12"
   >
-    <!-- <TipTapToolbar :editor="focusedEditor" /> -->
-
+    <TiptapEditorContent :editor="editorOne" />
     <TiptapEditorContent :editor="editorTwo" />
-    <TiptapEditorContent :editor="editorThree" />
+  </div>
+  <div
+    v-else-if="slide?.layout === slideLayoutTypes.bible"
+    class="slide-layout-ctn flex flex-col gap-2 h-[100%] justify-center rounded-md px-12"
+  >
+    <TiptapEditorContent :editor="uneditableEditorOne" />
+    <TiptapEditorContent :editor="uneditableEditorTwo" />
   </div>
 </template>
 
@@ -83,7 +84,7 @@ const editorOne = ref(
     },
   })
 )
-// editorOne.value.chain().focus().toggleHeading({ level: 1 }).run()
+
 const editorTwo = ref(
   useEditor({
     content: props.slide.contents[1] || "",
@@ -108,11 +109,61 @@ const editorTwo = ref(
     },
   })
 )
-// editorOne.value.chain().focus().toggleHeading({ level: 1 }).run()
+
 const editorThree = ref(
   useEditor({
     content: props.slide.contents[2] || "",
     editable: props.editable,
+    extensions: [
+      TiptapStarterKit,
+      TiptapTextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      TiptapPlaceholder.configure({
+        placeholder: "Full (richtext) content goes here",
+      }),
+    ],
+    // onUpdate: ({ editor }) => {
+    //   emit("update", 2, editor.getHTML())
+    // },
+    onBlur: ({ editor }) => {
+      emit("update", 2, editor.getHTML())
+    },
+    onFocus: ({ editor }) => {
+      emit("change-focused-editor", editor)
+    },
+  })
+)
+
+const uneditableEditorOne = ref(
+  useEditor({
+    content: props.slide.contents[0] || "",
+    editable: false,
+    extensions: [
+      TiptapStarterKit,
+      TiptapTextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      TiptapPlaceholder.configure({
+        placeholder: "Full (richtext) content goes here",
+      }),
+    ],
+    // onUpdate: ({ editor }) => {
+    //   emit("update", 2, editor.getHTML())
+    // },
+    onBlur: ({ editor }) => {
+      emit("update", 2, editor.getHTML())
+    },
+    onFocus: ({ editor }) => {
+      emit("change-focused-editor", editor)
+    },
+  })
+)
+
+const uneditableEditorTwo = ref(
+  useEditor({
+    content: props.slide.contents[1] || "",
+    editable: false,
     extensions: [
       TiptapStarterKit,
       TiptapTextAlign.configure({
