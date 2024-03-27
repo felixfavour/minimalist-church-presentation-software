@@ -1,37 +1,18 @@
 <template>
   <AppSection heading="Preview and Edit Content" class="flex-[2]">
-    <div
-      class="slides-ctn overflow-auto mb-4 rounded-md transition"
-      :class="[
-        windowHeight / 3 > 300 ? 'slides-ctn-3-rows' : 'slides-ctn-2-rows',
-        slides?.length === 0 ? 'bg-primary-100' : '',
-      ]"
-    >
+    <div class="slides-ctn overflow-auto mb-4 rounded-md transition" :class="[
+      windowHeight / 3 > 300 ? 'slides-ctn-3-rows' : 'slides-ctn-2-rows',
+      slides?.length === 0 ? 'bg-primary-100' : '',
+    ]">
       <div v-if="slides?.length > 0" class="grid grid-cols-3 gap-3">
-        <SlideCard
-          v-for="slide in slides"
-          :key="slide.id"
-          :slide="slide"
-          :live="false"
-          grid-type
-          @click="makeSlideActive(slide)"
-        />
+        <SlideCard v-for="slide in slides" :key="slide.id" :slide="slide" :live="false" grid-type
+          @click="makeSlideActive(slide)" @delete="deleteSlide" />
       </div>
-      <EmptyState
-        v-else
-        icon="i-tabler-device-desktop-plus"
-        sub="No slides yet"
-        action="new-slide"
-        action-text="Create new slide"
-      />
+      <EmptyState v-else icon="i-tabler-device-desktop-plus" sub="No slides yet" action="new-slide"
+        action-text="Create new slide" />
     </div>
-    <EditLiveContent
-      :slide="activeSlide"
-      @slide-update="onUpdateSlide"
-      @next-scripture="nextScripture"
-      @previous-scripture="previousScripture"
-      @goto-scripture="gotoScripture"
-    />
+    <EditLiveContent :slide="activeSlide" @slide-update="onUpdateSlide" @next-scripture="nextScripture"
+      @previous-scripture="previousScripture" @goto-scripture="gotoScripture" />
   </AppSection>
 </template>
 
@@ -47,7 +28,7 @@ const activeSlide = ref<Slide>()
 
 watch(slides, () => {
   appStore.setActiveSlides(slides.value)
-}, {deep: true})
+}, { deep: true })
 
 const makeSlideActive = (slide: Slide, goLive: boolean = false) => {
   activeSlide.value = slide
@@ -112,14 +93,20 @@ const createNewBibleSlide = (scripture: Scripture) => {
 
   tempSlide.contents = [
     `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-    `<p class="scripture-label"><b>${scripture?.label}</b> • ${
-      scripture?.version
+    `<p class="scripture-label"><b>${scripture?.label}</b> • ${scripture?.version
     }</p>`,
   ]
 
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide, true)
   toast.add({ title: "Bible Slide created", icon: "i-bx-bible" })
+}
+
+const deleteSlide = (slideId: string) => {
+  const tempSlide = appStore.activeSlides.find((s) => s.id === slideId)
+  const slideIndex = slides.value.findIndex((s) => s.id === slideId)
+  slides.value.splice(slideIndex, 1)
+  toast.add({ title: `Delete ${tempSlide?.name}`, icon: "i-bx-trash" })
 }
 
 const onUpdateSlide = (slide: Slide) => {
@@ -158,8 +145,7 @@ const nextScripture = () => {
     let fontSize = useScreenFontSize(scripture?.content)
     tempSlide.contents = [
       `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
-        scripture?.version
+      `<p class="scripture-label"><b>${scripture?.label}</b> • ${scripture?.version
       }</p>`,
     ]
     activeSlide.value = tempSlide as Slide
@@ -177,14 +163,13 @@ const previousScripture = () => {
   const previousScriptureShortLabel = `${scriptureSplitted?.[0]}:${scriptureSplitted?.[1]}:${previousVerse}`
 
   const scripture = useScripture(previousScriptureShortLabel)
-  if (scripture) {  
+  if (scripture) {
     tempSlide.scripture = previousScriptureLabel
     // Calculate font-size of scripture content
     let fontSize = useScreenFontSize(scripture?.content)
     tempSlide.contents = [
       `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
-        scripture?.version
+      `<p class="scripture-label"><b>${scripture?.label}</b> • ${scripture?.version
       }</p>`,
     ]
     activeSlide.value = tempSlide as Slide
@@ -203,12 +188,11 @@ const gotoScripture = (scriptureText: string) => {
   const scripture = useScripture(scriptureShortLabel)
   if (scripture) {
     // Calculate font-size of scripture content
-    tempSlide.scripture = scriptureLabel  
+    tempSlide.scripture = scriptureLabel
     let fontSize = useScreenFontSize(scripture?.content)
     tempSlide.contents = [
       `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
-        scripture?.version
+      `<p class="scripture-label"><b>${scripture?.label}</b> • ${scripture?.version
       }</p>`,
     ]
     activeSlide.value = tempSlide as Slide
@@ -222,6 +206,7 @@ const gotoScripture = (scriptureText: string) => {
 .slides-ctn-3-rows {
   height: 390px;
 }
+
 .slides-ctn-2-rows {
   height: 260px;
 }
