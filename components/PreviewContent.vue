@@ -25,13 +25,19 @@
         action-text="Create new slide"
       />
     </div>
-    <EditLiveContent :slide="activeSlide" @slide-update="onUpdateSlide" />
+    <EditLiveContent
+      :slide="activeSlide"
+      @slide-update="onUpdateSlide"
+      @next-scripture="nextScripture"
+      @previous-scripture="previousScripture"
+      @goto-scripture="gotoScripture"
+    />
   </AppSection>
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from "~/store/app"
-import type { Slide } from "~/types"
+import type { Scripture, Slide } from "~/types"
 const appStore = useAppStore()
 const toast = useToast()
 
@@ -61,9 +67,9 @@ emitter.on("new-slide", () => {
 })
 
 emitter.on("new-bible", (data: string) => {
-  const bible = useBible(data)
-  if (bible) {
-    createNewBibleSlide(bible)
+  const scripture = useScripture(data)
+  if (scripture) {
+    createNewBibleSlide(scripture)
   }
 })
 
@@ -90,19 +96,19 @@ const createNewSlide = () => {
   toast.add({ title: "New Slide created", icon: "i-bx-slideshow" })
 }
 
-const createNewBibleSlide = (bible: Object) => {
+const createNewBibleSlide = (scripture: Scripture) => {
   const tempSlide = { ...preSlideCreation() }
   tempSlide.layout = slideLayoutTypes.bible
   tempSlide.type = slideTypes.bible
-  tempSlide.scripture = bible?.shortFormat
+  tempSlide.scripture = scripture?.label
 
   // Calculate font-size of scripture content
-  let fontSize = useScreenFontSize(bible?.scripture)
+  let fontSize = useScreenFontSize(scripture?.content)
 
   tempSlide.contents = [
-    `<p class="scripture-content" style="font-size: ${fontSize}vw">${bible?.scripture}</>`,
-    `<p class="scripture-label"><b>${bible?.reference?.toUpperCase()}</b> • ${
-      bible?.version
+    `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
+    `<p class="scripture-label"><b>${scripture?.label}</b> • ${
+      scripture?.version
     }</p>`,
   ]
 
@@ -127,6 +133,82 @@ const updateLiveOutput = (updatedSlide: Slide) => {
   // If the current slide in the live output is being edited, then update LiveOutput immediately
   if (updatedSlide.id === appStore.liveSlide?.id) {
     appStore.setLiveSlide(updatedSlide)
+  }
+}
+
+const nextScripture = () => {
+  const tempSlide = { ...activeSlide.value }
+  const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
+  const scriptureSplitted = useScriptureLabel(tempSlide.scripture || '1:1:1')?.split(":")
+  const nextVerse = Number(scriptureSplitted?.[2]) + 1
+  const nextScriptureLabel = `${tempSlide.scripture?.slice(0, tempSlide.scripture.lastIndexOf(' '))} ${scriptureSplitted?.[1]}:${nextVerse}`
+  const nextScriptureShortLabel = `${scriptureSplitted?.[0]}:${scriptureSplitted?.[1]}:${nextVerse}`
+
+  const scripture = useScripture(nextScriptureShortLabel)
+
+  // Set scripture content
+  if (scripture) {
+    tempSlide.scripture = nextScriptureLabel
+    // Calculate font-size of scripture content
+    let fontSize = useScreenFontSize(scripture?.content)
+    tempSlide.contents = [
+      `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
+      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
+        scripture?.version
+      }</p>`,
+    ]
+    activeSlide.value = tempSlide as Slide
+    slides.value.splice(slideIndex, 1, tempSlide as Slide)
+    updateLiveOutput(activeSlide.value)
+  }
+}
+
+const previousScripture = () => {
+  const tempSlide = { ...activeSlide.value }
+  const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
+  const scriptureSplitted = useScriptureLabel(tempSlide.scripture || '1:1:1')?.split(":")
+  const previousVerse = Number(scriptureSplitted?.[2]) - 1
+  const previousScriptureLabel = `${tempSlide.scripture?.slice(0, tempSlide.scripture.lastIndexOf(' '))} ${scriptureSplitted?.[1]}:${previousVerse}`
+  const previousScriptureShortLabel = `${scriptureSplitted?.[0]}:${scriptureSplitted?.[1]}:${previousVerse}`
+
+  const scripture = useScripture(previousScriptureShortLabel)
+  if (scripture) {  
+    tempSlide.scripture = previousScriptureLabel
+    // Calculate font-size of scripture content
+    let fontSize = useScreenFontSize(scripture?.content)
+    tempSlide.contents = [
+      `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
+      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
+        scripture?.version
+      }</p>`,
+    ]
+    activeSlide.value = tempSlide as Slide
+    slides.value.splice(slideIndex, 1, tempSlide as Slide)
+    updateLiveOutput(activeSlide.value)
+  }
+}
+
+const gotoScripture = (scriptureText: string) => {
+  const tempSlide = { ...activeSlide.value }
+  const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
+  const scriptureSplitted = useScriptureLabel(scriptureText || '1:1:1')?.split(":")
+  const scriptureLabel = `${scriptureText?.slice(0, scriptureText.lastIndexOf(' '))} ${scriptureSplitted?.[1]}:${scriptureSplitted?.[2]}`
+  const scriptureShortLabel = `${scriptureSplitted?.[0]}:${scriptureSplitted?.[1]}:${scriptureSplitted?.[2]}`
+
+  const scripture = useScripture(scriptureShortLabel)
+  if (scripture) {
+    // Calculate font-size of scripture content
+    tempSlide.scripture = scriptureLabel  
+    let fontSize = useScreenFontSize(scripture?.content)
+    tempSlide.contents = [
+      `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
+      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
+        scripture?.version
+      }</p>`,
+    ]
+    activeSlide.value = tempSlide as Slide
+    slides.value.splice(slideIndex, 1, tempSlide as Slide)
+    updateLiveOutput(activeSlide.value)
   }
 }
 </script>

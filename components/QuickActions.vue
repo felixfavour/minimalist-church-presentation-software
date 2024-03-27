@@ -14,7 +14,7 @@
         class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]"
       >
         <ActionCard
-          v-for="action in actions?.filter((a) => !a.searchableOnly)"
+          v-for="(action, index) in actions?.filter((a) => !a.searchableOnly)"
           :key="action.name"
           :action="action"
           :class="{ 'bg-primary-50 rounded-md': index === focusedActionIndex }"
@@ -49,6 +49,7 @@ const actions = [
     action: "new-bible",
     // meta: bibleBooks.toString(),
     meta: "",
+    bibleBookIndex: 1,
   },
   {
     icon: "i-bx-music",
@@ -70,6 +71,7 @@ const actions = [
     desc: "Find scriptures with familiar words",
     action: "new-bible-search",
     meta: "",
+    unreleased: true,
   },
   {
     icon: "i-bx-carousel",
@@ -77,6 +79,7 @@ const actions = [
     desc: "Find scriptures with familiar words",
     action: "new-carousel",
     meta: "",
+    unreleased: true,
   },
   {
     icon: "i-bx-time",
@@ -84,6 +87,7 @@ const actions = [
     desc: "Find scriptures with familiar words",
     action: "new-timer",
     meta: "",
+    unreleased: true,
   },
 ].concat(
   bibleBooks?.map((book, index) => {

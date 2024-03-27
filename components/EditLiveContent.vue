@@ -23,7 +23,11 @@
             class="button-group bg-primary-200 rounded-md mx-1 flex items-center gap-1"
           >
             <UTooltip text="Previous verse" :popper="{ arrow: true }">
-              <UButton variant="ghost" icon="i-bx-chevron-left" />
+              <UButton
+                variant="ghost"
+                icon="i-bx-chevron-left"
+                @click="$emit('previous-scripture')"
+              />
             </UTooltip>
             <UInput
               placeholder="Bible verse"
@@ -31,20 +35,28 @@
               variant="none"
               v-model="bibleVerse"
               inputClass="bg-white border-0 shadow-none outline-none w-[16ch] text-center"
+              @keydown.enter="$emit('goto-scripture', bibleVerse)"
             />
             <UTooltip text="Next verse" :popper="{ arrow: true }">
-              <UButton variant="ghost" icon="i-bx-chevron-right" />
+              <UButton
+                variant="ghost"
+                icon="i-bx-chevron-right"
+                @click="$emit('next-scripture')"
+              />
             </UTooltip>
           </div>
-          <div class="button-group bg-primary-200 rounded-md mx-1">
+          <!-- <div class="button-group bg-primary-200 rounded-md mx-1">
             <UTooltip text="Increase font size" :popper="{ arrow: true }">
               <UButton variant="ghost" icon="i-mdi-format-font-size-increase" />
             </UTooltip>
             <UTooltip text="Decrease font size" :popper="{ arrow: true }">
               <UButton variant="ghost" icon="i-mdi-format-font-size-decrease" />
             </UTooltip>
-          </div>
-          <UPopover v-model:open="layoutPopoverOpen">
+          </div> -->
+          <UPopover
+            v-if="slide.layout !== slideLayoutTypes.bible"
+            v-model:open="layoutPopoverOpen"
+          >
             <UTooltip text="Switch slide layout" :popper="{ arrow: true }">
               <UButton variant="ghost" icon="i-mingcute-layout-3-line" />
             </UTooltip>
@@ -55,7 +67,12 @@
               />
             </template>
           </UPopover>
-          <div class="button-group flex bg-primary-200 rounded-md mx-1">
+          <div
+            class="button-group flex rounded-md mx-1"
+            :class="{
+              'bg-primary-200': slide.layout !== slideLayoutTypes.bible,
+            }"
+          >
             <UPopover v-model:open="bgEditBgPopoverOpen">
               <UTooltip text="Style background" :popper="{ arrow: true }">
                 <UButton variant="ghost" class="px-1.5" icon="i-bx-slider" />
@@ -168,6 +185,14 @@ const animatedSlides = computed(() => {
   }
   return null
 })
+
+watch(
+  () => props.slide,
+  () => {
+    bibleVerse.value = props.slide?.scripture
+  },
+  { immediate: true }
+)
 
 const onSelectLayout = (data: string) => {
   layoutPopoverOpen.value = false
