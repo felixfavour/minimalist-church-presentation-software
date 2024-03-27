@@ -42,14 +42,19 @@ const appStore = useAppStore()
 const toast = useToast()
 
 const windowHeight = ref<number>(0)
-const slides = ref<Array<Slide>>([])
+const slides = ref<Array<Slide>>(appStore.activeSlides || [])
 const activeSlide = ref<Slide>()
+
+watch(slides, () => {
+  appStore.setActiveSlides(slides.value)
+}, {deep: true})
 
 const makeSlideActive = (slide: Slide, goLive: boolean = false) => {
   activeSlide.value = slide
+
   if (goLive) {
-    appStore.setLiveOutputSlides(slides.value)
-    appStore.setLiveSlide(activeSlide.value)
+    appStore.setActiveSlides(slides.value)
+    appStore.setLiveSlide(activeSlide.value.id)
   }
 }
 
@@ -128,11 +133,11 @@ const onUpdateSlide = (slide: Slide) => {
 }
 
 const updateLiveOutput = (updatedSlide: Slide) => {
-  appStore.setLiveOutputSlides(slides.value || [])
+  appStore.setActiveSlides(slides.value || [])
 
   // If the current slide in the live output is being edited, then update LiveOutput immediately
-  if (updatedSlide.id === appStore.liveSlide?.id) {
-    appStore.setLiveSlide(updatedSlide)
+  if (updatedSlide.id === appStore.liveSlideId) {
+    appStore.setLiveSlide(updatedSlide.id)
   }
 }
 

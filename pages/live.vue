@@ -21,7 +21,11 @@
 <script setup>
 import { useAppStore } from "@/store/app"
 const appStore = useAppStore()
-const { liveSlide, liveOutputSlides } = storeToRefs(appStore)
+const { liveSlideId, activeSlide, activeSlides } = storeToRefs(appStore)
+
+const liveSlide = computed(() => {
+  return activeSlides.value.find(slide => slide.id === liveSlideId.value)
+})
 </script>
 
 <style scoped></style>

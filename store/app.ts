@@ -1,25 +1,32 @@
 import { defineStore } from 'pinia'
 import { Slide } from '~/types/index'
-import { Emitter } from 'mitt'
+import type { Emitter } from 'mitt'
 
 // console.log(usePinia())
 
 export const useAppStore = defineStore('app', {
   state: () => {
     return {
-      // activeSlides: [] as Array<Slide>,
-      // activeSlide: null as Slide | null,
-      liveOutputSlides: null as Array<Slide> | null,
-      liveSlide: null as Slide | null,
+      activeSlides: [] as Array<Slide>,
+      // activeSlideId: null as string | null,
+      liveOutputSlidesId: null as Array<string> | null,
+      liveSlideId: null as string | null,
       emitter: null as Emitter | null
     }
   },
   actions: {
-    setLiveOutputSlides(slides: Array<Slide>) {
-      this.liveOutputSlides = slides
+    setActiveSlides(slides: Array<Slide>) {
+      this.activeSlides = slides
+      this.liveOutputSlidesId = slides?.map(slide => slide.id)
     },
-    setLiveSlide(slide: Slide) {
-      this.liveSlide = slide
+    // setActiveSlideId(slideId: string) {
+    //   this.activeSlideId = slideId
+    // },
+    setLiveOutputSlidesId(slides: Array<string>) {
+      this.liveOutputSlidesId = slides
+    },
+    setLiveSlide(slide: string) {
+      this.liveSlideId = slide
     },
     setEmitter(emitter: Emitter) {
       this.emitter = emitter

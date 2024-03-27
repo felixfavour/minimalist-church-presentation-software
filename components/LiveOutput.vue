@@ -14,11 +14,11 @@
         <SlideCard
           v-else
           v-for="slide in liveOutputSlides"
-          :key="slide.id"
+          :key="slide?.id"
           :slide="slide"
           :grid-type="false"
           :live="liveSlide?.id === slide?.id"
-          @click="appStore.setLiveSlide(slide)"
+          @click="appStore.setLiveSlide(slide?.id || '0')"
         />
       </div>
       <LiveProjectionOnly
@@ -35,5 +35,13 @@
 import { useAppStore } from "~/store/app"
 
 const appStore = useAppStore()
-const { liveOutputSlides, liveSlide } = storeToRefs(appStore)
+const { liveOutputSlidesId, liveSlideId } = storeToRefs(appStore)
+
+const liveSlide = computed(() => {
+  return appStore.activeSlides.find(slide => slide.id === liveSlideId.value)
+})
+
+const liveOutputSlides = computed(() => {
+  return liveOutputSlidesId.value?.map(id => appStore.activeSlides.find(slide => slide.id === id))
+})
 </script>
