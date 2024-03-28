@@ -103,10 +103,11 @@ const createNewBibleSlide = (scripture: Scripture) => {
 }
 
 const deleteSlide = (slideId: string) => {
+  preSlideCreation()
   const tempSlide = appStore.activeSlides.find((s) => s.id === slideId)
   const slideIndex = slides.value.findIndex((s) => s.id === slideId)
   slides.value.splice(slideIndex, 1)
-  toast.add({ title: `Delete ${tempSlide?.name}`, icon: "i-bx-trash" })
+  toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-bx-trash" })
 }
 
 const onUpdateSlide = (slide: Slide) => {
