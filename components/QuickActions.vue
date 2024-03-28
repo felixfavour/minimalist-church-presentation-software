@@ -35,6 +35,15 @@ const actions = [
     // meta: bibleBooks.toString(),
     meta: "",
     bibleBookIndex: 1,
+    type: slideTypes.bible
+  },
+  {
+    icon: "i-bx-church",
+    name: "Display Hymns",
+    desc: "Find verses and chorus to all hymns",
+    action: "new-hymn",
+    meta: "",
+    type: slideTypes.hymn
   },
   {
     icon: "i-bx-music",
@@ -42,6 +51,7 @@ const actions = [
     desc: "Find lyrics to any song, native too",
     action: "new-lyrics",
     meta: "",
+    type: slideTypes.lyrics
   },
   {
     icon: "i-bx-slideshow",
@@ -49,6 +59,7 @@ const actions = [
     desc: "Create slides for sermons and more",
     action: "new-slide",
     meta: "",
+    type: slideTypes.text
   },
   {
     icon: "i-bx-search",
@@ -57,6 +68,7 @@ const actions = [
     action: "new-bible-search",
     meta: "",
     unreleased: true,
+    type: slideTypes.bible
   },
   {
     icon: "i-bx-carousel",
@@ -65,6 +77,7 @@ const actions = [
     action: "new-carousel",
     meta: "",
     unreleased: true,
+    type: slideTypes.text
   },
   {
     icon: "i-bx-time",
@@ -73,20 +86,37 @@ const actions = [
     action: "new-timer",
     meta: "",
     unreleased: true,
+    type: slideTypes.text
   },
 ].concat(
   bibleBooks?.map((book, index) => {
     const bibleBookIndex = index + 1 // Does not start from 0, starts from 1
     return {
       icon: "i-bx-bible",
-      name: `Open ${book}`,
+      name: `${book}`,
       desc: `Open the book of ${book}`,
       action: "new-bible",
       meta: `${book} 0:0 1:1 2:2 3:3 4:4 5:5 6:6 7:7 8:8 9:9 10:10 -`,
       searchableOnly: true,
-      bibleBookIndex: bibleBookIndex,
+      bibleBookIndex,
+      type: slideTypes.bible
+    }
+  }),
+  hymnTitles?.map(title => {
+    const hymnIndex = title.slice(0, title.indexOf(' '))
+    const hymnTitle = title?.slice(title.indexOf(' '))
+    return {
+      icon: 'i-bx-church',
+      name: `${hymnTitle}`,
+      desc: `verse and choruses included`,
+      action: 'new-hymn',
+      meta: `hymn ${title}`,
+      searchableOnly: true,
+      hymnIndex,
+      type: slideTypes.hymn
     }
   })
+
 )
 
 onMounted(() => {

@@ -13,10 +13,13 @@ export interface QuickAction {
   icon: string
   name: string
   desc: string
+  type: string
   action: string
-  bibleBookIndex: string
-  bibleChapterAndVerse: string
   unreleased: boolean
+  bibleBookIndex?: string
+  bibleChapterAndVerse?: string
+  hymnIndex?: string
+  searchableOnly?: boolean
 }
 
 export interface Scripture {
