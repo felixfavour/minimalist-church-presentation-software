@@ -201,6 +201,9 @@
 .tiptap.live-content .scripture-content {
   font-weight: 500;
 }
+.tiptap.live-content .song-content {
+  font-weight: 400;
+}
 .tiptap.live-content:focus-within {
   outline-color: #e9d5ff;
 }
@@ -301,6 +304,11 @@
   margin-top: 3vw;
 }
 
+.tiptap.live-content .song-label {
+  margin-top: 3vw;
+  font-size: 1.5vw;
+}
+
 /* LIVE CONTENT LG PREVIEW */
 .lg-preview .slide-layout-ctn {
   min-height: calc(220px - 24px);
@@ -309,10 +317,15 @@
   font-size: 0.8vw;
   line-height: 1.1vw;
 }
-.lg-preview .tiptap.live-content .scripture-content {
+.lg-preview .tiptap.live-content .scripture-content, .lg-preview .tiptap.live-content .song-content {
   font-size: 0.8vw !important;
   line-height: 1.1vw !important;
 }
+
+.lg-preview .tiptap.live-content .song-label {
+  font-size: 0.5vw;
+}
+
 .tiptap.live-content p {
   min-height: 2ch;
 }
@@ -351,7 +364,11 @@
   line-height: 0.8vw;
 }
 
-.md-preview .tiptap.live-content .scripture-content {
+.md-preview .tiptap.live-content .song-label {
+  font-size: 0.3vw;
+}
+
+.md-preview .tiptap.live-content .scripture-content, .md-preview .tiptap.live-content .song-content {
   font-size: 0.6vw !important;
   line-height: 0.8vw !important;
 }
@@ -387,9 +404,13 @@
   line-height: 0.3vw;
 }
 
-.sm-preview .tiptap.live-content .scripture-content {
+.sm-preview .tiptap.live-content .scripture-content, .sm-preview .tiptap.live-content .song-content {
   font-size: 0.2vw !important;
   line-height: 0.3vw !important;
+}
+
+.sm-preview .tiptap.live-content .song-label {
+  font-size: 0.2vw;
 }
 
 .sm-preview .tiptap.live-content h1,

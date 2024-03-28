@@ -7,7 +7,7 @@
     <div class="texts">
       <h4 v-if="action.searchableOnly">
         <span class="font-light italic pr-1 capitalize">
-          {{ action.type }}
+          {{ action.type }}:
         </span>
         <span class="font-semibold">
           {{ action.name || '' }} <span v-if="action.type === slideTypes.bible">{{ action.bibleChapterAndVerse || ''
@@ -29,11 +29,14 @@ const props = defineProps<{
 }>()
 
 const emitParameter = computed(() => {
-  if (props.action.type === slideTypes.bible) {
-    return `${props.action?.bibleBookIndex}:${props.action?.bibleChapterAndVerse || "1:1"
-      }`
+  switch (props.action.type) {
+    case slideTypes.bible:
+      return `${props.action?.bibleBookIndex}:${props.action?.bibleChapterAndVerse || "1:1"}`
+    case slideTypes.hymn:
+      return `${props.action?.hymnIndex}`
+    default:
+      return ""
   }
-  return ""
 })
 </script>
 

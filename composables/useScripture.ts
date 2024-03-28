@@ -24,7 +24,7 @@ const useScripture = (label: string = '1:1:1', version: string = 'KJV'): Scriptu
       labelShortFormat: label
     }
   } catch (err) {
-    toast.add({ title: 'Bible verse does not exist', icon: 'i-bx-error', color: 'red' })
+    toast.add({ title: 'Scripture not found', icon: 'i-bx-error', color: 'red' })
   }
 
   return null

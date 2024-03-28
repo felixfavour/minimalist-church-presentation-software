@@ -4,7 +4,7 @@
       <label class="text-xs font-semibold mb-2 block">
         Background Blur
       </label>
-      <URange v-model="blur" size="sm" step="0.05" min="0" max="10" />
+      <URange v-model="blur" size="sm" step="0.05" min="0" max="15" />
     </UFormGroup>
     <UFormGroup>
       <label class="text-xs font-semibold mb-2 block">

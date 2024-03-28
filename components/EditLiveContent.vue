@@ -10,17 +10,21 @@
           </div>
         </TransitionGroup>
         <div class="actions flex items-center">
-          <div v-if="slide?.type === slideTypes?.bible"
-            class="button-group bg-primary-200 rounded-md mx-1 flex items-center gap-1">
+          <div
+            v-if="slide?.type === slideTypes?.bible || slide?.type === slideTypes?.hymn || slide?.type === slideTypes?.lyrics"
+            class="button-group bg-primary-200 rounded-md mx-1 flex items-center gap-1 h-[36px] px-1">
             <UTooltip text="Previous verse" :popper="{ arrow: true }">
-              <UButton variant="ghost" icon="i-bx-chevron-left" @click="$emit('previous-scripture')" />
+              <UButton variant="ghost" class="p-1" icon="i-bx-chevron-left" @click="$emit('previous-verse')" />
             </UTooltip>
-            <UInput placeholder="Bible verse" size="xs" variant="none" v-model="bibleVerse"
+            <UInput placeholder="Verse" size="xs" variant="none" v-model="verse"
               inputClass="bg-white border-0 shadow-none outline-none w-[16ch] text-center"
-              @keydown.enter="$emit('goto-scripture', bibleVerse)" />
+              @keydown.enter="$emit('goto-verse', verse)" />
             <UTooltip text="Next verse" :popper="{ arrow: true }">
-              <UButton variant="ghost" icon="i-bx-chevron-right" @click="$emit('next-scripture')" />
+              <UButton variant="ghost" class="p-1" icon="i-bx-chevron-right" @click="$emit('next-verse')" />
             </UTooltip>
+            <UButton class="rounded-md" size="xs" @click="$emit('goto-chorus', verse)">
+              Chorus
+            </UButton>
           </div>
           <!-- <div class="button-group bg-primary-200 rounded-md mx-1">
             <UTooltip text="Increase font size" :popper="{ arrow: true }">
@@ -120,7 +124,7 @@ const bgImagePopoverOpen = ref<boolean>(false)
 const bgVideoPopoverOpen = ref<boolean>(false)
 const bgColorPopoverOpen = ref<boolean>(false)
 const slideContents = ref<Array<string>>([])
-const bibleVerse = ref<string>(props.slide?.scripture)
+const verse = ref<string | undefined>(props.slide?.title)
 
 const animatedSlides = computed(() => {
   if (props.slide) {
@@ -132,7 +136,7 @@ const animatedSlides = computed(() => {
 watch(
   () => props.slide,
   () => {
-    bibleVerse.value = props.slide?.scripture
+    verse.value = props.slide?.title
   },
   { immediate: true }
 )
