@@ -1,35 +1,20 @@
 <template>
   <AppSection heading="Quick Actions">
     <div class="main" ref="quickActions">
-      <UInput
-        icon="i-bx-search"
-        placeholder="Search actions"
-        v-model="searchInput"
-        color="gray"
-      />
+      <UInput icon="i-bx-search" placeholder="Search actions, scripture" v-model="searchInput" color="gray" />
 
       <!-- BASIC ACTIONS -->
-      <div
-        v-if="searchInput.length < 2"
-        class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]"
-      >
-        <ActionCard
-          v-for="(action, index) in actions?.filter((a) => !a.searchableOnly)"
-          :key="action.name"
-          :action="action"
-          :class="{ 'bg-primary-50 rounded-md': index === focusedActionIndex }"
-          @click="focusedActionIndex = index"
-        />
+      <div v-if="searchInput.length < 2" class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]">
+        <ActionCard v-for="(action, index) in actions?.filter((a) => !a.searchableOnly)" :key="action.name"
+          :action="action" :class="{ 'bg-primary-50 rounded-md': index === focusedActionIndex }"
+          @click="focusedActionIndex = index" />
       </div>
 
       <!-- SEARCHING ACTIONS -->
       <div v-else class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]">
-        <ActionCard
-          v-for="(action, index) in searchedActions"
-          :key="action.name"
+        <ActionCard v-for="(action, index) in searchedActions" :key="action.name"
           :action="{ ...action, bibleChapterAndVerse }"
-          :class="{ 'bg-primary-50 rounded-md': index === focusedActionIndex }"
-        />
+          :class="{ 'bg-primary-50 rounded-md': index === focusedActionIndex }" />
       </div>
     </div>
   </AppSection>
@@ -112,7 +97,7 @@ onMounted(() => {
     }
     switch (e.key) {
       case "ArrowDown":
-        focusedActionIndex.value < searchedActions.value.length
+        focusedActionIndex.value < searchedActions.value.length - 1
           ? (focusedActionIndex.value += 1)
           : null
         break

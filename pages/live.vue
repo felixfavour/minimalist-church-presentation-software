@@ -1,27 +1,12 @@
 <template>
   <div class="main max-h-[100vh] overflow-hidden">
-    <LiveProjectionOnly
-      :full-screen="true"
-      :slide="liveSlide"
-      :slide-label="false"
-    />
-
-    <!-- <TransitionGroup name="live">
-      <LiveProjectionOnly
-        v-for="slide in liveOutputSlides"
-        :key="slide.id"
-        :full-screen="true"
-        :slide="slide"
-        :slide-label="false"
-        v-show="slide.id === liveSlide.id"
-      />
-    </TransitionGroup> -->
+    <LiveProjectionOnly :full-screen="true" :slide="liveSlide" :slide-label="false" :slide-styles="slideStyles" />
   </div>
 </template>
 <script setup>
 import { useAppStore } from "@/store/app"
 const appStore = useAppStore()
-const { liveSlideId, activeSlide, activeSlides } = storeToRefs(appStore)
+const { liveSlideId, activeSlide, activeSlides, slideStyles } = storeToRefs(appStore)
 
 const liveSlide = computed(() => {
   return activeSlides.value.find(slide => slide.id === liveSlideId.value)

@@ -45,7 +45,9 @@
               <UTooltip text="Style background" :popper="{ arrow: true }">
                 <UButton variant="ghost" class="px-1.5" icon="i-bx-slider" />
               </UTooltip>
-              <template #panel> Style background image or video </template>
+              <template #panel>
+                <BgStyle />
+              </template>
             </UPopover>
             <UPopover v-model:open="bgImagePopoverOpen">
               <UTooltip text="Add background image" :popper="{ arrow: true }">

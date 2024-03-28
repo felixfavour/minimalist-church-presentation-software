@@ -19,10 +19,10 @@ const useScreenFontSize = (content: string) => {
 
   /**
    * Using interpolation to estimate font size
-   * where 525 is the highest content length and 5vw is the corresponding font size
+   * where 525 is the highest content length and 4.8vw is the corresponding font size
    * and 125 is the lowest content length and 2.8vw is the corresponding font size
    */
-  const fontSize = 5 + (content.length - 125) * (2.8 - 5) / (525 - 125)
+  const fontSize = 4.7 + (content.length - 125) * (2.8 - 5) / (525 - 125)
 
   return fontSize.toFixed(2)
 }

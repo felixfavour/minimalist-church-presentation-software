@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Slide } from '~/types/index'
+import { Slide, SlideStyle } from '~/types/index'
 import type { Emitter } from 'mitt'
 
 // console.log(usePinia())
@@ -8,10 +8,10 @@ export const useAppStore = defineStore('app', {
   state: () => {
     return {
       activeSlides: [] as Array<Slide>,
-      // activeSlideId: null as string | null,
       liveOutputSlidesId: null as Array<string> | null,
       liveSlideId: null as string | null,
-      emitter: null as Emitter | null
+      emitter: null as Emitter | null,
+      slideStyles: { blur: 0.5, brightness: 50 } as SlideStyle
     }
   },
   actions: {
@@ -30,6 +30,9 @@ export const useAppStore = defineStore('app', {
     },
     setEmitter(emitter: Emitter) {
       this.emitter = emitter
+    },
+    setSlideStyles(styles: SlideStyle) {
+      this.slideStyles = styles
     }
   },
   persist: {

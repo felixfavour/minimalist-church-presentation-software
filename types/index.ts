@@ -26,3 +26,7 @@ export interface Scripture {
   content: string
 }
 
+export interface SlideStyle {
+  blur: number
+  brightness: number
+}
