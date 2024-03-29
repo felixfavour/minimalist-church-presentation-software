@@ -22,7 +22,8 @@
             <UTooltip text="Next verse" :popper="{ arrow: true }">
               <UButton variant="ghost" class="p-1" icon="i-bx-chevron-right" @click="$emit('next-verse')" />
             </UTooltip>
-            <UButton class="rounded-md" size="xs" @click="$emit('goto-chorus', verse)">
+            <UButton v-if="slide?.type === slideTypes?.hymn" class="rounded-md" size="xs"
+              @click="$emit('goto-chorus', verse)">
               Chorus
             </UButton>
           </div>

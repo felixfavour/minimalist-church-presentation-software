@@ -1,7 +1,7 @@
 <template>
   <div
     class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-cover bg-no-repeat transition-all"
-    :class="{ 'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen }" :style="`${useSlideBackground(slide)}`">
+    :class="{ 'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen }" :style="useSlideBackground(slide)">
     <!-- VIDEO BACKGROUND -->
     <video ref="video" v-if="slide?.backgroundType === backgroundTypes.video" :src="slide?.background" autoplay loop
       class="h-[100%] w-[100%] object-cover absolute inset-0 "></video>

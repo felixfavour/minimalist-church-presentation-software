@@ -181,7 +181,7 @@
 /* LIVE CONTENT */
 .live-output {
   color: #ffffff;
-  background-color: #000000;
+  /* background-color: #000000; */
 }
 .tiptap.live-content {
   padding: 0.75rem;

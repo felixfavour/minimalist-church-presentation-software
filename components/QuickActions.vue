@@ -108,7 +108,7 @@ const actions = [
     return {
       icon: 'i-bx-church',
       name: `${hymnTitle}`,
-      desc: `verse and choruses included`,
+      desc: `verse and chorus included`,
       action: 'new-hymn',
       meta: `hymn ${title}`,
       searchableOnly: true,
