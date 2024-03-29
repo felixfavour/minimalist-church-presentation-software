@@ -1,7 +1,8 @@
 <template>
   <div class="main relative h-[calc(100vh-390px-160px)]">
     <div>
-      <div class="toolbar w-[100%] p-2 px-4 bg-primary-100 rounded-md flex items-center justify-between overflow-hidden">
+      <div
+        class="toolbar w-[100%] p-2 px-4 bg-primary-100 rounded-t-md flex items-center justify-between overflow-hidden">
         <TransitionGroup name="list">
           <div v-for="slide in animatedSlides" :key="slide?.id"
             class="slide-name flex items-center gap-2 top-1 text-primary-900">
@@ -43,7 +44,7 @@
               <SlideLayoutSelection :value="slide?.layout" @select="onSelectLayout" />
             </template>
           </UPopover>
-          <div class="button-group flex rounded-md mx-1" :class="{
+          <div class="button-group flex rounded-md mx-1 p-1" :class="{
             'bg-primary-200': slide?.layout !== slideLayoutTypes.bible,
           }">
             <UPopover v-model:open="bgEditBgPopoverOpen">
@@ -96,7 +97,7 @@
     <!-- MAIN CONTENT -->
     <EmptyState v-if="!slide" icon="i-bx-slideshow" sub="Select slide above to start editing" action="" action-text="" />
     <div v-else
-      class="h-[100%] relative text-white bg-primary-900 bg-cover bg-no-repeat transition-all rounded-md overflow-hidden"
+      class="h-[100%] relative text-white bg-primary-900 bg-cover bg-no-repeat transition-all rounded-b-md overflow-hidden"
       :style="useSlideBackground(slide)">
       <!-- VIDEO BACKGROUND -->
       <video v-if="slide?.backgroundType === backgroundTypes.video" :src="slide?.background"
@@ -137,7 +138,13 @@ const animatedSlides = computed(() => {
 watch(
   () => props.slide,
   () => {
+    // Update slide title when Slide is updated
     verse.value = props.slide?.title
+
+    // Remove toolbar when Slide is updated, if slide.type is not text
+    if (props.slide?.type !== slideTypes.text) {
+      focusedEditor.value = undefined
+    }
   },
   { immediate: true }
 )

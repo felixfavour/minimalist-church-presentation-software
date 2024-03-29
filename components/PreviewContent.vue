@@ -1,6 +1,6 @@
 <template>
   <AppSection heading="Preview and Edit Content" class="flex-[2]">
-    <div class="slides-ctn overflow-auto mb-4 rounded-md transition" :class="[
+    <div class="slides-ctn overflow-y-scroll mb-4 rounded-md transition" :class="[
       windowHeight / 3 > 300 ? 'slides-ctn-3-rows' : 'slides-ctn-2-rows',
       slides?.length === 0 ? 'bg-primary-100' : '',
     ]">
@@ -94,6 +94,7 @@ const deleteSlide = (slideId: string) => {
   const tempSlide = appStore.activeSlides.find((s) => s.id === slideId)
   const slideIndex = slides.value.findIndex((s) => s.id === slideId)
   slides.value.splice(slideIndex, 1)
+  appStore.setActiveSlides(slides.value)
   toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-bx-trash" })
 }
 
@@ -323,7 +324,7 @@ const gotoChorus = (title: string) => {
 
 <style scoped>
 .slides-ctn-3-rows {
-  height: 390px;
+  height: 336px;
 }
 
 .slides-ctn-2-rows {
