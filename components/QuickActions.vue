@@ -1,7 +1,7 @@
 <template>
   <AppSection heading="Quick Actions">
     <div class="main" ref="quickActions">
-      <UInput icon="i-bx-search" placeholder="Search actions, scripture" v-model="searchInput" color="gray" />
+      <UInput icon="i-bx-search" placeholder="Search scripture, hymns, actions" v-model="searchInput" color="gray" />
 
       <!-- BASIC ACTIONS -->
       <div v-if="searchInput.length < 2" class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]">
@@ -71,6 +71,24 @@ const actions = [
     type: slideTypes.bible
   },
   {
+    icon: "i-bx-image",
+    name: "Add Media",
+    desc: "Display video or image media",
+    action: "new-media",
+    meta: "",
+    unreleased: true,
+    // type: slideTypes.text
+  },
+  {
+    icon: "i-ph-file-ppt",
+    name: "Import Slides",
+    desc: "Extract from other apps like PowerPoint",
+    action: "new-transcribe",
+    meta: "power point Google slides",
+    unreleased: true,
+    // type: slideTypes.text
+  },
+  {
     icon: "i-bx-carousel",
     name: "Add Slideshow/Carousel",
     desc: "Find scriptures with familiar words",
@@ -78,6 +96,15 @@ const actions = [
     meta: "",
     unreleased: true,
     type: slideTypes.text
+  },
+  {
+    icon: "i-material-symbols-speech-to-text",
+    name: "Transcribe Sermon",
+    desc: "Start transcribing preacher sermons",
+    action: "new-transcribe",
+    meta: "",
+    unreleased: true,
+    // type: slideTypes.text
   },
   {
     icon: "i-bx-time",
