@@ -1,6 +1,5 @@
 import { Scripture } from '~/types'
 import kjvBible from '../public/large_assets/kjv.json'
-import useScriptureLabel from './useScriptureLabel'
 
 const useScripture = (label: string = '1:1:1', version: string = 'KJV'): Scripture | null => {
 

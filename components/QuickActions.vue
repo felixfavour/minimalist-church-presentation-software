@@ -1,5 +1,5 @@
 <template>
-  <AppSection heading="Quick Actions">
+  <AppSection heading="Quick Actions" class="max-w-[330px]">
     <div class="main" ref="quickActions">
       <UInput icon="i-bx-search" placeholder="Search scripture, hymns, actions" v-model="searchInput" color="gray" />
 
@@ -75,6 +75,15 @@ const actions = [
     name: "Add Media",
     desc: "Display video or image media",
     action: "new-media",
+    meta: "",
+    unreleased: true,
+    // type: slideTypes.text
+  },
+  {
+    icon: "i-carbon-overlay",
+    name: "Add Overlay",
+    desc: "Place one-third of slide over another",
+    action: "new-overlay",
     meta: "",
     unreleased: true,
     // type: slideTypes.text

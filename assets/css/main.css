@@ -4,6 +4,10 @@
   font-family: Inter;
 }
 
+.slides-grid {
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+}
+
 /* TRANSITIONS START */
 .fade-enter-active,
 .fade-leave-active {
@@ -437,3 +441,4 @@
 .sm-preview .tiptap.live-content h4 {
   font-size: 0.25vw;
 }
+

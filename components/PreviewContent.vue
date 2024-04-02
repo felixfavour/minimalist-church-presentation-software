@@ -4,7 +4,7 @@
       windowHeight / 3 > 300 ? 'slides-ctn-3-rows' : 'slides-ctn-2-rows',
       slides?.length === 0 ? 'bg-primary-100' : '',
     ]">
-      <div v-if="slides?.length > 0" class="grid grid-cols-3 gap-3">
+      <div v-if="slides?.length > 0" class="grid slides-grid gap-3">
         <SlideCard v-for="slide in slides" :key="slide.id" :slide="slide" :live="false" grid-type
           @click="makeSlideActive(slide)" @delete="deleteSlide" />
       </div>
@@ -84,8 +84,8 @@ const preSlideCreation = (): Slide => {
 
 const createNewSlide = () => {
   const tempSlide = { ...preSlideCreation() }
-  tempSlide.background = appStore.defaultBackground.text.background
-  tempSlide.backgroundType = appStore.defaultBackground.text.backgroundType
+  tempSlide.background = appStore.settings.defaultBackground.text.background
+  tempSlide.backgroundType = appStore.settings.defaultBackground.text.backgroundType
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide)
   toast.add({ title: "New Slide created", icon: "i-bx-slideshow" })
@@ -114,8 +114,8 @@ const createNewBibleSlide = (scripture: Scripture) => {
   const tempSlide = { ...preSlideCreation() }
   tempSlide.layout = slideLayoutTypes.bible
   tempSlide.type = slideTypes.bible
-  tempSlide.background = appStore.defaultBackground.bible.background
-  tempSlide.backgroundType = appStore.defaultBackground.bible.backgroundType
+  tempSlide.background = appStore.settings.defaultBackground.bible.background
+  tempSlide.backgroundType = appStore.settings.defaultBackground.bible.backgroundType
   tempSlide.title = scripture?.label
 
   // Calculate font-size of scripture content
@@ -136,8 +136,8 @@ const createNewHymnSlide = (hymn: Hymn) => {
   const tempSlide = { ...preSlideCreation() }
   tempSlide.layout = slideLayoutTypes.bible
   tempSlide.type = slideTypes.hymn
-  tempSlide.background = appStore.defaultBackground.hymn.background
-  tempSlide.backgroundType = appStore.defaultBackground.hymn.backgroundType
+  tempSlide.background = appStore.settings.defaultBackground.hymn.background
+  tempSlide.backgroundType = appStore.settings.defaultBackground.hymn.backgroundType
   tempSlide.hymnNumber = hymn.number
   tempSlide.title = 'Verse 1'
 
