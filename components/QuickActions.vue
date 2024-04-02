@@ -214,10 +214,24 @@ const searchedActions = computed(() => {
       ? searchInput.value
       : searchInput.value?.substring(0, colonIndex)
 
-  const results = fuzzysort.go(searchInputBeforeColon, actions, {
+  let results = fuzzysort.go(searchInputBeforeColon, actions, {
     keys: ["name", "desc", "meta"],
   })
-  return results?.map((result) => result.obj)
+  results = results?.map((result) => result.obj)
+
+  // If true, then show Bible types first.
+  if (bibleChapterAndVerse.value) {
+    results.sort((a, b) => {
+      if (a.type === "bible" && b.type !== "bible") {
+        return -1
+      } else if (a.type !== "bible" && b.type === "bible") {
+        return 1
+      } else {
+        return 0
+      }
+    })
+  }
+  return results
 })
 </script>
 
