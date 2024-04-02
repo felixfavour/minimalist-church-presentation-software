@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { useAppStore } from "~/store/app"
-import type { Hymn, Scripture, Slide } from "~/types"
+import type { Hymn, Scripture, Slide, Song } from "~/types"
 const appStore = useAppStore()
 const toast = useToast()
 
@@ -90,6 +90,13 @@ emitter.on("new-hymn", (data: string) => {
   const hymn = useHymn(data)
   if (hymn) {
     createNewHymnSlide(hymn)
+  }
+})
+
+emitter.on("new-lyrics", (data: string) => {
+  const song = useLyrics("dunsin-oyekan-imole-de")
+  if (song) {
+    createNewLyricsSlide(song)
   }
 })
 
@@ -167,7 +174,7 @@ const createNewHymnSlide = (hymn: Hymn) => {
   tempSlide.background = appStore.settings.defaultBackground.hymn.background
   tempSlide.backgroundType =
     appStore.settings.defaultBackground.hymn.backgroundType
-  tempSlide.hymnNumber = hymn.number
+  tempSlide.songId = hymn.number
   tempSlide.title = "Verse 1"
 
   const currentHymnVerse = hymn.verses?.[0].trim()
@@ -188,6 +195,34 @@ const createNewHymnSlide = (hymn: Hymn) => {
   toast.add({ title: "Hymn slide created", icon: "i-bx-church" })
 }
 
+const createNewLyricsSlide = (song: Song) => {
+  const tempSlide = { ...preSlideCreation() }
+  tempSlide.layout = slideLayoutTypes.bible
+  tempSlide.type = slideTypes.lyrics
+  tempSlide.background = appStore.settings.defaultBackground.hymn.background
+  tempSlide.backgroundType =
+    appStore.settings.defaultBackground.hymn.backgroundType
+  tempSlide.songId = song.id
+  tempSlide.title = "Verse 1"
+
+  const currentSongVerse = song.verses?.[0].trim()
+
+  // Calculate font-size of scripture content
+  let fontSize = useScreenFontSize(currentSongVerse)
+
+  tempSlide.contents = [
+    `<p class="song-content" style="font-size: ${fontSize}vw">${currentSongVerse?.replaceAll(
+      "\n",
+      "<br>"
+    )}</>`,
+    `<p class="song-label"><b>${song.title}</b> • ${song.artist}</p>`,
+  ]
+
+  slides.value?.push(tempSlide)
+  makeSlideActive(tempSlide, true)
+  toast.add({ title: "Lyrics slide created", icon: "i-bx-music" })
+}
+
 const updateLiveOutput = (updatedSlide: Slide) => {
   appStore.setActiveSlides(slides.value || [])
 
@@ -203,6 +238,8 @@ const nextAction = () => {
       return nextScripture()
     case slideTypes.hymn:
       return nextVerse()
+    case slideTypes.lyrics:
+      return nextSongVerse()
   }
 }
 
@@ -212,6 +249,8 @@ const prevAction = () => {
       return previousScripture()
     case slideTypes.hymn:
       return previousVerse()
+    case slideTypes.lyrics:
+      return previousSongVerse()
   }
 }
 
@@ -300,7 +339,7 @@ const gotoScripture = (title: string) => {
 const nextVerse = () => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const hymn = useHymn(tempSlide.hymnNumber as string)
+  const hymn = useHymn(tempSlide.songId as string)
   const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
 
   if (hymn) {
@@ -328,7 +367,7 @@ const nextVerse = () => {
 const previousVerse = () => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const hymn = useHymn(tempSlide.hymnNumber as string)
+  const hymn = useHymn(tempSlide.songId as string)
   const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
 
   if (hymn) {
@@ -345,6 +384,62 @@ const previousVerse = () => {
           "<br>"
         )}</>`,
         `<p class="song-label"><b>${hymn?.title}</b> • HYMN</p>`,
+      ]
+      activeSlide.value = tempSlide
+      slides.value.splice(slideIndex, 1, tempSlide)
+      updateLiveOutput(activeSlide.value)
+    }
+  }
+}
+
+const nextSongVerse = () => {
+  const tempSlide = { ...activeSlide.value } as Slide
+  const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
+  const song = useLyrics(tempSlide.songId as string)
+  const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
+
+  if (song) {
+    const hymnVerseIndex = Number(realTitle?.split(" ")?.[1]) + 1
+    const nextVerse = song?.verses?.[hymnVerseIndex]?.trim()
+
+    if (nextVerse) {
+      tempSlide.title = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) + 1}`
+      // Calculate font-size of content
+      let fontSize = useScreenFontSize(nextVerse)
+      tempSlide.contents = [
+        `<p class="song-content" style="font-size: ${fontSize}vw">${nextVerse?.replaceAll(
+          "\n",
+          "<br>"
+        )}</>`,
+        `<p class="song-label"><b>${song?.title}</b> • ${song.artist}</p>`,
+      ]
+      activeSlide.value = tempSlide
+      slides.value.splice(slideIndex, 1, tempSlide)
+      updateLiveOutput(activeSlide.value)
+    }
+  }
+}
+
+const previousSongVerse = () => {
+  const tempSlide = { ...activeSlide.value } as Slide
+  const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
+  const song = useLyrics(tempSlide.songId as string)
+  const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
+
+  if (song) {
+    const hymnVerseIndex = Number(realTitle?.split(" ")?.[1]) - 1
+    const nextVerse = song?.verses?.[hymnVerseIndex]?.trim()
+
+    if (nextVerse) {
+      tempSlide.title = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}`
+      // Calculate font-size of content
+      let fontSize = useScreenFontSize(nextVerse)
+      tempSlide.contents = [
+        `<p class="song-content" style="font-size: ${fontSize}vw">${nextVerse?.replaceAll(
+          "\n",
+          '<br class="mt-3">'
+        )}</>`,
+        `<p class="song-label"><b>${song?.title}</b> • ${song.artist}</p>`,
       ]
       activeSlide.value = tempSlide
       slides.value.splice(slideIndex, 1, tempSlide)

@@ -206,7 +206,7 @@
   font-weight: 500;
 }
 .tiptap.live-content .song-content {
-  font-weight: 400;
+  font-weight: 600;
 }
 .tiptap.live-content:focus-within {
   outline-color: #e9d5ff;
@@ -321,7 +321,8 @@
   font-size: 0.8vw;
   line-height: 1.1vw;
 }
-.lg-preview .tiptap.live-content .scripture-content, .lg-preview .tiptap.live-content .song-content {
+.lg-preview .tiptap.live-content .scripture-content,
+.lg-preview .tiptap.live-content .song-content {
   font-size: 0.8vw !important;
   line-height: 1.1vw !important;
 }
@@ -372,7 +373,8 @@
   font-size: 0.3vw;
 }
 
-.md-preview .tiptap.live-content .scripture-content, .md-preview .tiptap.live-content .song-content {
+.md-preview .tiptap.live-content .scripture-content,
+.md-preview .tiptap.live-content .song-content {
   font-size: 0.6vw !important;
   line-height: 0.8vw !important;
 }
@@ -408,7 +410,8 @@
   line-height: 0.3vw;
 }
 
-.sm-preview .tiptap.live-content .scripture-content, .sm-preview .tiptap.live-content .song-content {
+.sm-preview .tiptap.live-content .scripture-content,
+.sm-preview .tiptap.live-content .song-content {
   font-size: 0.2vw !important;
   line-height: 0.3vw !important;
 }
@@ -441,4 +444,3 @@
 .sm-preview .tiptap.live-content h4 {
   font-size: 0.25vw;
 }
-

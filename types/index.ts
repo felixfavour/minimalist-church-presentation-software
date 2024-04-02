@@ -7,7 +7,7 @@ export interface Slide {
   backgroundType?: string
   background?: string
   title?: string // For hymn and song titles, also for scripture labels (e.g Ephesians 3:1)
-  hymnNumber?: string // only for hymns, as hymn titles do not contain enough information to infer Hymn object
+  songId?: string // only for hymns/songs, could be [hymn.number] or [song.id]
 }
 
 export interface QuickAction {
@@ -31,13 +31,23 @@ export interface Scripture {
 }
 
 export interface Hymn {
-  number: string,
-  title: string,
-  titleWithHymnNumber: string,
-  chorus: string,
-  verses: Array<string>,
-  sound: string,
+  number: string
+  title: string
+  titleWithHymnNumber: string
+  chorus: string
+  verses: Array<string>
+  sound: string
   category: string
+}
+
+export interface Song {
+  id: string
+  lyrics: string
+  title: string
+  album: string
+  cover: string
+  artist: string
+  verses: Array<string>
 }
 
 export interface SlideStyle {

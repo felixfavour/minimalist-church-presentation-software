@@ -72,7 +72,11 @@
             v-model:open="layoutPopoverOpen"
           >
             <UTooltip text="Switch slide layout" :popper="{ arrow: true }">
-              <UButton variant="ghost" icon="i-mingcute-layout-3-line" />
+              <UButton
+                variant="ghost"
+                icon="i-mingcute-layout-3-line"
+                :disabled="!slide"
+              />
             </UTooltip>
             <template #panel>
               <SlideLayoutSelection
@@ -89,7 +93,12 @@
           >
             <UPopover v-model:open="bgEditBgPopoverOpen">
               <UTooltip text="Style background" :popper="{ arrow: true }">
-                <UButton variant="ghost" class="px-1.5" icon="i-bx-slider" />
+                <UButton
+                  variant="ghost"
+                  class="px-1.5"
+                  icon="i-bx-slider"
+                  :disabled="!slide"
+                />
               </UTooltip>
               <template #panel>
                 <BgStyle />
@@ -97,7 +106,12 @@
             </UPopover>
             <UPopover v-model:open="bgImagePopoverOpen">
               <UTooltip text="Add background image" :popper="{ arrow: true }">
-                <UButton variant="ghost" class="px-1.5" icon="i-bx-image-add" />
+                <UButton
+                  variant="ghost"
+                  class="px-1.5"
+                  icon="i-bx-image-add"
+                  :disabled="!slide"
+                />
               </UTooltip>
               <template #panel>
                 <BgImageSelection
@@ -108,7 +122,12 @@
             </UPopover>
             <UPopover v-model:open="bgVideoPopoverOpen">
               <UTooltip text="Add background video" :popper="{ arrow: true }">
-                <UButton variant="ghost" class="px-1.5" icon="i-bx-film" />
+                <UButton
+                  variant="ghost"
+                  class="px-1.5"
+                  icon="i-bx-film"
+                  :disabled="!slide"
+                />
               </UTooltip>
               <template #panel>
                 <BgVideoSelection
@@ -123,6 +142,7 @@
                   variant="ghost"
                   class="px-1.5"
                   icon="i-mdi-square-rounded"
+                  :disabled="!slide"
                 />
               </UTooltip>
               <template #panel>
