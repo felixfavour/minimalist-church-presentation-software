@@ -94,9 +94,11 @@ emitter.on("new-hymn", (data: string) => {
 })
 
 emitter.on("new-lyrics", (data: string) => {
-  const song = useLyrics("dunsin-oyekan-imole-de")
-  if (song) {
-    createNewLyricsSlide(song)
+  if (data) {
+    const song = useLyrics(data)
+    if (song) {
+      createNewLyricsSlide(song)
+    }
   }
 })
 

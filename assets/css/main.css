@@ -9,6 +9,14 @@
 }
 
 /* TRANSITIONS START */
+.fade-sm-enter-active,
+.fade-sm-leave-active {
+  transition: opacity 0.3s ease;
+  -webkit-transition: opacity 0.3s ease;
+  -moz-transition: opacity 0.3s ease;
+  -ms-transition: opacity 0.3s ease;
+  -o-transition: opacity 0.3s ease;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s ease;
@@ -18,6 +26,8 @@
   -o-transition: opacity 1s ease;
 }
 
+.fade-sm-enter-from,
+.fade-sm-leave-to,
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
