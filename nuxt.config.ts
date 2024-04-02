@@ -30,13 +30,14 @@ export default defineNuxtConfig({
     storesDirs: ['./stores/**']
   },
   vite: {
-    plugins: [VitePWA({ registerType: 'autoUpdate' })]
-  },
-  pwa: {
-    manifest: {
-      name: "Cloud of Worshippers",
-      short_name: 'clowd',
-      theme_color: '#a855f7'
-    }
+    plugins: [VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'Cloud of Worshippers',
+        short_name: 'clowd',
+        description: 'Cloud of Worshippers',
+        theme_color: '#a855f7'
+      }
+    })]
   }
 })
