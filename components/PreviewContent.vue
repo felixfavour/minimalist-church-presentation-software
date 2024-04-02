@@ -1,7 +1,7 @@
 <template>
   <AppSection
     heading="Preview and Edit Content"
-    slot-ctn-styles="flex flex-col justify-between h-[calc(100vh-176px)]"
+    slot-ctn-styles="flex flex-col justify-between h-[calc(100vh-182px)]"
     class="flex-[2]"
   >
     <div

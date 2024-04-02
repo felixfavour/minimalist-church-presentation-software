@@ -183,6 +183,7 @@
         :src="slide?.background"
         class="h-[100%] w-[100%] object-cover absolute inset-0"
       ></video>
+      <div class="bg-black opacity-30 absolute inset-0"></div>
       <TipTap
         v-if="slide"
         :slide="slide"
