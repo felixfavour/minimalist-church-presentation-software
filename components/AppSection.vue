@@ -7,7 +7,7 @@
         {{ heading }}
       </h2>
     </div>
-    <div class="slot-ctn p-3 text-sm">
+    <div :class="`slot-ctn p-3 text-sm ${slotCtnStyles}`">
       <slot></slot>
     </div>
   </section>
@@ -16,6 +16,7 @@
 <script setup>
 const props = defineProps({
   heading: String,
+  slotCtnStyles: String,
 })
 </script>
 

@@ -1,20 +1,35 @@
 <template>
   <AppSection heading="Quick Actions" class="max-w-[330px]">
     <div class="main" ref="quickActions">
-      <UInput icon="i-bx-search" placeholder="Search scripture, hymns, actions" v-model="searchInput" color="gray" />
+      <UInput
+        icon="i-bx-search"
+        placeholder="Search scripture, hymns, actions"
+        v-model="searchInput"
+        color="gray"
+      />
 
       <!-- BASIC ACTIONS -->
-      <div v-if="searchInput.length < 2" class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]">
-        <ActionCard v-for="(action, index) in actions?.filter((a) => !a.searchableOnly)" :key="action.name"
-          :action="action" :class="{ 'bg-primary-50 rounded-md': index === focusedActionIndex }"
-          @click="focusedActionIndex = index" />
+      <div
+        v-if="searchInput.length < 2"
+        class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]"
+      >
+        <ActionCard
+          v-for="(action, index) in actions?.filter((a) => !a.searchableOnly)"
+          :key="action.name"
+          :action="action"
+          :class="{ 'bg-primary-50 rounded-md': index === focusedActionIndex }"
+          @click="focusedActionIndex = index"
+        />
       </div>
 
       <!-- SEARCHING ACTIONS -->
       <div v-else class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]">
-        <ActionCard v-for="(action, index) in searchedActions" :key="action.name"
+        <ActionCard
+          v-for="(action, index) in searchedActions"
+          :key="action.name"
           :action="{ ...action, bibleChapterAndVerse }"
-          :class="{ 'bg-primary-50 rounded-md': index === focusedActionIndex }" />
+          :class="{ 'bg-primary-50 rounded-md': index === focusedActionIndex }"
+        />
       </div>
     </div>
   </AppSection>
@@ -35,7 +50,7 @@ const actions = [
     // meta: bibleBooks.toString(),
     meta: "",
     bibleBookIndex: 1,
-    type: slideTypes.bible
+    type: slideTypes.bible,
   },
   {
     icon: "i-bx-church",
@@ -43,7 +58,7 @@ const actions = [
     desc: "Find verses and chorus to all hymns",
     action: "new-hymn",
     meta: "",
-    type: slideTypes.hymn
+    type: slideTypes.hymn,
   },
   {
     icon: "i-bx-music",
@@ -51,7 +66,7 @@ const actions = [
     desc: "Find lyrics to any song, native too",
     action: "new-lyrics",
     meta: "",
-    type: slideTypes.lyrics
+    type: slideTypes.lyrics,
   },
   {
     icon: "i-bx-slideshow",
@@ -59,7 +74,7 @@ const actions = [
     desc: "Create slides for sermons and more",
     action: "new-slide",
     meta: "",
-    type: slideTypes.text
+    type: slideTypes.text,
   },
   {
     icon: "i-bx-search",
@@ -68,7 +83,7 @@ const actions = [
     action: "new-bible-search",
     meta: "",
     unreleased: true,
-    type: slideTypes.bible
+    type: slideTypes.bible,
   },
   {
     icon: "i-bx-image",
@@ -82,7 +97,7 @@ const actions = [
   {
     icon: "i-carbon-overlay",
     name: "Add Overlay",
-    desc: "Place one-third of slide over another",
+    desc: "Place one-third of a slide over another",
     action: "new-overlay",
     meta: "",
     unreleased: true,
@@ -104,7 +119,7 @@ const actions = [
     action: "new-carousel",
     meta: "",
     unreleased: true,
-    type: slideTypes.text
+    type: slideTypes.text,
   },
   {
     icon: "i-material-symbols-speech-to-text",
@@ -122,7 +137,7 @@ const actions = [
     action: "new-timer",
     meta: "",
     unreleased: true,
-    type: slideTypes.text
+    type: slideTypes.text,
   },
 ].concat(
   bibleBooks?.map((book, index) => {
@@ -135,24 +150,23 @@ const actions = [
       meta: `${book} 0:0 1:1 2:2 3:3 4:4 5:5 6:6 7:7 8:8 9:9 10:10 -`,
       searchableOnly: true,
       bibleBookIndex,
-      type: slideTypes.bible
+      type: slideTypes.bible,
     }
   }),
-  hymnTitles?.map(title => {
-    const hymnIndex = title.slice(0, title.indexOf(' '))
-    const hymnTitle = title?.slice(title.indexOf(' '))
+  hymnTitles?.map((title) => {
+    const hymnIndex = title.slice(0, title.indexOf(" "))
+    const hymnTitle = title?.slice(title.indexOf(" "))
     return {
-      icon: 'i-bx-church',
+      icon: "i-bx-church",
       name: `${hymnTitle}`,
       desc: `verse and chorus included`,
-      action: 'new-hymn',
+      action: "new-hymn",
       meta: `hymn ${title}`,
       searchableOnly: true,
       hymnIndex,
-      type: slideTypes.hymn
+      type: slideTypes.hymn,
     }
   })
-
 )
 
 onMounted(() => {

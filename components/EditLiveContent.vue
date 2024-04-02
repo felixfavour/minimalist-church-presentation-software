@@ -1,30 +1,61 @@
 <template>
-  <div class="main relative h-[calc(100vh-390px-160px)]">
+  <div class="main relative min-h-[400px] h-[45vh]">
     <div>
       <div
-        class="toolbar w-[100%] p-2 px-4 bg-primary-100 rounded-t-md flex items-center justify-between overflow-hidden">
+        class="toolbar w-[100%] p-2 px-4 bg-primary-100 rounded-t-md flex items-center justify-between overflow-hidden"
+      >
         <TransitionGroup name="list">
-          <div v-for="slide in animatedSlides" :key="slide?.id"
-            class="slide-name flex items-center gap-2 top-1 text-primary-900">
+          <div
+            v-for="slide in animatedSlides"
+            :key="slide?.id"
+            class="slide-name flex items-center gap-2 top-1 text-primary-900"
+          >
             <h4 class="font-medium ws-nowrap">{{ slide?.name }}</h4>
-            <SlideChip :slide-type="slide?.type" class="text-primary-900 bg-primary text-white" />
+            <SlideChip
+              :slide-type="slide?.type"
+              class="text-primary-900 bg-primary text-white"
+            />
           </div>
         </TransitionGroup>
         <div class="actions flex items-center">
           <div
-            v-if="slide?.type === slideTypes?.bible || slide?.type === slideTypes?.hymn || slide?.type === slideTypes?.lyrics"
-            class="button-group bg-primary-200 rounded-md mx-1 flex items-center gap-1 h-[36px] px-1">
+            v-if="
+              slide?.type === slideTypes?.bible ||
+              slide?.type === slideTypes?.hymn ||
+              slide?.type === slideTypes?.lyrics
+            "
+            class="button-group bg-primary-200 rounded-md mx-1 flex items-center gap-1 h-[36px] px-1"
+          >
             <UTooltip text="Previous verse" :popper="{ arrow: true }">
-              <UButton variant="ghost" class="p-1" icon="i-bx-chevron-left" @click="$emit('previous-verse')" />
+              <UButton
+                variant="ghost"
+                class="p-1"
+                icon="i-bx-chevron-left"
+                @click="$emit('previous-verse')"
+              />
             </UTooltip>
-            <UInput placeholder="Verse" size="xs" variant="none" v-model="verse"
+            <UInput
+              placeholder="Verse"
+              size="xs"
+              variant="none"
+              v-model="verse"
               inputClass="bg-white border-0 shadow-none outline-none w-[16ch] text-center"
-              @keydown.enter="$emit('goto-verse', verse)" />
+              @keydown.enter="$emit('goto-verse', verse)"
+            />
             <UTooltip text="Next verse" :popper="{ arrow: true }">
-              <UButton variant="ghost" class="p-1" icon="i-bx-chevron-right" @click="$emit('next-verse')" />
+              <UButton
+                variant="ghost"
+                class="p-1"
+                icon="i-bx-chevron-right"
+                @click="$emit('next-verse')"
+              />
             </UTooltip>
-            <UButton v-if="slide?.type === slideTypes?.hymn" class="rounded-md" size="xs"
-              @click="$emit('goto-chorus', verse)">
+            <UButton
+              v-if="slide?.type === slideTypes?.hymn"
+              class="rounded-md"
+              size="xs"
+              @click="$emit('goto-chorus', verse)"
+            >
               Chorus
             </UButton>
           </div>
@@ -36,17 +67,26 @@
               <UButton variant="ghost" icon="i-mdi-format-font-size-decrease" />
             </UTooltip>
           </div> -->
-          <UPopover v-if="slide?.layout !== slideLayoutTypes.bible" v-model:open="layoutPopoverOpen">
+          <UPopover
+            v-if="slide?.layout !== slideLayoutTypes.bible"
+            v-model:open="layoutPopoverOpen"
+          >
             <UTooltip text="Switch slide layout" :popper="{ arrow: true }">
               <UButton variant="ghost" icon="i-mingcute-layout-3-line" />
             </UTooltip>
             <template #panel>
-              <SlideLayoutSelection :value="slide?.layout" @select="onSelectLayout" />
+              <SlideLayoutSelection
+                :value="slide?.layout"
+                @select="onSelectLayout"
+              />
             </template>
           </UPopover>
-          <div class="button-group flex rounded-md mx-1 p-1" :class="{
-            'bg-primary-200': slide?.layout !== slideLayoutTypes.bible,
-          }">
+          <div
+            class="button-group flex rounded-md mx-1 p-1"
+            :class="{
+              'bg-primary-200': slide?.layout !== slideLayoutTypes.bible,
+            }"
+          >
             <UPopover v-model:open="bgEditBgPopoverOpen">
               <UTooltip text="Style background" :popper="{ arrow: true }">
                 <UButton variant="ghost" class="px-1.5" icon="i-bx-slider" />
@@ -60,8 +100,10 @@
                 <UButton variant="ghost" class="px-1.5" icon="i-bx-image-add" />
               </UTooltip>
               <template #panel>
-                <BgImageSelection :value="slide?.background"
-                  @select="onSelectBackground(backgroundTypes.image, $event)" />
+                <BgImageSelection
+                  :value="slide?.background"
+                  @select="onSelectBackground(backgroundTypes.image, $event)"
+                />
               </template>
             </UPopover>
             <UPopover v-model:open="bgVideoPopoverOpen">
@@ -69,17 +111,25 @@
                 <UButton variant="ghost" class="px-1.5" icon="i-bx-film" />
               </UTooltip>
               <template #panel>
-                <BgVideoSelection :value="slide?.background"
-                  @select="onSelectBackground(backgroundTypes.video, $event)" />
+                <BgVideoSelection
+                  :value="slide?.background"
+                  @select="onSelectBackground(backgroundTypes.video, $event)"
+                />
               </template>
             </UPopover>
             <UPopover v-model:open="bgColorPopoverOpen">
               <UTooltip text="Add background color" :popper="{ arrow: true }">
-                <UButton variant="ghost" class="px-1.5" icon="i-mdi-square-rounded" />
+                <UButton
+                  variant="ghost"
+                  class="px-1.5"
+                  icon="i-mdi-square-rounded"
+                />
               </UTooltip>
               <template #panel>
-                <BgColorSelection :value="slide?.background"
-                  @select="onSelectBackground(backgroundTypes.solid, $event)" />
+                <BgColorSelection
+                  :value="slide?.background"
+                  @select="onSelectBackground(backgroundTypes.solid, $event)"
+                />
               </template>
             </UPopover>
           </div>
@@ -95,15 +145,32 @@
     </div>
 
     <!-- MAIN CONTENT -->
-    <EmptyState v-if="!slide" icon="i-bx-slideshow" sub="Select slide above to start editing" action="" action-text="" />
-    <div v-else
+    <EmptyState
+      v-if="!slide"
+      icon="i-bx-slideshow"
+      sub="Select slide above to start editing"
+      action=""
+      action-text=""
+    />
+    <div
+      v-else
       class="h-[100%] relative text-white bg-primary-900 bg-cover bg-no-repeat transition-all rounded-b-md overflow-hidden"
-      :style="useSlideBackground(slide)">
+      :style="useSlideBackground(slide)"
+    >
       <!-- VIDEO BACKGROUND -->
-      <video v-if="slide?.backgroundType === backgroundTypes.video" :src="slide?.background"
-        class="h-[100%] w-[100%] object-cover absolute inset-0"></video>
-      <TipTap v-if="slide" :slide="slide" @update="onUpdateSlideContent" @change-focused-editor="focusedEditor = $event"
-        :layout="slide?.layout" editable />
+      <video
+        v-if="slide?.backgroundType === backgroundTypes.video"
+        :src="slide?.background"
+        class="h-[100%] w-[100%] object-cover absolute inset-0"
+      ></video>
+      <TipTap
+        v-if="slide"
+        :slide="slide"
+        @update="onUpdateSlideContent"
+        @change-focused-editor="focusedEditor = $event"
+        :layout="slide?.layout"
+        editable
+      />
     </div>
   </div>
 </template>
