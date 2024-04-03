@@ -8,12 +8,17 @@
       class="slides-ctn overflow-y-scroll mb-4 rounded-md transition"
       :class="[slides?.length === 0 ? 'bg-primary-100' : '']"
     >
-      <div v-if="slides?.length > 0" class="grid slides-grid gap-3">
+      <div
+        v-if="slides?.length > 0"
+        ref="slidesGrid"
+        class="grid slides-grid gap-3"
+      >
         <SlideCard
-          v-for="slide in slides"
+          v-for="(slide, index) in slides"
           :key="slide.id"
           :slide="slide"
           :live="false"
+          :id="useURLFriendlyString(`${slide.name}-${index}`)"
           grid-type
           :selected="activeSlide?.id === slide?.id"
           @click="makeSlideActive(slide)"
@@ -35,6 +40,7 @@
       @previous-verse="prevAction"
       @goto-verse="gotoScripture"
       @goto-chorus="gotoChorus"
+      @update-bible-version="gotoScripture(activeSlide?.title!!, $event)"
     />
   </AppSection>
 </template>
@@ -48,11 +54,21 @@ const toast = useToast()
 const windowHeight = ref<number>(0)
 const slides = ref<Array<Slide>>(appStore.activeSlides || [])
 const activeSlide = ref<Slide>()
+const slidesGrid = ref<HTMLDivElement | null>(null)
 
 watch(
   slides,
-  () => {
+  (newVal, oldVal) => {
     appStore.setActiveSlides(slides.value)
+
+    setTimeout(() => {
+      // Scroll down to newest slide on slide create
+      const slideId = useURLFriendlyString(
+        `${activeSlide.value?.name}-${slides.value?.length - 1}`
+      )
+      const newestSlide = slidesGrid.value?.querySelector(`#${slideId}`)
+      newestSlide?.scrollIntoView()
+    }, 100)
   },
   { deep: true }
 )
@@ -314,7 +330,7 @@ const previousScripture = () => {
   }
 }
 
-const gotoScripture = (title: string) => {
+const gotoScripture = (title: string, version: string) => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
   const scriptureSplitted = useScriptureLabel(title || "1:1:1")?.split(":")
@@ -323,7 +339,7 @@ const gotoScripture = (title: string) => {
   }:${scriptureSplitted?.[2]}`
   const scriptureShortLabel = `${scriptureSplitted?.[0]}:${scriptureSplitted?.[1]}:${scriptureSplitted?.[2]}`
 
-  const scripture = useScripture(scriptureShortLabel)
+  const scripture = useScripture(scriptureShortLabel, version)
   if (scripture) {
     // Calculate font-size of scripture content
     tempSlide.title = scriptureLabel

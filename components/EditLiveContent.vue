@@ -58,6 +58,10 @@
             >
               Chorus
             </UButton>
+            <BibleVersionSelect
+              v-if="slide?.type === slideTypes?.bible"
+              @change="$emit('update-bible-version', $event)"
+            />
           </div>
           <!-- <div class="button-group bg-primary-200 rounded-md mx-1">
             <UTooltip text="Increase font size" :popper="{ arrow: true }">
@@ -204,10 +208,17 @@ const props = defineProps<{
   slide: Slide
 }>()
 
+const emit = defineEmits([
+  "slide-update",
+  "update-live-output-slides",
+  "next-verse",
+  "previous-verse",
+  "goto-verse",
+  "goto-chorus",
+  "update-bible-version",
+])
+
 const focusedEditor = ref<Editor | undefined>()
-
-const emit = defineEmits(["slide-update", "update-live-output-slides"])
-
 const layoutPopoverOpen = ref<boolean>(false)
 const bgEditBgPopoverOpen = ref<boolean>(false)
 const bgImagePopoverOpen = ref<boolean>(false)

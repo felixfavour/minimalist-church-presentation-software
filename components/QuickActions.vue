@@ -7,7 +7,7 @@
   >
     <Transition name="fade-sm">
       <!-- ACTIONS HOME SECTION -->
-      <div v-if="page === ''" class="main" ref="quickActions">
+      <div v-if="page === ''" class="main min-h-[90vh]" ref="quickActions">
         <UInput
           icon="i-bx-search"
           placeholder="Search scripture, hymns, actions"
@@ -45,7 +45,11 @@
       </div>
 
       <!-- LYRICS SECTION -->
-      <div v-else-if="page === 'lyrics'" class="lyrics-main" ref="quickActions">
+      <div
+        v-else-if="page === 'lyrics'"
+        class="lyrics-main min-h-[90vh]"
+        ref="quickActions"
+      >
         <div class="flex gap-2">
           <UInput
             icon="i-bx-search"
@@ -362,7 +366,7 @@ const searchedActions = computed(() => {
       }
     })
   }
-  return results
+  return results?.slice(0, 10)
 })
 
 const searchedSongs = computed(() => {

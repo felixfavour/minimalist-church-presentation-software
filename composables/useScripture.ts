@@ -1,21 +1,40 @@
+import { useAppStore } from '~/store/app'
 import { Scripture } from '~/types'
 import kjvBible from '../public/large_assets/kjv.json'
+import nkjvBible from '../public/large_assets/nkjv.json'
+import nivBible from '../public/large_assets/niv.json'
 
-const useScripture = (label: string = '1:1:1', version: string = 'KJV'): Scripture | null => {
+const useScripture = (label: string = '1:1:1', version: string): Scripture | null => {
 
-  // console.log('label', label)
-  // console.log('label', label)
+  // set default version
+  const appStore = useAppStore()
+  version = version || appStore.settings.defaultBibleVersion
+
   const toast = useToast()
 
   const shortLabelSplitted = label.split(':')
-  const book = shortLabelSplitted?.[0] || "1"
-  const chapter = shortLabelSplitted?.[1] || "1"
-  const verse = shortLabelSplitted?.[2] || "1"
+  const book = Number(shortLabelSplitted?.[0] || "1")
+  const chapter = Number(shortLabelSplitted?.[1] || "1")
+  const verse = Number(shortLabelSplitted?.[2] || "1")
   let scripture = ''
 
   try {
-    // console.log(passageSplitted)
-    scripture = kjvBible?.find((scripture: any) => scripture.book === book && scripture.chapter === chapter && scripture.verse === verse).scripture
+    console.log(shortLabelSplitted)
+    switch (version) {
+      case 'NKJV':
+        scripture = nkjvBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
+        appStore.setDefaultBibleVersion(version)
+        break
+      case 'NIV':
+        scripture = nivBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
+        appStore.setDefaultBibleVersion(version)
+        break
+      default:
+        scripture = kjvBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
+        appStore.setDefaultBibleVersion(version)
+        break
+    }
+
     return {
       label: `${bibleBooks?.[Number(book) - 1]} ${chapter}:${verse}`,
       content: scripture,
@@ -23,6 +42,7 @@ const useScripture = (label: string = '1:1:1', version: string = 'KJV'): Scriptu
       labelShortFormat: label
     }
   } catch (err) {
+    console.log(err)
     toast.add({ title: 'Scripture not found', icon: 'i-bx-error', color: 'red' })
   }
 

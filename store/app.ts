@@ -11,7 +11,9 @@ export const useAppStore = defineStore('app', {
       liveOutputSlidesId: null as Array<string> | null,
       liveSlideId: null as string | null,
       emitter: null as Emitter | null,
+      bibleVersions: ['KJV', 'NKJV', 'NIV'] as Array<string>,
       settings: {
+        defaultBibleVersion: 'KJV',
         defaultBackground: {
           hymn: {
             backgroundType: "video",
@@ -49,6 +51,12 @@ export const useAppStore = defineStore('app', {
     },
     setSlideStyles(styles: SlideStyle) {
       this.slideStyles = styles
+    },
+    setBibleVersions(styles: SlideStyle) {
+      this.slideStyles = styles
+    },
+    setDefaultBibleVersion(version: string) {
+      this.settings = { ...this.settings, defaultBibleVersion: version }
     }
   },
   persist: {
