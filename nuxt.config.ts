@@ -1,4 +1,5 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { VitePWA } from 'vite-plugin-pwa'
+
 export default defineNuxtConfig({
   ssr: false,
   colorMode: {
@@ -8,8 +9,10 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     'nuxt-tiptap-editor',
     '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt'
-  ], css: [
+    '@pinia-plugin-persistedstate/nuxt',
+    '@vite-pwa/nuxt'
+  ],
+  css: [
     '~/assets/css/main.css',
   ],
   ui: {
@@ -25,5 +28,16 @@ export default defineNuxtConfig({
   },
   pinia: {
     storesDirs: ['./stores/**']
+  },
+  vite: {
+    plugins: [VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'Cloud of Worshippers',
+        short_name: 'clowd',
+        description: 'Cloud of Worshippers',
+        theme_color: '#a855f7'
+      }
+    })]
   }
 })

@@ -1,5 +1,5 @@
 <template>
-  <AppSection heading="Live Output">
+  <AppSection heading="Live Output" class="max-w-[330px]">
     <div class="main">
       <div class="slides-ctn h-[calc(100vh-80px-220px-80px)] overflow-auto mb-4 overflow-x-hidden">
         <EmptyState v-if="liveOutputSlides?.length === 0 || !liveOutputSlides" icon="i-bx-slideshow" sub="No slides yet"

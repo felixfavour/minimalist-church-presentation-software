@@ -11,6 +11,24 @@ export const useAppStore = defineStore('app', {
       liveOutputSlidesId: null as Array<string> | null,
       liveSlideId: null as string | null,
       emitter: null as Emitter | null,
+      bibleVersions: ['KJV', 'NKJV', 'NIV'] as Array<string>,
+      settings: {
+        defaultBibleVersion: 'KJV',
+        defaultBackground: {
+          hymn: {
+            backgroundType: "video",
+            background: '/large_assets/video-bg-3.mp4'
+          },
+          bible: {
+            backgroundType: "image",
+            background: 'https://images.unsplash.com/photo-1597773150796-e5c14ebecbf5?q=80&w=1740'
+          },
+          text: {
+            backgroundType: "image",
+            background: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1740'
+          }
+        },
+      },
       slideStyles: { blur: 0.5, brightness: 50 } as SlideStyle
     }
   },
@@ -33,6 +51,12 @@ export const useAppStore = defineStore('app', {
     },
     setSlideStyles(styles: SlideStyle) {
       this.slideStyles = styles
+    },
+    setBibleVersions(styles: SlideStyle) {
+      this.slideStyles = styles
+    },
+    setDefaultBibleVersion(version: string) {
+      this.settings = { ...this.settings, defaultBibleVersion: version }
     }
   },
   persist: {
