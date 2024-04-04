@@ -38,11 +38,11 @@ const downloadEssentialResources = async () => {
 
   // Download KJV Bible
   const kjvBible = await useS3File("kjv.json")
-  useNuxtApp().provide("kjvBible", kjvBible)
+  useNuxtApp().provide("kjvBible", JSON.parse(kjvBible || ""))
 
   // Download all hymns
   const hymns = await useS3File("hymns.json")
-  useNuxtApp().provide("hymns", hymns)
+  useNuxtApp().provide("hymns", JSON.parse(hymns || ""))
 
   loadingResources.value = false
 }

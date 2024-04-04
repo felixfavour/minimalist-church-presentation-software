@@ -1,12 +1,9 @@
 import { useAppStore } from '~/store/app'
 import { Scripture } from '~/types'
-// import kjvBible from '../public/large_assets/kjv.json'
-// import nkjvBible from '../public/large_assets/nkjv.json'
-// import nivBible from '../public/large_assets/niv.json'
 
 const useScripture = (label: string = '1:1:1', version: string): Scripture | null => {
-  const kjvBible = inject('kjvBible')
-  console.log(kjvBible)
+  const nuxtApp = useNuxtApp()
+  const kjvBible = nuxtApp.$kjvBible
 
   // set default version
   const appStore = useAppStore()
