@@ -13,6 +13,10 @@ const appStore = useAppStore()
 
 const emitter = mitt()
 appStore.setEmitter(emitter)
+
+onMounted(async () => {
+  const kjvBible = await useS3File("kjv.json")
+})
 </script>
 
 <style>

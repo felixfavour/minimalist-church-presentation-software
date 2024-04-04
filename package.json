@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.540.0",
     "@nuxt/ui": "npm:@nuxt/ui-edge@latest",
     "@pinia/nuxt": "^0.5.1",
     "@tiptap/extension-placeholder": "^2.2.4",
