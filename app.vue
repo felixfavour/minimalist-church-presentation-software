@@ -18,7 +18,6 @@
           size="2xl"
           class="text-center"
           :value="downloadProgress"
-          indicator
           :max="[
             'Setting up environment...',
             'Loading KJV Bible...',
@@ -47,6 +46,7 @@ const downloadProgress = ref<number>(5)
 
 const downloadEssentialResources = async () => {
   loadingResources.value = true
+  downloadProgress.value = 1
 
   // Download KJV Bible
   const kjvBible = await useS3File("kjv.json")
