@@ -1,7 +1,8 @@
 import { Hymn } from '~/types'
-import hymnsObj from '../public/large_assets/hymns.json'
+// import hymnsObj from '../public/large_assets/hymns.json'
 
 const useHymn = (number: string): Hymn | null => {
+  const hymnsObj = inject('hymns')
   const toast = useToast()
   const hymns = Object.values(hymnsObj.hymns) as Array<Hymn>
 

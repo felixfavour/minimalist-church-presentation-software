@@ -1,9 +1,10 @@
 import { Song } from '~/types'
-import songsObj from '../public/large_assets/lyrics_data.json'
+// import songsObj from '../public/large_assets/lyrics_data.json'
 import useURLFriendlyString from './useURLFriendlyString'
 
 const useLyrics = (songId: string, linesPerDisplay: number = 4): Song | null => {
   const toast = useToast()
+  const songsObj = inject('songs')
   let songs = Object.values(songsObj) as Array<Song>
 
   // Give each song an ID with their title and artist

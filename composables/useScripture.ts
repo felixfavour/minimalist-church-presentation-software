@@ -1,10 +1,12 @@
 import { useAppStore } from '~/store/app'
 import { Scripture } from '~/types'
-import kjvBible from '../public/large_assets/kjv.json'
-import nkjvBible from '../public/large_assets/nkjv.json'
-import nivBible from '../public/large_assets/niv.json'
+// import kjvBible from '../public/large_assets/kjv.json'
+// import nkjvBible from '../public/large_assets/nkjv.json'
+// import nivBible from '../public/large_assets/niv.json'
 
 const useScripture = (label: string = '1:1:1', version: string): Scripture | null => {
+  const kjvBible = inject('kjvBible')
+  console.log(kjvBible)
 
   // set default version
   const appStore = useAppStore()
@@ -21,14 +23,14 @@ const useScripture = (label: string = '1:1:1', version: string): Scripture | nul
   try {
     console.log(shortLabelSplitted)
     switch (version) {
-      case 'NKJV':
-        scripture = nkjvBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
-        appStore.setDefaultBibleVersion(version)
-        break
-      case 'NIV':
-        scripture = nivBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
-        appStore.setDefaultBibleVersion(version)
-        break
+      // case 'NKJV':
+      //   scripture = nkjvBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
+      //   appStore.setDefaultBibleVersion(version)
+      //   break
+      // case 'NIV':
+      //   scripture = nivBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
+      //   appStore.setDefaultBibleVersion(version)
+      //   break
       default:
         scripture = kjvBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
         appStore.setDefaultBibleVersion(version)
