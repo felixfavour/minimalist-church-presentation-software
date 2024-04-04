@@ -14,9 +14,9 @@ export default defineNuxtConfig({
     }
 
   },
-  build: {
-    transpile: ['pretty-bytes', 'workbox-build'],
-  },
+  // build: {
+  //   transpile: ['workbox-build', 'nanoid', 'pretty-bytes'],
+  // },
   modules: [
     '@nuxt/ui',
     'nuxt-tiptap-editor',
