@@ -46,10 +46,7 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [VitePWA({
-      workbox: {
-        clientsClaim: true,
-        skipWaiting: true
-      },
+      registerType: 'autoUpdate',
       manifest: {
         name: 'Cloud of Worshippers',
         short_name: 'clowd',
