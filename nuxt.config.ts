@@ -47,6 +47,7 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [VitePWA({
+      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       strategies: sw ? 'injectManifest' : 'generateSW',
       srcDir: sw ? 'service-worker' : undefined,
       filename: sw ? 'sw.ts' : undefined,
