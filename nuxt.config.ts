@@ -20,9 +20,6 @@ export default defineNuxtConfig({
     }
 
   },
-  // build: {
-  //   transpile: ['workbox-build', 'nanoid', 'pretty-bytes'],
-  // },
   modules: [
     '@nuxt/ui',
     'nuxt-tiptap-editor',
@@ -50,7 +47,6 @@ export default defineNuxtConfig({
   vite: {
     plugins: [VitePWA({
       registerType: 'autoUpdate',
-      useCredentials: true,
       manifest: {
         name: 'Cloud of Worshippers',
         short_name: 'clowd',
@@ -73,6 +69,12 @@ export default defineNuxtConfig({
             type: 'image/png'
           }
         ]
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+      },
+      injectManifest: {
+        globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
       },
       devOptions: {
         enabled: true,
