@@ -1,5 +1,4 @@
 import { Song } from '~/types'
-// import songsObj from '../public/large_assets/lyrics_data.json'
 import useURLFriendlyString from './useURLFriendlyString'
 
 const useLyrics = (songId: string, linesPerDisplay: number = 4): Song | null => {

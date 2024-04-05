@@ -29,8 +29,8 @@ defineProps<{
   value: string
 }>()
 const backgroundVideos = [
-  "/large_assets/video-bg-1.mp4",
-  "/large_assets/video-bg-2.mp4",
-  "/large_assets/video-bg-3.mp4",
+  "https://revaise.s3.us-east-2.amazonaws.com/video-bg-1.mp4",
+  "https://revaise.s3.us-east-2.amazonaws.com/video-bg-2.mp4",
+  "https://revaise.s3.us-east-2.amazonaws.com/video-bg-3.mp4",
 ]
 </script>

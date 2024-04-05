@@ -17,7 +17,7 @@ export const useAppStore = defineStore('app', {
         defaultBackground: {
           hymn: {
             backgroundType: "video",
-            background: '/large_assets/video-bg-3.mp4'
+            background: 'https://revaise.s3.us-east-2.amazonaws.com/video-bg-3.mp4'
           },
           bible: {
             backgroundType: "image",

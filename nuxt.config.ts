@@ -13,9 +13,6 @@ export default defineNuxtConfig({
     }
   },
   ssr: true,
-  devtools: {
-    enabled: true
-  },
   colorMode: {
     preference: 'light',
   },
@@ -54,9 +51,12 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [VitePWA({
+      injectRegister: 'auto',
       registerType: 'autoUpdate',
-
       manifest: false,
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+      },
       devOptions: {
         enabled: true,
         suppressWarnings: true,
