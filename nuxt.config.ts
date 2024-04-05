@@ -57,22 +57,25 @@ export default defineNuxtConfig({
         theme_color: '#ffffff',
         icons: [
           {
-            src: 'cloud-w-144.png',
+            src: '/cloud-w-144.png',
             sizes: '144x144',
             type: 'image/png',
-            purpose: 'any'
           },
           {
-            src: 'cloud-w-192.png',
+            src: '/cloud-w-192.png',
             sizes: '192x192',
             type: 'image/png',
-            purpose: 'any'
           },
           {
-            src: 'cloud-w-512.png',
+            src: '/cloud-w-512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any'
+          },
+          {
+            src: '/cloud-w-512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable'
           },
         ]
       },
