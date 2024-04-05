@@ -47,6 +47,7 @@ export default defineNuxtConfig({
   vite: {
     plugins: [VitePWA({
       registerType: 'autoUpdate',
+      useCredentials: true,
       manifest: {
         name: 'Cloud of Worshippers',
         short_name: 'clowd',
