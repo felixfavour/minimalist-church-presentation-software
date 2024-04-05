@@ -13,7 +13,7 @@
     >
       <div class="wrapper flex flex-col gap-2">
         <div class="logo flex items-center justify-center mb-6 gap-2">
-          <IconWrapper name="i-bx-cloud" size="12" />
+          <Logo class="w-[48px]" />
           <h1 class="text-2xl font-semibold">Cloud of Worshippers</h1>
         </div>
         <div class="progress-wrapper text-center">

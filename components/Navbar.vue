@@ -5,7 +5,7 @@
       v-if="route.name !== 'live'"
     >
       <div class="logo flex items-center gap-2">
-        <IconWrapper name="i-bx-cloud" />
+        <Logo class="w-[32px]" />
         <h1 class="text-md font-semibold">Cloud of Worshippers</h1>
       </div>
       <div class="actions text-sm flex gap-2 items-center">
