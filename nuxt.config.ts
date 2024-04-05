@@ -1,5 +1,6 @@
 import { VitePWA } from 'vite-plugin-pwa'
 
+const sw = false
 export default defineNuxtConfig({
   experimental: {
     renderJsonPayloads: false
@@ -46,6 +47,9 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [VitePWA({
+      strategies: sw ? 'injectManifest' : 'generateSW',
+      srcDir: sw ? 'service-worker' : undefined,
+      filename: sw ? 'sw.ts' : undefined,
       registerType: 'autoUpdate',
       manifest: {
         name: 'Cloud of Worshippers',
@@ -76,13 +80,16 @@ export default defineNuxtConfig({
       injectManifest: {
         globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
       },
+      client: {
+        installPrompt: true,
+      },
       devOptions: {
         enabled: true,
         suppressWarnings: true,
         navigateFallback: '/',
         navigateFallbackAllowlist: [/^\/$/],
         type: 'module',
-      }
+      },
     })]
   }
 })
