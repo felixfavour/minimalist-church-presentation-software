@@ -1,7 +1,10 @@
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineNuxtConfig({
-  ssr: false,
+  experimental: {
+    renderJsonPayloads: false
+  },
+  ssr: true,
   devtools: {
     enabled: true
   },
