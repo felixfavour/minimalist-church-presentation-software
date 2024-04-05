@@ -1,5 +1,5 @@
 <template>
-  <div class="main relative min-h-[400px] h-[45vh]">
+  <div class="main relative min-h-[300px] h-[45vh]">
     <div>
       <div
         class="toolbar w-[100%] p-2 px-4 bg-primary-100 rounded-t-md flex items-center justify-between overflow-hidden"

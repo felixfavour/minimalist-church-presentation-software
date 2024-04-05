@@ -49,7 +49,29 @@ export default defineNuxtConfig({
         short_name: 'clowd',
         description: 'Cloud of Worshippers',
         theme_color: '#a855f7'
+      },
+      devOptions: {
+        enabled: true,
+        suppressWarnings: true,
+        navigateFallback: '/',
+        navigateFallbackAllowlist: [/^\/$/],
+        type: 'module',
       }
     })]
+  },
+  pwa: {
+    manifest: {
+      name: 'Cloud of Worshippers',
+      short_name: 'clowd',
+      description: 'Cloud of Worshippers',
+      theme_color: '#a855f7'
+    },
+    devOptions: {
+      enabled: true,
+      suppressWarnings: true,
+      navigateFallback: '/',
+      navigateFallbackAllowlist: [/^\/$/],
+      type: 'module',
+    }
   }
 })
