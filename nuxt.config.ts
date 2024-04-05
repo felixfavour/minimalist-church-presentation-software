@@ -2,6 +2,9 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineNuxtConfig({
   ssr: false,
+  devtools: {
+    enabled: true
+  },
   colorMode: {
     preference: 'light',
   },
@@ -43,12 +46,27 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [VitePWA({
-      registerType: 'autoUpdate',
+      workbox: {
+        clientsClaim: true,
+        skipWaiting: true
+      },
       manifest: {
         name: 'Cloud of Worshippers',
         short_name: 'clowd',
         description: 'Cloud of Worshippers',
-        theme_color: '#a855f7'
+        theme_color: '#ffffff',
+        icons: [
+          {
+            src: '/cloud-w-192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: '/cloud-w-512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+        ]
       },
       devOptions: {
         enabled: true,
@@ -58,20 +76,5 @@ export default defineNuxtConfig({
         type: 'module',
       }
     })]
-  },
-  pwa: {
-    manifest: {
-      name: 'Cloud of Worshippers',
-      short_name: 'clowd',
-      description: 'Cloud of Worshippers',
-      theme_color: '#a855f7'
-    },
-    devOptions: {
-      enabled: true,
-      suppressWarnings: true,
-      navigateFallback: '/',
-      navigateFallbackAllowlist: [/^\/$/],
-      type: 'module',
-    }
   }
 })

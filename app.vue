@@ -28,9 +28,6 @@
               'Finishing up',
             ]"
           />
-          <!-- <div class="text-sm mt-2 text-primary-800">
-          Retrieving essential resources...
-        </div> -->
         </div>
       </div>
     </div>
