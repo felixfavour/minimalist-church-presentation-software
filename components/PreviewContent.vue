@@ -5,7 +5,7 @@
     class="flex-[2]"
   >
     <div
-      class="slides-ctn overflow-y-scroll mb-4 rounded-md transition"
+      class="slides-ctn overflow-y-scroll mb-4 rounded-md transition h-[50%]"
       :class="[slides?.length === 0 ? 'bg-primary-100' : '']"
     >
       <div
