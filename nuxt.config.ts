@@ -85,10 +85,7 @@ export default defineNuxtConfig({
         navigateFallback: '/',
         navigateFallbackAllowlist: [/^\/$/],
         type: 'module',
-      },
-      client: {
-        installPrompt: true,
-      },
+      }
     })]
   }
 })
