@@ -46,6 +46,7 @@
 </template>
 
 <script setup lang="ts">
+import type { Emitter } from "mitt"
 import { useAppStore } from "~/store/app"
 import type { Hymn, Scripture, Slide, Song } from "~/types"
 const appStore = useAppStore()
@@ -90,7 +91,7 @@ onMounted(() => {
 })
 
 // LISTEN TO EVENTS
-const emitter = appStore.emitter
+const emitter = useNuxtApp().$emitter as Emitter<any>
 emitter.on("new-slide", () => {
   createNewSlide()
 })

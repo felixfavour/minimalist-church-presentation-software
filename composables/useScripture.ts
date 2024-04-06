@@ -18,7 +18,6 @@ const useScripture = (label: string = '1:1:1', version: string): Scripture | nul
   let scripture = ''
 
   try {
-    console.log(shortLabelSplitted)
     switch (version) {
       // case 'NKJV':
       //   scripture = nkjvBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture

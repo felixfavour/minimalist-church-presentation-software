@@ -38,8 +38,10 @@
 import mitt from "mitt"
 import { useAppStore } from "./store/app"
 
+const nuxtApp = useNuxtApp()
 const emitter = mitt()
 const appStore = useAppStore()
+nuxtApp.provide("emitter", emitter)
 appStore.setEmitter(emitter)
 
 const loadingResources = ref<boolean>(true)
@@ -54,7 +56,7 @@ const downloadEssentialResources = async () => {
   useNuxtApp().provide("kjvBible", JSON.parse(kjvBible || ""))
   downloadProgress.value = 2
 
-  // // Download all hymns
+  // Download all hymns
   const hymns = await useS3File("hymns.json")
   useNuxtApp().provide("hymns", JSON.parse(hymns || ""))
   downloadProgress.value = 90

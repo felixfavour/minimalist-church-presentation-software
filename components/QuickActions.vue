@@ -294,12 +294,9 @@ const songs = [
       "https://images.genius.com/c41320603ba793f7dbb8e6544ae2a51c.300x300x1.jpg",
     artist: "Nathaniel Bassey",
   },
-]?.map((song) => ({
-  ...song,
-  id: useURLFriendlyString(`${song.artist} ${song.title}`),
-}))
+]
 
-const emitter = appStore.emitter
+const emitter = useNuxtApp().$emitter
 emitter.on("new-lyrics", () => {
   page.value = "lyrics"
 })

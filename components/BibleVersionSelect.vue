@@ -6,7 +6,7 @@
       searchable-placeholder="Search version"
       select-class="bg-white border-3 shadow-none outline-none w-[16ch] text-center"
       size="xs"
-      :options="bibleVersions"
+      :options="settings.bibleVersions"
       v-model="bibleVersion"
       variant="none"
       color="primary"
@@ -37,6 +37,6 @@
 import { useAppStore } from "~/store/app"
 
 const appStore = useAppStore()
-const { bibleVersions, settings } = storeToRefs(appStore)
+const { settings } = storeToRefs(appStore)
 const bibleVersion = ref<string>(settings.value.defaultBibleVersion)
 </script>

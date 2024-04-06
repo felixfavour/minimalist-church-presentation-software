@@ -1,5 +1,13 @@
 import { Song } from '~/types'
+import songsObj from '../public/songs.json'
 import useURLFriendlyString from './useURLFriendlyString'
+
+const addIdToReturnedSongs = (songs: Array<Song>) => {
+  return songs?.map((song) => ({
+    ...song,
+    id: useURLFriendlyString(`${song.artist} ${song.title}`),
+  }))
+}
 
 const useLyrics = (songId: string, linesPerDisplay: number = 4): Song | null => {
   const toast = useToast()
