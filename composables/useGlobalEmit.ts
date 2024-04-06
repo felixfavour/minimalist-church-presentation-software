@@ -1,7 +1,8 @@
 import type { Emitter } from 'mitt'
 import { useAppStore } from '~/store/app'
+import { Song } from '~/types'
 
-const useGlobalEmit = (type: string, value?: string) => {
+const useGlobalEmit = (type: string, value?: string | Song) => {
   const appStore = useAppStore()
   const toast = useToast()
   const emitter = (useNuxtApp().$emitter || appStore.emitter) as Emitter<any>
@@ -9,6 +10,7 @@ const useGlobalEmit = (type: string, value?: string) => {
   try {
     emitter.emit(type, value)
   } catch (err) {
+    console.log(err)
     toast.add({ title: 'An error occurred. Please reload', icon: 'i-bx-error', color: 'red' })
   }
 }

@@ -1,4 +1,4 @@
-import { Song } from '~/types'
+import type { Song } from '~/types'
 import songsObj from '../public/songs.json'
 import useURLFriendlyString from './useURLFriendlyString'
 
@@ -9,21 +9,10 @@ const addIdToReturnedSongs = (songs: Array<Song>) => {
   }))
 }
 
-const useLyrics = (songId: string, linesPerDisplay: number = 4): Song | null => {
+const useLyrics = (song: Song, linesPerDisplay: number = 4): Song | null => {
   const toast = useToast()
-  const songsObj = inject('songs')
-  let songs = Object.values(songsObj) as Array<Song>
-
-  // Give each song an ID with their title and artist
-  songs = songs.map(song => ({
-    ...song,
-    id: useURLFriendlyString(`${song.artist} ${song.title}`)
-  }))
-  console.log(songs[0].id)
-
 
   try {
-    const song = songs.find(song => song.id === songId) as Song
 
     // Divide songs into verses
     const verses = []
@@ -32,10 +21,11 @@ const useLyrics = (songId: string, linesPerDisplay: number = 4): Song | null => 
     const lyricLines = song.lyrics?.split('\n')
 
     for (let i = 0; i < lyricLines.length; i++) {
-      const line = lyricLines[i]
+      let line = lyricLines[i]
       if (line.toLocaleLowerCase().includes('[verse') || line.toLocaleLowerCase().includes('[intro]') || line.toLocaleLowerCase().includes('[chorus]')) {
         continue
       }
+      line = line.replaceAll("â", "'").replaceAll('solo: ', '')
       tempVerse += `${line}\n`
       lineCount += 1
 

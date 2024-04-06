@@ -1,0 +1,111 @@
+<template>
+  <div class="lyrics-main min-h-[90vh]" ref="quickActions">
+    <div class="flex gap-2">
+      <UInput
+        icon="i-bx-search"
+        placeholder="Search song titles"
+        v-model="searchInput"
+        class="w-[100%]"
+        @input="onSearchInput"
+        @keyup.enter="getSongs($event.target.value)"
+      />
+      <UButton icon="i-bx-x" color="primary" @click="$emit('close')"></UButton>
+    </div>
+
+    <div v-if="loading" class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]">
+      <USkeleton
+        v-for="i in 15"
+        :key="i"
+        class="w-[100%] h-[80px] mt-2"
+      ></USkeleton>
+    </div>
+    <template v-else>
+      <!-- BASIC SONGS -->
+      <div
+        v-if="searchInput.length < 2"
+        class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]"
+      >
+        <SongCard
+          v-for="(song, index) in songs"
+          :key="song.id"
+          :song="song"
+          :class="{
+            'bg-primary-50 rounded-md': index === focusedActionIndex,
+          }"
+          @click="focusedActionIndex = index"
+        />
+      </div>
+
+      <!-- SEARCHING SONGS -->
+      <div v-else class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]">
+        <SongCard
+          v-for="(song, index) in songs"
+          :key="song.id"
+          :song="song"
+          :class="{
+            'bg-primary-50 rounded-md': index === focusedActionIndex,
+          }"
+          @click="focusedActionIndex = index"
+        />
+      </div>
+    </template>
+  </div>
+</template>
+<script setup lang="ts">
+import type { Song } from "~/types"
+import { useDebounceFn } from "@vueuse/core"
+
+const searchInput = ref<string>("")
+const loading = ref<boolean>(true)
+const songs = ref<Song[]>([])
+const searchedSongs = ref<Song[]>([])
+const focusedActionIndex = ref(0)
+const quickActions = ref<HTMLDivElement | null>(null)
+
+onMounted(() => {
+  quickActions.value?.addEventListener("keydown", (e) => {
+    if (e.defaultPrevented) {
+      e.preventDefault()
+      return
+    }
+    switch (e.key) {
+      case "ArrowDown":
+        focusedActionIndex.value < searchedSongs.value.length - 1
+          ? (focusedActionIndex.value += 1)
+          : null
+        break
+      case "ArrowUp":
+        focusedActionIndex.value > 0 ? (focusedActionIndex.value -= 1) : null
+        break
+      case "Enter":
+        const action = searchedSongs.value?.[focusedActionIndex.value]
+        // useGlobalEmit(
+        //   action.action,
+        //   `${action.bibleBookIndex}:${bibleChapterAndVerse.value}`
+        // )
+        break
+      default:
+        return
+    }
+  })
+})
+
+const getSongs = async (query: string = "") => {
+  loading.value = true
+  const promise = await useFetch(
+    `https://revaise-api.onrender.com/v1/song?search=${query}`
+  )
+  let songsData = promise.data.value.data?.map((song) => ({
+    ...song,
+    title: song.title.replaceAll("â", "'"),
+  }))
+  songs.value = songsData
+  loading.value = false
+}
+
+getSongs()
+
+const onSearchInput = useDebounceFn(async () => {
+  getSongs(searchInput.value)
+}, 1000)
+</script>

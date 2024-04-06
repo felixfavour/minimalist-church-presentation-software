@@ -233,6 +233,7 @@ const createNewLyricsSlide = (song: Song) => {
 
   // Calculate font-size of scripture content
   let fontSize = useScreenFontSize(currentSongVerse)
+  tempSlide.song = song
 
   tempSlide.contents = [
     `<p class="song-content" style="font-size: ${fontSize}vw">${currentSongVerse?.replaceAll(
@@ -438,7 +439,7 @@ const previousVerse = () => {
 const nextSongVerse = () => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const song = useLyrics(tempSlide.songId as string)
+  const song = useLyrics(activeSlide.value?.song)
   const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
 
   if (song) {
@@ -449,6 +450,7 @@ const nextSongVerse = () => {
       tempSlide.title = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) + 1}`
       // Calculate font-size of content
       let fontSize = useScreenFontSize(nextVerse)
+      tempSlide.song = song
       tempSlide.contents = [
         `<p class="song-content" style="font-size: ${fontSize}vw">${nextVerse?.replaceAll(
           "\n",
@@ -466,7 +468,7 @@ const nextSongVerse = () => {
 const previousSongVerse = () => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const song = useLyrics(tempSlide.songId as string)
+  const song = useLyrics(activeSlide.value?.song)
   const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
 
   if (song) {
@@ -477,6 +479,7 @@ const previousSongVerse = () => {
       tempSlide.title = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}`
       // Calculate font-size of content
       let fontSize = useScreenFontSize(nextVerse)
+      tempSlide.song = song
       tempSlide.contents = [
         `<p class="song-content" style="font-size: ${fontSize}vw">${nextVerse?.replaceAll(
           "\n",

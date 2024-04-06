@@ -7,6 +7,106 @@ export const slideTypes = {
   text: 'text'
 }
 
+export const quickActionsArr = [
+  {
+    icon: "i-bx-bible",
+    name: "Display Bible",
+    desc: "Select and open scriptures",
+    action: "new-bible",
+    // meta: bibleBooks.toString(),
+    meta: "",
+    bibleBookIndex: 1,
+    type: slideTypes.bible,
+  },
+  {
+    icon: "i-bx-church",
+    name: "Display Hymns",
+    desc: "Find verses and chorus to all hymns",
+    action: "new-hymn",
+    meta: "",
+    type: slideTypes.hymn,
+  },
+  {
+    icon: "i-bx-music",
+    name: "Display Lyrics",
+    desc: "Find lyrics to any song, native too",
+    action: "new-lyrics",
+    meta: "",
+    type: slideTypes.lyrics,
+  },
+  {
+    icon: "i-bx-slideshow",
+    name: "Create Slide",
+    desc: "Create slides for sermons and more",
+    action: "new-slide",
+    meta: "",
+    type: slideTypes.text,
+  },
+  {
+    icon: "i-bx-search",
+    name: "Search Bible",
+    desc: "Find scriptures with familiar words",
+    action: "new-bible-search",
+    meta: "",
+    unreleased: true,
+    type: slideTypes.bible,
+  },
+  {
+    icon: "i-bx-image",
+    name: "Add Media",
+    desc: "Display video or image media",
+    action: "new-media",
+    meta: "",
+    unreleased: true,
+    // type: slideTypes.text
+  },
+  {
+    icon: "i-carbon-overlay",
+    name: "Add Overlay",
+    desc: "Place one-third of a slide over another",
+    action: "new-overlay",
+    meta: "",
+    unreleased: true,
+    // type: slideTypes.text
+  },
+  {
+    icon: "i-ph-file-ppt",
+    name: "Import Slides",
+    desc: "Extract from other apps like PowerPoint",
+    action: "new-transcribe",
+    meta: "power point Google slides",
+    unreleased: true,
+    // type: slideTypes.text
+  },
+  {
+    icon: "i-bx-carousel",
+    name: "Add Slideshow/Carousel",
+    desc: "Find scriptures with familiar words",
+    action: "new-carousel",
+    meta: "",
+    unreleased: true,
+    type: slideTypes.text,
+  },
+  {
+    icon: "i-material-symbols-speech-to-text",
+    name: "Transcribe Sermon",
+    desc: "Start transcribing preacher sermons",
+    action: "new-transcribe",
+    meta: "",
+    unreleased: true,
+    // type: slideTypes.text
+  },
+  {
+    icon: "i-bx-time",
+    name: "Add Countdown Timer",
+    desc: "Find scriptures with familiar words",
+    action: "new-timer",
+    meta: "",
+    unreleased: true,
+    type: slideTypes.text,
+  },
+]
+
 export const slideLayoutTypes = {
   heading_sub: 'heading-and-subtitle',
   full_text: 'full-text',
