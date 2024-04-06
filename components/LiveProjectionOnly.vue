@@ -57,13 +57,15 @@ const props = defineProps<{
 
 watch(
   () => props.slide,
-  () => {
+  (newVal, oldVal) => {
     if (appMounted) {
-      foregroundContentVisible.value = false
       video.value?.play()
-      setTimeout(() => {
-        foregroundContentVisible.value = true
-      }, 100)
+      if (JSON.stringify(oldVal) !== JSON.stringify(newVal)) {
+        foregroundContentVisible.value = false
+        setTimeout(() => {
+          foregroundContentVisible.value = true
+        }, 100)
+      }
     }
   }
 )

@@ -7,7 +7,7 @@
   >
     <button class=" " @click="$emit('click')">
       <div class="slide-preview text-white overflow-hidden md-preview">
-        <LiveContent :slide="slide" padding="0" />
+        <LiveContent :slide="slide" padding="0" content-visible />
       </div>
       <div
         class="overlay-gradient absolute inset-0"
@@ -41,7 +41,7 @@
     <div
       class="slide-preview w-24 min-w-24 h-16 bg-primary-600 text-white rounded-md overflow-hidden sm-preview"
     >
-      <LiveContent :slide="slide" padding="0" />
+      <LiveContent :slide="slide" padding="0" content-visible />
     </div>
     <div class="texts flex-col justify-between">
       <h4 class="font-medium mt-2">{{ slide?.name }}</h4>
