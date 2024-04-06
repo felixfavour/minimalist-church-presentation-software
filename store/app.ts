@@ -12,7 +12,7 @@ export const useAppStore = defineStore('app', {
       liveSlideId: null as string | null,
       emitter: null as Emitter | null,
       settings: {
-        bibleVersions: ['KJV', 'NKJV', 'NIV'] as Array<string>,
+        bibleVersions: ['KJV', 'NKJV', 'NIV', 'AMP'] as Array<string>,
         defaultBibleVersion: 'KJV',
         defaultBackground: {
           hymn: {

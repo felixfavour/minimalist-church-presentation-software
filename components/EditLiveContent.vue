@@ -10,7 +10,7 @@
             :key="slide?.id"
             class="slide-name flex items-center gap-2 top-1 text-primary-900"
           >
-            <h4 class="font-medium ws-nowrap">{{ slide?.name }}</h4>
+            <h4 class="font-medium text-nowrap">{{ slide?.name }}</h4>
             <SlideChip
               :slide-type="slide?.type"
               class="text-primary-900 bg-primary text-white"

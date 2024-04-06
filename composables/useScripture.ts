@@ -4,6 +4,9 @@ import { Scripture } from '~/types'
 const useScripture = (label: string = '1:1:1', version: string): Scripture | null => {
   const nuxtApp = useNuxtApp()
   const kjvBible = nuxtApp.$kjvBible
+  const nkjvBible = nuxtApp.$nkjvBible
+  const nivBible = nuxtApp.$nivBible
+  const ampBible = nuxtApp.$ampBible
 
   // set default version
   const appStore = useAppStore()
@@ -19,14 +22,18 @@ const useScripture = (label: string = '1:1:1', version: string): Scripture | nul
 
   try {
     switch (version) {
-      // case 'NKJV':
-      //   scripture = nkjvBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
-      //   appStore.setDefaultBibleVersion(version)
-      //   break
-      // case 'NIV':
-      //   scripture = nivBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
-      //   appStore.setDefaultBibleVersion(version)
-      //   break
+      case 'NKJV':
+        scripture = nkjvBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
+        appStore.setDefaultBibleVersion(version)
+        break
+      case 'NIV':
+        scripture = nivBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
+        appStore.setDefaultBibleVersion(version)
+        break
+      case 'AMP':
+        scripture = ampBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
+        appStore.setDefaultBibleVersion(version)
+        break
       default:
         scripture = kjvBible?.find((scripture: any) => Number(scripture.book) === book && Number(scripture.chapter) === chapter && Number(scripture.verse) === verse).scripture
         appStore.setDefaultBibleVersion(version)

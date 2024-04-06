@@ -27,3 +27,4 @@ logs
 # local large assets
 large_assets
 
+bible-json-converter.ts

@@ -24,6 +24,9 @@
             :max="[
               'Setting up environment...',
               'Loading KJV Bible...',
+              'Loading NKJV Bible...',
+              'Loading NIV Bible...',
+              'Loading AMP Bible...',
               'Loading Hymns...',
               'Finishing up',
             ]"
@@ -57,14 +60,28 @@ const downloadEssentialResources = async () => {
   useNuxtApp().provide("kjvBible", JSON.parse(kjvBible || ""))
   downloadProgress.value = 2
 
+  // Download NKJV Bible
+  const nkjvBible = await useS3File("nkjv.json")
+  useNuxtApp().provide("nkjvBible", JSON.parse(nkjvBible || ""))
+  downloadProgress.value = 3
+
+  // Download NIV Bible
+  const nivBible = await useS3File("niv.json")
+  useNuxtApp().provide("nivBible", JSON.parse(nivBible || ""))
+  downloadProgress.value = 4
+
+  // Download AMP Bible
+  const ampBible = await useS3File("amp.json")
+  useNuxtApp().provide("ampBible", JSON.parse(ampBible || ""))
+  downloadProgress.value = 5
+
   // Download all hymns
   const hymns = await useS3File("hymns.json")
   useNuxtApp().provide("hymns", JSON.parse(hymns || ""))
-  downloadProgress.value = 90
-  downloadProgress.value = 3
+  downloadProgress.value = 6
 
   setTimeout(() => {
-    downloadProgress.value = 4
+    downloadProgress.value = 7
     loadingResources.value = false
   }, 500)
 }
