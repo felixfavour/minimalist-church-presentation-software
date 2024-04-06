@@ -177,7 +177,12 @@ const createNewBibleSlide = (scripture: Scripture) => {
 
   tempSlide.contents = [
     `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-    `<p class="scripture-label"><b>${scripture?.label}</b> • ${scripture?.version}</p>`,
+    `<p class="scripture-label"><b>${scripture?.label}</b> • ${
+      scripture?.version
+    }</p>
+    <p class="copyright-content">${
+      appStore.copyrightContent[scripture?.version]
+    }</p>`,
   ]
 
   slides.value?.push(tempSlide)
@@ -293,10 +298,17 @@ const nextScripture = () => {
     tempSlide.title = nextScriptureLabel
     // Calculate font-size of scripture content
     let fontSize = useScreenFontSize(scripture?.content)
+
     tempSlide.contents = [
       `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-      `<p class="scripture-label"><b>${scripture?.label}</b> • ${scripture?.version}</p>`,
+      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
+        scripture?.version
+      }</p>
+    <p class="copyright-content">${
+      appStore.copyrightContent[scripture?.version]
+    }</p>`,
     ]
+
     activeSlide.value = tempSlide as Slide
     slides.value.splice(slideIndex, 1, tempSlide as Slide)
     updateLiveOutput(activeSlide.value)
@@ -321,9 +333,15 @@ const previousScripture = () => {
     tempSlide.title = previousScriptureLabel
     // Calculate font-size of scripture content
     let fontSize = useScreenFontSize(scripture?.content)
+
     tempSlide.contents = [
       `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-      `<p class="scripture-label"><b>${scripture?.label}</b> • ${scripture?.version}</p>`,
+      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
+        scripture?.version
+      }</p>
+    <p class="copyright-content">${
+      appStore.copyrightContent[scripture?.version]
+    }</p>`,
     ]
     activeSlide.value = tempSlide as Slide
     slides.value.splice(slideIndex, 1, tempSlide as Slide)
@@ -345,9 +363,15 @@ const gotoScripture = (title: string, version: string) => {
     // Calculate font-size of scripture content
     tempSlide.title = scriptureLabel
     let fontSize = useScreenFontSize(scripture?.content)
+
     tempSlide.contents = [
       `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-      `<p class="scripture-label"><b>${scripture?.label}</b> • ${scripture?.version}</p>`,
+      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
+        scripture?.version
+      }</p>
+    <p class="copyright-content">${
+      appStore.copyrightContent[scripture?.version]
+    }</p>`,
     ]
     activeSlide.value = tempSlide
     slides.value.splice(slideIndex, 1, tempSlide)

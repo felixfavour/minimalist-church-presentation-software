@@ -323,6 +323,13 @@
   font-size: 1.5vw;
 }
 
+.tiptap.live-content .copyright-content {
+  font-size: 1vw;
+  margin-top: 1%;
+  max-width: 50%;
+  color: #ffffff80;
+}
+
 /* LIVE CONTENT LG PREVIEW */
 .lg-preview .slide-layout-ctn {
   min-height: calc(220px - 24px);
@@ -339,6 +346,11 @@
 
 .lg-preview .tiptap.live-content .song-label {
   font-size: 0.5vw;
+}
+
+.lg-preview .tiptap.live-content .copyright-content {
+  font-size: 0.3vw;
+  line-height: 1.2;
 }
 
 .tiptap.live-content p {
@@ -381,6 +393,11 @@
 
 .md-preview .tiptap.live-content .song-label {
   font-size: 0.3vw;
+}
+
+.md-preview .tiptap.live-content .copyright-content {
+  font-size: 0.1vw;
+  line-height: 1.2;
 }
 
 .md-preview .tiptap.live-content .scripture-content,
@@ -428,6 +445,11 @@
 
 .sm-preview .tiptap.live-content .song-label {
   font-size: 0.2vw;
+}
+
+.sm-preview .tiptap.live-content .copyright-content {
+  font-size: 0.1vw;
+  line-height: 1.2;
 }
 
 .sm-preview .tiptap.live-content h1,

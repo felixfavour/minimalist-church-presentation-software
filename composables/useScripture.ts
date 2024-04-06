@@ -1,7 +1,7 @@
 import { useAppStore } from '~/store/app'
 import { Scripture } from '~/types'
 
-const useScripture = (label: string = '1:1:1', version: string): Scripture | null => {
+const useScripture = (label: string = '1:1:1', version: string = ''): Scripture | null => {
   const nuxtApp = useNuxtApp()
   const kjvBible = nuxtApp.$kjvBible
   const nkjvBible = nuxtApp.$nkjvBible

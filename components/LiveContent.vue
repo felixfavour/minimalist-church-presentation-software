@@ -1,5 +1,8 @@
 <template>
-  <div class="live-content tiptap border-none h-[100%] pointer-events-none ">
+  <div
+    class="live-content tiptap border-none h-[100%] pointer-events-none"
+    :id="slide?.name"
+  >
     <SlideContentByLayout :slide="slide" :padding="padding" />
   </div>
 </template>
