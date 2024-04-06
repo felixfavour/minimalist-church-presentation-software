@@ -3,7 +3,12 @@
     class="live-content tiptap border-none h-[100%] pointer-events-none"
     :id="slide?.name"
   >
-    <SlideContentByLayout :slide="slide" :padding="padding" />
+    <SlideContentByLayout
+      v-if="contentVisible"
+      :slide="slide"
+      :padding="padding"
+      class="come-up-1"
+    />
   </div>
 </template>
 
@@ -13,6 +18,7 @@ import type { Slide } from "~/types"
 const props = defineProps<{
   slide: Slide
   padding: string
+  contentVisible: boolean
 }>()
 
 const emit = defineEmits(["slide-update", "update-live-output-slides"])

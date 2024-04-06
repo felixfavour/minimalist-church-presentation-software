@@ -67,6 +67,33 @@
   position: absolute;
   top: 0.8rem;
 }
+
+.come-up-1 {
+  animation: come-up 0.4s ease-in-out forwards;
+  -webkit-animation: come-up 0.4s ease-in-out forwards;
+}
+.come-up-2 {
+  animation-delay: 300s;
+}
+
+@keyframes come-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+    -webkit-transform: translateY(10px);
+    -moz-transform: translateY(10px);
+    -ms-transform: translateY(10px);
+    -o-transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+  }
+}
 /* TRANSITIONS END */
 
 .overlay-gradient {
