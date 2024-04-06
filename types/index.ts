@@ -8,6 +8,7 @@ export interface Slide {
   background?: string
   title?: string // For hymn and song titles, also for scripture labels (e.g Ephesians 3:1)
   songId?: string // only for hymns/songs, could be [hymn.number] or [song.id]
+  hasChorus?: boolean // only for hymns, to tell if the hymns include a chorus
 }
 
 export interface QuickAction {

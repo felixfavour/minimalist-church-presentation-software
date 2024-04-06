@@ -19,6 +19,7 @@
           :grid-type="false"
           :live="liveSlide?.id === slide?.id"
           @click="appStore.setLiveSlide(slide?.id || '0')"
+          @delete="deleteSlide"
         />
       </div>
       <LiveProjectionOnly
@@ -36,6 +37,7 @@
 import { useAppStore } from "~/store/app"
 
 const appStore = useAppStore()
+const toast = useToast()
 const { liveOutputSlidesId, liveSlideId, settings } = storeToRefs(appStore)
 
 const liveSlide = computed(() => {
@@ -47,4 +49,13 @@ const liveOutputSlides = computed(() => {
     appStore.activeSlides.find((slide) => slide.id === id)
   )
 })
+
+const deleteSlide = (slideId: string) => {
+  const slides = appStore.activeSlides || []
+  const tempSlide = appStore.activeSlides.find((s) => s.id === slideId)
+  const slideIndex = slides.findIndex((s) => s.id === slideId)
+  slides.splice(slideIndex, 1)
+  appStore.setActiveSlides(slides)
+  toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-bx-trash" })
+}
 </script>

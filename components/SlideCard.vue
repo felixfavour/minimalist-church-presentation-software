@@ -34,7 +34,7 @@
   <!-- LIST TYPE CARD -->
   <button
     v-else
-    class="slide-card flex w-[100%] text-left gap-3 p-2 border-t first:border-t-0 border-gray-100 rounded-md hover:bg-primary-50 transition-all cursor-pointer relative"
+    class="group slide-card flex w-[100%] text-left gap-3 p-2 border-t first:border-t-0 border-gray-100 rounded-md hover:bg-primary-50 transition-all cursor-pointer relative"
     :class="{ 'bg-red-100': live }"
     @click="$emit('click')"
   >
@@ -48,6 +48,15 @@
       <SlideChip :slide-type="slide?.type" class="mt-1" />
     </div>
     <LiveSlideIndicator :visible="live" class="mr-2 mt-4" />
+    <!-- DELETE SLIDE BUTTON -->
+    <ConfirmDialog
+      class="absolute bottom-2 right-2 invisible group-hover:visible"
+      button-icon="i-bx-trash"
+      header="Delete slide"
+      label="Are you sure you want to delete this slide? This action is not reversible"
+      @confirm="$emit('delete', slide?.id)"
+    >
+    </ConfirmDialog>
   </button>
 </template>
 
