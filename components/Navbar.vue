@@ -7,10 +7,13 @@
       <div class="logo flex items-center gap-2">
         <Logo class="w-[32px]" />
         <h1 class="text-md font-semibold">Cloud of Worshippers</h1>
+        <span
+          class="version-chip flex text-xs font-semibold bg-gray-100 p-2 py-1 rounded-full"
+        >
+          v{{ appVersion }}
+        </span>
       </div>
       <div class="actions text-sm flex gap-2 items-center">
-        Links + Auth info here
-
         <UButton icon="i-bx-desktop" to="/live" target="_blank">
           Go Live
         </UButton>
@@ -21,6 +24,9 @@
 
 <script setup>
 const route = useRoute()
+defineProps({
+  appVersion: String,
+})
 </script>
 
 <style scoped></style>

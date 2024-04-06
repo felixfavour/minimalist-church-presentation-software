@@ -3,7 +3,7 @@
     <NuxtPwaManifest />
     <NuxtLoadingIndicator />
 
-    <NuxtLayout v-if="!loadingResources">
+    <NuxtLayout v-if="!loadingResources" :app-version="appVersion">
       <NuxtPage />
       <UNotifications />
     </NuxtLayout>
@@ -44,6 +44,7 @@ const appStore = useAppStore()
 nuxtApp.provide("emitter", emitter)
 appStore.setEmitter(emitter)
 
+const appVersion = ref<string>("0.1.0")
 const loadingResources = ref<boolean>(true)
 const downloadProgress = ref<number>(5)
 

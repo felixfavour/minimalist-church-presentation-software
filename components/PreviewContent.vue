@@ -146,7 +146,6 @@ const createNewSlide = () => {
 }
 
 const deleteSlide = (slideId: string) => {
-  preSlideCreation()
   const tempSlide = appStore.activeSlides.find((s) => s.id === slideId)
   const slideIndex = slides.value.findIndex((s) => s.id === slideId)
   slides.value.splice(slideIndex, 1)
@@ -194,6 +193,7 @@ const createNewHymnSlide = (hymn: Hymn) => {
   tempSlide.backgroundType =
     appStore.settings.defaultBackground.hymn.backgroundType
   tempSlide.songId = hymn.number
+  tempSlide.hasChorus = !!hymn.chorus
   tempSlide.title = "Verse 1"
 
   const currentHymnVerse = hymn.verses?.[0].trim()
@@ -470,7 +470,7 @@ const previousSongVerse = () => {
 const gotoChorus = (title: string) => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const hymn = useHymn(tempSlide.hymnNumber as string)
+  const hymn = useHymn(tempSlide.songId as string)
 
   const chorus = hymn?.chorus as string
 

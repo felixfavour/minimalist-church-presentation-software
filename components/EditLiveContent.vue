@@ -51,7 +51,7 @@
               />
             </UTooltip>
             <UButton
-              v-if="slide?.type === slideTypes?.hymn"
+              v-if="slide?.type === slideTypes?.hymn && slide?.hasChorus"
               class="rounded-md"
               size="xs"
               @click="$emit('goto-chorus', verse)"
