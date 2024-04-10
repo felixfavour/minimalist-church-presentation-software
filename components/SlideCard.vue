@@ -25,29 +25,26 @@
     </button>
 
     <!-- DELETE AND DUPLICATE SLIDE BUTTON -->
-    <UTooltip
-      v-if="slide.type === slideTypes.text"
-      text="Duplicate Slide"
-      class="absolute bottom-2 right-9"
-    >
-      <UButton
-        icon="i-bx-copy"
-        size="xs"
-        variant="ghost"
-        class="px-1.5 text-white hover:bg-primary-500"
-        @click.stop.prevent="$emit('duplicate')"
-      >
-      </UButton>
-    </UTooltip>
+    <div class="actions absolute bottom-2 right-2 flex gap-1">
+      <UTooltip v-if="slide.type === slideTypes.text" text="Duplicate Slide">
+        <UButton
+          icon="i-bx-copy"
+          size="xs"
+          variant="ghost"
+          class="px-1.5 text-white hover:bg-primary-500"
+          @click.stop.prevent="$emit('duplicate')"
+        >
+        </UButton>
+      </UTooltip>
 
-    <ConfirmDialog
-      class="absolute bottom-2 right-2"
-      button-icon="i-bx-trash"
-      header="Delete slide"
-      label="Are you sure you want to delete this slide? This action is not reversible"
-      @confirm="$emit('delete', slide?.id)"
-    >
-    </ConfirmDialog>
+      <ConfirmDialog
+        button-icon="i-bx-trash"
+        header="Delete slide"
+        label="Are you sure you want to delete this slide? This action is not reversible"
+        @confirm="$emit('delete', slide?.id)"
+      >
+      </ConfirmDialog>
+    </div>
   </div>
 
   <!-- LIST TYPE CARD -->
@@ -97,4 +94,16 @@ const props = defineProps<{
 }>()
 </script>
 
-<style scoped></style>
+<style scoped>
+.slide-card .actions {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: 0.3s;
+}
+.slide-card:hover .actions {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0);
+}
+</style>

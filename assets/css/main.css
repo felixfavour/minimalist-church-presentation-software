@@ -100,7 +100,7 @@
 .overlay-gradient {
   background: linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0) 0%,
     rgba(0, 0, 0, 0) 50%,
     rgba(0, 0, 0, 0.7) 70%,
     rgb(0, 0, 0) 100%
@@ -416,23 +416,23 @@
   min-height: 95px;
 }
 .md-preview .tiptap.live-content {
-  font-size: 0.6vw;
-  line-height: 0.8vw;
+  font-size: 0.4vw;
+  line-height: 0.6vw;
 }
 
 .md-preview .tiptap.live-content .song-label {
-  font-size: 0.3vw;
+  font-size: 0.15vw;
 }
 
 .md-preview .tiptap.live-content .copyright-content {
-  font-size: 0.1vw;
+  font-size: 0.05vw;
   line-height: 1.2;
 }
 
 .md-preview .tiptap.live-content .scripture-content,
 .md-preview .tiptap.live-content .song-content {
-  font-size: 0.6vw !important;
-  line-height: 0.8vw !important;
+  font-size: 0.4vw !important;
+  line-height: 0.6vw !important;
 }
 
 .md-preview .tiptap.live-content h1,
@@ -441,23 +441,23 @@
 .md-preview .tiptap.live-content h4,
 .md-preview .tiptap.live-content h5,
 .md-preview .tiptap.live-content h6 {
-  margin: 0.4vw 0;
+  margin: 0.3vw 0;
 }
 
 .md-preview .tiptap.live-content h1 {
-  font-size: 1vw;
+  font-size: 0.7vw;
 }
 
 .md-preview .tiptap.live-content h2 {
-  font-size: 0.85vw;
+  font-size: 0.6vw;
 }
 
 .md-preview .tiptap.live-content h3 {
-  font-size: 0.75vw;
+  font-size: 0.5vw;
 }
 
 .md-preview .tiptap.live-content h4 {
-  font-size: 0.65vw;
+  font-size: 0.4vw;
 }
 
 /* LIVE CONTENT SM PREVIEW */
