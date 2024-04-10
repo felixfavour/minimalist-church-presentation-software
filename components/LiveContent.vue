@@ -1,13 +1,17 @@
 <template>
   <div
-    class="live-content tiptap border-none h-[100%] pointer-events-none"
+    class="live-content tiptap border-none w-[100%] h-[100%] pointer-events-none text-left"
     :id="slide?.name"
   >
+    <!-- <div
+    class="live-content tiptap border-none w-[100%] h-[100%] pointer-events-none absolute inset-0 bg-no-repeat bg-cover"
+    :id="slide?.name"
+    :style="`padding: ${padding || 0}vw; ${useSlideBackground(slide)}`"
+  > -->
     <SlideContentByLayout
-      v-if="contentVisible"
+      :content-visible="contentVisible"
       :slide="slide"
       :padding="padding"
-      class="come-up-1"
     />
   </div>
 </template>

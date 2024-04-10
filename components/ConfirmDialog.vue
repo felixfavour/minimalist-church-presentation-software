@@ -5,7 +5,7 @@
         :icon="buttonIcon"
         size="xs"
         variant="ghost"
-        class="px-1.5"
+        class="px-1.5 text-white hover:bg-primary-500"
         @click.stop.prevent="isOpen = true"
         >{{ buttonLabel }}
       </UButton>

@@ -2,12 +2,15 @@
   <!-- GRID TYPE CARD -->
   <div
     v-if="gridType"
-    class="slide-card border-2 flex items-center justify-center text-left gap-3 p-2 h-[120px] rounded-md bg-primary hover:bg-primary-700 transition-all cursor-pointer relative overflow-hidden"
+    class="slide-card gap-3 h-[120px] rounded-md bg-primary hover:bg-primary-700 transition-all cursor-pointer relative overflow-hidden"
     :class="[selected ? 'border-black' : 'border-transparent']"
   >
     <button class=" " @click="$emit('click')">
       <div class="slide-preview text-white overflow-hidden md-preview">
-        <LiveContent :slide="slide" padding="0" content-visible />
+        <LiveContentWithBackground
+          :slide="slide"
+          :slide-styles="settings.slideStyles"
+        />
       </div>
       <div
         class="overlay-gradient absolute inset-0"
@@ -20,6 +23,7 @@
         <SlideChip :slide-type="slide?.type" dark-mode class="mt-1" />
       </div>
     </button>
+
     <!-- DELETE AND DUPLICATE SLIDE BUTTON -->
     <UTooltip
       v-if="slide.type === slideTypes.text"
@@ -30,11 +34,12 @@
         icon="i-bx-copy"
         size="xs"
         variant="ghost"
-        class="px-1.5"
+        class="px-1.5 text-white hover:bg-primary-500"
         @click.stop.prevent="$emit('duplicate')"
       >
       </UButton>
     </UTooltip>
+
     <ConfirmDialog
       class="absolute bottom-2 right-2"
       button-icon="i-bx-trash"
@@ -53,9 +58,12 @@
     @click="$emit('click')"
   >
     <div
-      class="slide-preview w-24 min-w-24 h-16 bg-primary-600 text-white rounded-md overflow-hidden sm-preview"
+      class="slide-preview w-24 min-w-24 h-16 text-white overflow-hidden sm-preview relative"
     >
-      <LiveContent :slide="slide" padding="0" content-visible />
+      <LiveContentWithBackground
+        :slide="slide"
+        :slide-styles="settings.slideStyles"
+      />
     </div>
     <div class="texts flex-col justify-between">
       <h4 class="font-medium mt-2">{{ slide?.name }}</h4>
@@ -76,6 +84,10 @@
 
 <script setup lang="ts">
 import type { Slide } from "~/types"
+import { useAppStore } from "~/store/app"
+
+const appStore = useAppStore()
+const { settings } = storeToRefs(appStore)
 
 const props = defineProps<{
   slide: Slide

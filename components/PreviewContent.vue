@@ -148,7 +148,10 @@ const createNewSlide = (duplicateSlide?: Slide) => {
   tempSlide.name = `Slide ${slides.value?.length + 1 || 1}`
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide)
-  toast.add({ title: "New Slide created", icon: "i-bx-slideshow" })
+  toast.add({
+    title: `${duplicateSlide?.name} duplicated`,
+    icon: "i-bx-slideshow",
+  })
 }
 
 const deleteSlide = (slideId: string) => {
