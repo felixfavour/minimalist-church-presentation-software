@@ -57,6 +57,7 @@ import { useAppStore } from "~/store/app"
 import { quickActionsArr } from "~/utils/constants"
 import fuzzysort from "fuzzysort"
 
+let searchInputBeforeTwoDigitNumbers = ""
 const searchInput = ref<string>("")
 const focusedActionIndex = ref<number>(0)
 const quickActions = ref<HTMLDivElement | null>(null)
@@ -131,12 +132,19 @@ const bibleChapterAndVerse = computed(() => {
 })
 
 const searchedActions = computed(() => {
+  const twoDigitNumbers = searchInput.value?.match(/\b\d{2}\b/g)
+
+  // Stop search if input includes two digit number
+  if (!twoDigitNumbers) {
+    searchInputBeforeTwoDigitNumbers = searchInput.value
+  }
+
   focusedActionIndex.value = 0
-  const colonIndex = searchInput.value?.indexOf(":")
+  const colonIndex = searchInputBeforeTwoDigitNumbers?.indexOf(":")
   const searchInputBeforeColon =
     colonIndex === -1
-      ? searchInput.value
-      : searchInput.value?.substring(0, colonIndex)
+      ? searchInputBeforeTwoDigitNumbers
+      : searchInputBeforeTwoDigitNumbers?.substring(0, colonIndex)
 
   let results = fuzzysort.go(searchInputBeforeColon, actions, {
     keys: ["name", "desc", "meta"],
