@@ -55,6 +55,9 @@
 
       <!-- SONG SECTION -->
       <SongsList v-else-if="page === 'song'" @close="page = ''" />
+
+      <!-- HYMN SECTION -->
+      <HymnList v-else-if="page === 'hymn'" @close="page = ''" />
     </Transition>
   </AppSection>
 </template>
@@ -105,6 +108,10 @@ const actions = quickActionsArr.concat(
 
 emitter.on("new-song", () => {
   page.value = "song"
+})
+
+emitter.on("new-hymn", () => {
+  page.value = "hymn"
 })
 
 onMounted(() => {

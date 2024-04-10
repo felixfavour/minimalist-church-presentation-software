@@ -1,13 +1,13 @@
 <template>
-  <div class="song-main min-h-[90vh]" ref="quickActions">
+  <div class="hymn-main min-h-[90vh]" ref="quickActions">
     <div class="flex gap-2">
       <UInput
         icon="i-bx-search"
-        placeholder="Search song titles"
+        placeholder="Search hymns"
         v-model="searchInput"
         class="w-[100%]"
         @input="onSearchInput"
-        @keyup.enter="getSongs($event.target.value)"
+        @keyup.enter="getHymns($event.target.value)"
       />
       <UButton icon="i-bx-x" color="primary" @click="$emit('close')"></UButton>
     </div>
@@ -26,10 +26,10 @@
         class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]"
       >
         <SongCard
-          v-for="(song, index) in songs"
-          :key="song.id"
-          :song="song"
-          type="song"
+          v-for="(hymn, index) in hymns"
+          :key="hymn?.number"
+          :song="hymn"
+          type="hymn"
           :class="{
             'bg-primary-50 rounded-md': index === focusedActionIndex,
           }"
@@ -40,10 +40,10 @@
       <!-- SEARCHING SONGS -->
       <div v-else class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]">
         <SongCard
-          v-for="(song, index) in songs"
-          :key="song.id"
-          :song="song"
-          type="song"
+          v-for="(hymn, index) in hymns"
+          :key="hymn?.number"
+          :song="hymn"
+          type="hymn"
           :class="{
             'bg-primary-50 rounded-md': index === focusedActionIndex,
           }"
@@ -54,13 +54,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Song } from "~/types"
+import type { Hymn, Song } from "~/types"
 import { useDebounceFn } from "@vueuse/core"
+import fuzzysort from "fuzzysort"
 
+const allHymns = useNuxtApp().$hymns as Hymn[]
 const searchInput = ref<string>("")
-const loading = ref<boolean>(true)
-const songs = ref<Song[]>([])
-const searchedSongs = ref<Song[]>([])
+const loading = ref<boolean>(false)
+const hymns = ref<Hymn[]>()
+const searchedHymns = ref<Song[]>([])
 const focusedActionIndex = ref(0)
 const quickActions = ref<HTMLDivElement | null>(null)
 
@@ -72,7 +74,7 @@ onMounted(() => {
     }
     switch (e.key) {
       case "ArrowDown":
-        focusedActionIndex.value < searchedSongs.value.length - 1
+        focusedActionIndex.value < searchedHymns.value.length - 1
           ? (focusedActionIndex.value += 1)
           : null
         break
@@ -80,7 +82,7 @@ onMounted(() => {
         focusedActionIndex.value > 0 ? (focusedActionIndex.value -= 1) : null
         break
       case "Enter":
-        const action = searchedSongs.value?.[focusedActionIndex.value]
+        const action = searchedHymns.value?.[focusedActionIndex.value]
         // useGlobalEmit(
         //   action.action,
         //   `${action.bibleBookIndex}:${bibleChapterAndVerse.value}`
@@ -92,22 +94,22 @@ onMounted(() => {
   })
 })
 
-const getSongs = async (query: string = "") => {
-  loading.value = true
-  const promise = await useFetch(
-    `https://revaise-api.onrender.com/v1/song?search=${query}`
-  )
-  let songsData = promise.data.value.data?.map((song) => ({
-    ...song,
-    title: song.title.replaceAll("â", "'"),
-  }))
-  songs.value = songsData
-  loading.value = false
+const getHymns = (query: string = "") => {
+  if (query?.length >= 2) {
+    let results = fuzzysort.go(query, allHymns, {
+      keys: ["title", "meta"],
+    })
+    results = results?.map((result) => result.obj)
+    hymns.value = results.slice(0, 15)
+  } else {
+    const rand = Math.floor(Math.random() * 1115 + 15)
+    hymns.value = allHymns.slice(rand - 15, rand)
+  }
 }
 
-getSongs()
+getHymns()
 
 const onSearchInput = useDebounceFn(async () => {
-  getSongs(searchInput.value)
-}, 1000)
+  getHymns(searchInput.value)
+}, 500)
 </script>

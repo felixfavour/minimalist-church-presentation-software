@@ -1,8 +1,8 @@
 import type { Emitter } from 'mitt'
 import { useAppStore } from '~/store/app'
-import { Song } from '~/types'
+import { Hymn, Song } from '~/types'
 
-const useGlobalEmit = (type: string, value?: string | Song) => {
+const useGlobalEmit = (type: string, value?: string | Song | Hymn) => {
   const appStore = useAppStore()
   const toast = useToast()
   const emitter = (useNuxtApp().$emitter || appStore.emitter) as Emitter<any>

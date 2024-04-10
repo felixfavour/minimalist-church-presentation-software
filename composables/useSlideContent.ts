@@ -4,6 +4,9 @@ import type { Hymn, Scripture, Slide, Song } from "~/types/index"
 const useSlideContent = (slide: Slide, data: Scripture | Hymn | Song, size: string, nextVerse: string = '') => {
   const appStore = useAppStore()
 
+  // Remove unwanted sequences from string
+  nextVerse = nextVerse?.replaceAll('[Refrain]', '')
+
   switch (slide?.type) {
     case slideTypes.bible:
       data = data as Scripture
