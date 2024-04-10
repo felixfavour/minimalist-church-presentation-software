@@ -22,6 +22,7 @@
           grid-type
           :selected="activeSlide?.id === slide?.id"
           @click="makeSlideActive(slide)"
+          @duplicate="createNewSlide(slide)"
           @delete="deleteSlide"
         />
       </div>
@@ -133,11 +134,18 @@ const preSlideCreation = (): Slide => {
   return tempSlide
 }
 
-const createNewSlide = () => {
-  const tempSlide = { ...preSlideCreation() }
-  tempSlide.background = appStore.settings.defaultBackground.text.background
-  tempSlide.backgroundType =
-    appStore.settings.defaultBackground.text.backgroundType
+const createNewSlide = (duplicateSlide?: Slide) => {
+  let tempSlide = { ...preSlideCreation() }
+  if (duplicateSlide) {
+    tempSlide = { ...duplicateSlide }
+  } else {
+    tempSlide.background = appStore.settings.defaultBackground.text.background
+    tempSlide.backgroundType =
+      appStore.settings.defaultBackground.text.backgroundType
+  }
+
+  tempSlide.id = (slides.value?.length + 1 || 1).toString()
+  tempSlide.name = `Slide ${slides.value?.length + 1 || 1}`
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide)
   toast.add({ title: "New Slide created", icon: "i-bx-slideshow" })

@@ -44,13 +44,18 @@ const emit = defineEmits(["update", "change-focused-editor"])
 watch(
   () => props.slide,
   (newVal, oldVal) => {
-    if (newVal?.name !== oldVal?.name) {
+    if (newVal?.name !== oldVal?.name && newVal.type === slideTypes.text) {
       editorOne.value?.commands.setContent(newVal?.contents[0])
       editorTwo.value?.commands.setContent(newVal?.contents[1])
       editorThree.value?.commands.setContent(newVal?.contents[2])
       uneditableEditorOne.value?.commands.setContent(newVal?.contents[0])
       uneditableEditorTwo.value?.commands.setContent(newVal?.contents[1])
-    } else {
+    } else if (newVal.type !== slideTypes.text) {
+      editorOne.value?.commands.setContent(newVal?.contents[0])
+      editorTwo.value?.commands.setContent(newVal?.contents[1])
+      editorThree.value?.commands.setContent(newVal?.contents[2])
+      uneditableEditorOne.value?.commands.setContent(newVal?.contents[0])
+      uneditableEditorTwo.value?.commands.setContent(newVal?.contents[1])
     }
   }
 )

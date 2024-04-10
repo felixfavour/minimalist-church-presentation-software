@@ -1,13 +1,15 @@
 <template>
   <div>
-    <UButton
-      :icon="buttonIcon"
-      size="xs"
-      variant="ghost"
-      class="px-1.5"
-      @click.stop.prevent="isOpen = true"
-      >{{ buttonLabel }}
-    </UButton>
+    <UTooltip text="Delete Slide">
+      <UButton
+        :icon="buttonIcon"
+        size="xs"
+        variant="ghost"
+        class="px-1.5"
+        @click.stop.prevent="isOpen = true"
+        >{{ buttonLabel }}
+      </UButton>
+    </UTooltip>
 
     <UModal
       v-model="isOpen"

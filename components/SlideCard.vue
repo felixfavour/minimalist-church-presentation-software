@@ -20,7 +20,21 @@
         <SlideChip :slide-type="slide?.type" dark-mode class="mt-1" />
       </div>
     </button>
-    <!-- DELETE SLIDE BUTTON -->
+    <!-- DELETE AND DUPLICATE SLIDE BUTTON -->
+    <UTooltip
+      v-if="slide.type === slideTypes.text"
+      text="Duplicate Slide"
+      class="absolute bottom-2 right-9"
+    >
+      <UButton
+        icon="i-bx-copy"
+        size="xs"
+        variant="ghost"
+        class="px-1.5"
+        @click.stop.prevent="$emit('duplicate')"
+      >
+      </UButton>
+    </UTooltip>
     <ConfirmDialog
       class="absolute bottom-2 right-2"
       button-icon="i-bx-trash"
