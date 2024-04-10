@@ -35,11 +35,11 @@ export interface Scripture {
 export interface Hymn {
   number: string
   title: string
-  titleWithHymnNumber: string
   chorus: string
   verses: Array<string>
-  sound: string
-  category: string
+  author: string
+  source: string
+  meta: string
 }
 
 export interface Song {

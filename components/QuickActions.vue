@@ -50,15 +50,19 @@
   </AppSection>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { Hymn, QuickAction } from "~/types"
 import { useAppStore } from "~/store/app"
 import { quickActionsArr } from "~/utils/constants"
 import fuzzysort from "fuzzysort"
-const searchInput = ref("")
-const focusedActionIndex = ref(0)
-const quickActions = ref(null)
+
+const searchInput = ref<string>("")
+const focusedActionIndex = ref<number>(0)
+const quickActions = ref<[] | null>(null)
 const appStore = useAppStore()
-const page = ref("") // lyrics
+const page = ref<string>("") // lyrics
+const hymns = useNuxtApp().$hymns as Array<Hymn>
+const emitter = useNuxtApp().$emitter
 
 const actions = quickActionsArr.concat(
   bibleBooks?.map((book, index) => {
@@ -74,23 +78,20 @@ const actions = quickActionsArr.concat(
       type: slideTypes.bible,
     }
   }),
-  hymnTitles?.map((title) => {
-    const hymnIndex = title.slice(0, title.indexOf(" "))
-    const hymnTitle = title?.slice(title.indexOf(" "))
+  hymns?.map((hymn: Hymn) => {
     return {
       icon: "i-bx-church",
-      name: `${hymnTitle}`,
+      name: `${hymn.title}`,
       desc: `verse and chorus included`,
       action: "new-hymn",
-      meta: `hymn ${title}`,
+      meta: `hymn ${hymn.meta}`,
       searchableOnly: true,
-      hymnIndex,
+      hymnIndex: hymn.number,
       type: slideTypes.hymn,
     }
   })
 )
 
-const emitter = useNuxtApp().$emitter
 emitter.on("new-lyrics", () => {
   page.value = "lyrics"
 })
@@ -116,10 +117,6 @@ onMounted(() => {
           action.action,
           `${action.bibleBookIndex}:${bibleChapterAndVerse.value}`
         )
-        // console.log(
-        //   action.action,
-        //   `${action.bibleBookIndex}:${bibleChapterAndVerse.value}`
-        // )
         break
       default:
         return
