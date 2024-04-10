@@ -1,19 +1,28 @@
 <template>
   <AppSection
     heading="Quick Actions"
-    :sub-heading="page"
+    :sub-heading="searchInput.length < 2 ? page : 'Search'"
     class="max-w-[330px]"
-    @header-click="page = ''"
+    @header-click="searchInput.length < 2 ? (page = '') : (searchInput = '')"
   >
     <Transition name="fade-sm">
       <!-- ACTIONS HOME SECTION -->
       <div v-if="page === ''" class="main min-h-[90vh]" ref="quickActions">
-        <UInput
-          icon="i-bx-search"
-          placeholder="Search scripture, hymns, actions"
-          v-model="searchInput"
-          color="gray"
-        />
+        <div class="flex gap-2">
+          <UInput
+            icon="i-bx-search"
+            placeholder="Search scripture, hymns, actions"
+            v-model="searchInput"
+            color="gray"
+            class="w-[100%]"
+          />
+          <UButton
+            v-if="searchInput.length >= 2"
+            icon="i-bx-x"
+            color="primary"
+            @click="searchInput = ''"
+          ></UButton>
+        </div>
 
         <!-- BASIC ACTIONS -->
         <div
@@ -62,7 +71,7 @@ const searchInput = ref<string>("")
 const focusedActionIndex = ref<number>(0)
 const quickActions = ref<HTMLDivElement | null>(null)
 const appStore = useAppStore()
-const page = ref<string>("") // song
+const page = ref<string>("") // song, search
 const hymns = useNuxtApp().$hymns as Array<Hymn>
 const emitter = useNuxtApp().$emitter as Emitter<any>
 
