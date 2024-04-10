@@ -31,7 +31,7 @@
                 variant="ghost"
                 class="p-1"
                 icon="i-bx-chevron-left"
-                @click="$emit('previous-verse')"
+                @click="$emit('goto-verse', previousVerse)"
               />
             </UTooltip>
             <UInput
@@ -47,7 +47,7 @@
                 variant="ghost"
                 class="p-1"
                 icon="i-bx-chevron-right"
-                @click="$emit('next-verse')"
+                @click="$emit('goto-verse', nextVerse)"
               />
             </UTooltip>
             <UButton
@@ -211,8 +211,6 @@ const props = defineProps<{
 const emit = defineEmits([
   "slide-update",
   "update-live-output-slides",
-  "next-verse",
-  "previous-verse",
   "goto-verse",
   "goto-chorus",
   "update-bible-version",
@@ -232,6 +230,22 @@ const animatedSlides = computed(() => {
     return [props.slide]
   }
   return null
+})
+
+const nextVerse = computed(() => {
+  if (props.slide.type === slideTypes.bible) {
+    const tempVerse = Number(verse.value?.split(":")?.[1]) + 1
+    return `${verse.value?.split(":")?.[0]}:${tempVerse}`
+  }
+  return `Verse ${Number(verse.value?.split(" ")?.[1]) + 1}`
+})
+
+const previousVerse = computed(() => {
+  if (props.slide.type === slideTypes.bible) {
+    const tempVerse = Number(verse.value?.split(":")?.[1]) - 1
+    return `${verse.value?.split(":")?.[0]}:${tempVerse < 1 ? 1 : tempVerse}`
+  }
+  return `Verse ${Number(verse.value?.split(" ")?.[1]) - 1}`
 })
 
 watch(

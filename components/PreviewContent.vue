@@ -36,9 +36,7 @@
     <EditLiveContent
       :slide="activeSlide"
       @slide-update="onUpdateSlide"
-      @next-verse="nextAction"
-      @previous-verse="prevAction"
-      @goto-verse="gotoScripture"
+      @goto-verse="gotoAction"
       @goto-chorus="gotoChorus"
       @update-bible-version="gotoScripture(activeSlide?.title!!, $event)"
     />
@@ -175,15 +173,7 @@ const createNewBibleSlide = (scripture: Scripture) => {
   // Calculate font-size of scripture content
   let fontSize = useScreenFontSize(scripture?.content)
 
-  tempSlide.contents = [
-    `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-    `<p class="scripture-label"><b>${scripture?.label}</b> • ${
-      scripture?.version
-    }</p>
-    <p class="copyright-content">${
-      appStore.copyrightContent[scripture?.version]
-    }</p>`,
-  ]
+  tempSlide.contents = useSlideContent(tempSlide, scripture, fontSize)
 
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide, true)
@@ -205,14 +195,12 @@ const createNewHymnSlide = (hymn: Hymn) => {
 
   // Calculate font-size of scripture content
   let fontSize = useScreenFontSize(currentHymnVerse)
-
-  tempSlide.contents = [
-    `<p class="song-content" style="font-size: ${fontSize}vw">${currentHymnVerse?.replaceAll(
-      "\n",
-      "<br>"
-    )}</>`,
-    `<p class="song-label"><b>${hymn.title}</b> • HYMN</p>`,
-  ]
+  tempSlide.contents = useSlideContent(
+    tempSlide,
+    hymn,
+    fontSize,
+    currentHymnVerse
+  )
 
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide, true)
@@ -233,15 +221,13 @@ const createNewSongSlide = (song: Song) => {
 
   // Calculate font-size of scripture content
   let fontSize = useScreenFontSize(currentSongVerse)
-  tempSlide.song = song
-
-  tempSlide.contents = [
-    `<p class="song-content" style="font-size: ${fontSize}vw">${currentSongVerse?.replaceAll(
-      "\n",
-      "<br>"
-    )}</>`,
-    `<p class="song-label"><b>${song.title}</b> • ${song.artist}</p>`,
-  ]
+  tempSlide.data = song
+  tempSlide.contents = useSlideContent(
+    tempSlide,
+    song,
+    fontSize,
+    currentSongVerse
+  )
 
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide, true)
@@ -257,96 +243,14 @@ const updateLiveOutput = (updatedSlide: Slide) => {
   }
 }
 
-const nextAction = () => {
+const gotoAction = (title: string, version: string) => {
   switch (activeSlide.value?.type) {
     case slideTypes.bible:
-      return nextScripture()
+      return gotoScripture(title, version)
     case slideTypes.hymn:
-      return nextVerse()
+      return gotoHymnVerse(title)
     case slideTypes.song:
-      return nextSongVerse()
-  }
-}
-
-const prevAction = () => {
-  switch (activeSlide.value?.type) {
-    case slideTypes.bible:
-      return previousScripture()
-    case slideTypes.hymn:
-      return previousVerse()
-    case slideTypes.song:
-      return previousSongVerse()
-  }
-}
-
-const nextScripture = () => {
-  const tempSlide = { ...activeSlide.value }
-  const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const scriptureSplitted = useScriptureLabel(
-    tempSlide.title || "1:1:1"
-  )?.split(":")
-  const nextVerse = Number(scriptureSplitted?.[2]) + 1
-  const nextScriptureLabel = `${tempSlide.title?.slice(
-    0,
-    tempSlide.title.lastIndexOf(" ")
-  )} ${scriptureSplitted?.[1]}:${nextVerse}`
-  const nextScriptureShortLabel = `${scriptureSplitted?.[0]}:${scriptureSplitted?.[1]}:${nextVerse}`
-
-  const scripture = useScripture(nextScriptureShortLabel)
-
-  // Set scripture content
-  if (scripture) {
-    tempSlide.title = nextScriptureLabel
-    // Calculate font-size of scripture content
-    let fontSize = useScreenFontSize(scripture?.content)
-
-    tempSlide.contents = [
-      `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
-        scripture?.version
-      }</p>
-    <p class="copyright-content">${
-      appStore.copyrightContent[scripture?.version]
-    }</p>`,
-    ]
-
-    activeSlide.value = tempSlide as Slide
-    slides.value.splice(slideIndex, 1, tempSlide as Slide)
-    updateLiveOutput(activeSlide.value)
-  }
-}
-
-const previousScripture = () => {
-  const tempSlide = { ...activeSlide.value }
-  const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const scriptureSplitted = useScriptureLabel(
-    tempSlide.title || "1:1:1"
-  )?.split(":")
-  const previousVerse = Number(scriptureSplitted?.[2]) - 1
-  const previousScriptureLabel = `${tempSlide.title?.slice(
-    0,
-    tempSlide.title.lastIndexOf(" ")
-  )} ${scriptureSplitted?.[1]}:${previousVerse}`
-  const previousScriptureShortLabel = `${scriptureSplitted?.[0]}:${scriptureSplitted?.[1]}:${previousVerse}`
-
-  const scripture = useScripture(previousScriptureShortLabel)
-  if (scripture) {
-    tempSlide.title = previousScriptureLabel
-    // Calculate font-size of scripture content
-    let fontSize = useScreenFontSize(scripture?.content)
-
-    tempSlide.contents = [
-      `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
-        scripture?.version
-      }</p>
-    <p class="copyright-content">${
-      appStore.copyrightContent[scripture?.version]
-    }</p>`,
-    ]
-    activeSlide.value = tempSlide as Slide
-    slides.value.splice(slideIndex, 1, tempSlide as Slide)
-    updateLiveOutput(activeSlide.value)
+      return gotoSongVerse(title)
   }
 }
 
@@ -363,44 +267,31 @@ const gotoScripture = (title: string, version: string) => {
   if (scripture) {
     // Calculate font-size of scripture content
     tempSlide.title = scriptureLabel
+    tempSlide.data = scripture
     let fontSize = useScreenFontSize(scripture?.content)
 
-    tempSlide.contents = [
-      `<p class="scripture-content" style="font-size: ${fontSize}vw">${scripture?.content}</>`,
-      `<p class="scripture-label"><b>${scripture?.label}</b> • ${
-        scripture?.version
-      }</p>
-    <p class="copyright-content">${
-      appStore.copyrightContent[scripture?.version]
-    }</p>`,
-    ]
+    tempSlide.contents = useSlideContent(tempSlide, scripture, fontSize)
     activeSlide.value = tempSlide
     slides.value.splice(slideIndex, 1, tempSlide)
     updateLiveOutput(activeSlide.value)
   }
 }
 
-const nextVerse = () => {
+const gotoHymnVerse = (title: string) => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
   const hymn = useHymn(tempSlide.songId as string)
-  const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
+  const realTitle = title
 
   if (hymn) {
-    const hymnVerseIndex = Number(realTitle?.split(" ")?.[1]) + 1
-    const nextVerse = hymn?.verses?.[hymnVerseIndex]?.trim()
+    const verseIndex = Number(realTitle?.split(" ")?.[1]) - 1
+    const nextVerse = hymn?.verses?.[verseIndex]?.trim()
 
     if (nextVerse) {
-      tempSlide.title = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) + 1}`
+      tempSlide.title = realTitle
       // Calculate font-size of content
       let fontSize = useScreenFontSize(nextVerse)
-      tempSlide.contents = [
-        `<p class="song-content" style="font-size: ${fontSize}vw">${nextVerse?.replaceAll(
-          "\n",
-          "<br>"
-        )}</>`,
-        `<p class="song-label"><b>${hymn?.title}</b> • HYMN</p>`,
-      ]
+      tempSlide.contents = useSlideContent(tempSlide, hymn, fontSize, nextVerse)
       activeSlide.value = tempSlide
       slides.value.splice(slideIndex, 1, tempSlide)
       updateLiveOutput(activeSlide.value)
@@ -408,56 +299,22 @@ const nextVerse = () => {
   }
 }
 
-const previousVerse = () => {
-  const tempSlide = { ...activeSlide.value } as Slide
-  const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const hymn = useHymn(tempSlide.songId as string)
-  const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
-
-  if (hymn) {
-    const hymnVerseIndex = Number(realTitle?.split(" ")?.[1]) - 1
-    const nextVerse = hymn?.verses?.[hymnVerseIndex]?.trim()
-
-    if (nextVerse) {
-      tempSlide.title = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}`
-      // Calculate font-size of content
-      let fontSize = useScreenFontSize(nextVerse)
-      tempSlide.contents = [
-        `<p class="song-content" style="font-size: ${fontSize}vw">${nextVerse?.replaceAll(
-          "\n",
-          "<br>"
-        )}</>`,
-        `<p class="song-label"><b>${hymn?.title}</b> • HYMN</p>`,
-      ]
-      activeSlide.value = tempSlide
-      slides.value.splice(slideIndex, 1, tempSlide)
-      updateLiveOutput(activeSlide.value)
-    }
-  }
-}
-
-const nextSongVerse = () => {
+const gotoSongVerse = (title: string) => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
   const song = useSong(activeSlide.value?.song)
-  const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
+  const realTitle = title // fake title is the one with the 0th index, but that is what is displayed in UI
 
   if (song) {
-    const hymnVerseIndex = Number(realTitle?.split(" ")?.[1]) + 1
-    const nextVerse = song?.verses?.[hymnVerseIndex]?.trim()
+    const verseIndex = Number(realTitle?.split(" ")?.[1]) - 1
+    const nextVerse = song?.verses?.[verseIndex]?.trim()
 
     if (nextVerse) {
-      tempSlide.title = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) + 1}`
+      tempSlide.title = title
       // Calculate font-size of content
       let fontSize = useScreenFontSize(nextVerse)
-      tempSlide.song = song
-      tempSlide.contents = [
-        `<p class="song-content" style="font-size: ${fontSize}vw">${nextVerse?.replaceAll(
-          "\n",
-          "<br>"
-        )}</>`,
-        `<p class="song-label"><b>${song?.title}</b> • ${song.artist}</p>`,
-      ]
+      tempSlide.data = song
+      tempSlide.contents = useSlideContent(tempSlide, song, fontSize, nextVerse)
       activeSlide.value = tempSlide
       slides.value.splice(slideIndex, 1, tempSlide)
       updateLiveOutput(activeSlide.value)
@@ -465,55 +322,21 @@ const nextSongVerse = () => {
   }
 }
 
-const previousSongVerse = () => {
-  const tempSlide = { ...activeSlide.value } as Slide
-  const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const song = useSong(activeSlide.value?.song)
-  const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
-
-  if (song) {
-    const hymnVerseIndex = Number(realTitle?.split(" ")?.[1]) - 1
-    const nextVerse = song?.verses?.[hymnVerseIndex]?.trim()
-
-    if (nextVerse) {
-      tempSlide.title = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}`
-      // Calculate font-size of content
-      let fontSize = useScreenFontSize(nextVerse)
-      tempSlide.song = song
-      tempSlide.contents = [
-        `<p class="song-content" style="font-size: ${fontSize}vw">${nextVerse?.replaceAll(
-          "\n",
-          '<br class="mt-3">'
-        )}</>`,
-        `<p class="song-label"><b>${song?.title}</b> • ${song.artist}</p>`,
-      ]
-      activeSlide.value = tempSlide
-      slides.value.splice(slideIndex, 1, tempSlide)
-      updateLiveOutput(activeSlide.value)
-    }
-  }
-}
-
-const gotoChorus = (title: string) => {
+const gotoChorus = () => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
   const hymn = useHymn(tempSlide.songId as string)
 
-  const chorus = hymn?.chorus as string
+  if (hymn) {
+    const chorus = hymn?.chorus as string
+    // Calculate font-size of scripture content
+    let fontSize = useScreenFontSize(chorus)
 
-  // Calculate font-size of scripture content
-  let fontSize = useScreenFontSize(chorus)
-
-  tempSlide.contents = [
-    `<p class="song-content" style="font-size: ${fontSize}vw">${chorus?.replaceAll(
-      "\n",
-      "<br>"
-    )}</>`,
-    `<p class="song-label"><b>${hymn?.title}</b> • HYMN</p>`,
-  ]
-  activeSlide.value = tempSlide
-  slides.value.splice(slideIndex, 1, tempSlide)
-  updateLiveOutput(activeSlide.value)
+    tempSlide.contents = useSlideContent(tempSlide, hymn, fontSize, chorus)
+    activeSlide.value = tempSlide
+    slides.value.splice(slideIndex, 1, tempSlide)
+    updateLiveOutput(activeSlide.value)
+  }
 }
 </script>
 
