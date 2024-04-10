@@ -127,7 +127,7 @@ const preSlideCreation = (): Slide => {
     id: (slides.value?.length + 1 || 1).toString(),
     name: `Slide ${slides.value?.length + 1 || 1}`,
     type: slideTypes.text,
-    layout: slideLayoutTypes.heading_sub,
+    layout: slideLayoutTypes.full_text,
     contents: [],
   }
   return tempSlide

@@ -2,8 +2,8 @@
   <!-- GRID TYPE CARD -->
   <div
     v-if="gridType"
-    class="slide-card border-2 border-transparent flex items-center justify-center text-left gap-3 p-2 h-[120px] rounded-md bg-primary hover:bg-primary-700 transition-all cursor-pointer relative overflow-hidden"
-    :class="{ 'border-black': selected }"
+    class="slide-card border-2 flex items-center justify-center text-left gap-3 p-2 h-[120px] rounded-md bg-primary hover:bg-primary-700 transition-all cursor-pointer relative overflow-hidden"
+    :class="[selected ? 'border-black' : 'border-transparent']"
   >
     <button class=" " @click="$emit('click')">
       <div class="slide-preview text-white overflow-hidden md-preview">

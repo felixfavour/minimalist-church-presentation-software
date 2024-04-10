@@ -42,7 +42,7 @@ const getBGBySlideType = (slideType) => {
     case slideTypes.hymn:
       return "bg-pink-100 border border-pink-500 text-pink-700"
     case slideTypes.bible:
-      return "bg-primary-100 border border-primary-500 text-primary-700"
+      return "bg-primary-200 border border-primary-500 text-primary-700"
     case slideTypes.text:
       return "bg-cyan-100 border border-cyan-500 text-cyan-700"
   }
