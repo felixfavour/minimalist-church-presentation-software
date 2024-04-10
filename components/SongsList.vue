@@ -1,5 +1,5 @@
 <template>
-  <div class="lyrics-main min-h-[90vh]" ref="quickActions">
+  <div class="song-main min-h-[90vh]" ref="quickActions">
     <div class="flex gap-2">
       <UInput
         icon="i-bx-search"

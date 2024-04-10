@@ -12,7 +12,9 @@
             >{{ heading }}</UButton
           >
           <IconWrapper name="i-bx-chevron-right" class="text-primary" />
-          <span class="pl-2 text-gray-600 font-normal">{{ subHeading }}</span>
+          <span class="pl-2 text-gray-600 font-normal capitalize">{{
+            subHeading
+          }}</span>
         </template>
         <span v-else class="p-1 px-2">
           {{ heading }}

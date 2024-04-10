@@ -45,24 +45,25 @@
       </div>
 
       <!-- SONG SECTION -->
-      <SongsList v-else-if="page === 'lyrics'" @close="page = ''" />
+      <SongsList v-else-if="page === 'song'" @close="page = ''" />
     </Transition>
   </AppSection>
 </template>
 
 <script setup lang="ts">
 import type { Hymn, QuickAction } from "~/types"
+import type { Emitter } from "mitt"
 import { useAppStore } from "~/store/app"
 import { quickActionsArr } from "~/utils/constants"
 import fuzzysort from "fuzzysort"
 
 const searchInput = ref<string>("")
 const focusedActionIndex = ref<number>(0)
-const quickActions = ref<[] | null>(null)
+const quickActions = ref<HTMLDivElement | null>(null)
 const appStore = useAppStore()
-const page = ref<string>("") // lyrics
+const page = ref<string>("") // song
 const hymns = useNuxtApp().$hymns as Array<Hymn>
-const emitter = useNuxtApp().$emitter
+const emitter = useNuxtApp().$emitter as Emitter<any>
 
 const actions = quickActionsArr.concat(
   bibleBooks?.map((book, index) => {
@@ -92,12 +93,12 @@ const actions = quickActionsArr.concat(
   })
 )
 
-emitter.on("new-lyrics", () => {
-  page.value = "lyrics"
+emitter.on("new-song", () => {
+  page.value = "song"
 })
 
 onMounted(() => {
-  quickActions.value.addEventListener("keydown", (e) => {
+  quickActions.value?.addEventListener("keydown", (e) => {
     if (e.defaultPrevented) {
       e.preventDefault()
       return

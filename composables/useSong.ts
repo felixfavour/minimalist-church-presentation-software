@@ -9,11 +9,10 @@ const addIdToReturnedSongs = (songs: Array<Song>) => {
   }))
 }
 
-const useLyrics = (song: Song, linesPerDisplay: number = 4): Song | null => {
+const useSong = (song: Song, linesPerDisplay: number = 4): Song | null => {
   const toast = useToast()
 
   try {
-
     // Divide songs into verses
     const verses = []
     let tempVerse = ''
@@ -48,5 +47,5 @@ const useLyrics = (song: Song, linesPerDisplay: number = 4): Song | null => {
   return null
 }
 
-export default useLyrics
+export default useSong
 

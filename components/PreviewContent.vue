@@ -110,11 +110,11 @@ emitter.on("new-hymn", (data: string) => {
   }
 })
 
-emitter.on("new-lyrics", (data: string) => {
+emitter.on("new-song", (data: Song) => {
   if (data) {
-    const song = useLyrics(data)
+    const song = useSong(data)
     if (song) {
-      createNewLyricsSlide(song)
+      createNewSongSlide(song)
     }
   }
 })
@@ -219,10 +219,10 @@ const createNewHymnSlide = (hymn: Hymn) => {
   toast.add({ title: "Hymn slide created", icon: "i-bx-church" })
 }
 
-const createNewLyricsSlide = (song: Song) => {
+const createNewSongSlide = (song: Song) => {
   const tempSlide = { ...preSlideCreation() }
   tempSlide.layout = slideLayoutTypes.bible
-  tempSlide.type = slideTypes.lyrics
+  tempSlide.type = slideTypes.song
   tempSlide.background = appStore.settings.defaultBackground.hymn.background
   tempSlide.backgroundType =
     appStore.settings.defaultBackground.hymn.backgroundType
@@ -245,7 +245,7 @@ const createNewLyricsSlide = (song: Song) => {
 
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide, true)
-  toast.add({ title: "Lyrics slide created", icon: "i-bx-music" })
+  toast.add({ title: "Song slide created", icon: "i-bx-music" })
 }
 
 const updateLiveOutput = (updatedSlide: Slide) => {
@@ -263,7 +263,7 @@ const nextAction = () => {
       return nextScripture()
     case slideTypes.hymn:
       return nextVerse()
-    case slideTypes.lyrics:
+    case slideTypes.song:
       return nextSongVerse()
   }
 }
@@ -274,7 +274,7 @@ const prevAction = () => {
       return previousScripture()
     case slideTypes.hymn:
       return previousVerse()
-    case slideTypes.lyrics:
+    case slideTypes.song:
       return previousSongVerse()
   }
 }
@@ -439,7 +439,7 @@ const previousVerse = () => {
 const nextSongVerse = () => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const song = useLyrics(activeSlide.value?.song)
+  const song = useSong(activeSlide.value?.song)
   const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
 
   if (song) {
@@ -468,7 +468,7 @@ const nextSongVerse = () => {
 const previousSongVerse = () => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const song = useLyrics(activeSlide.value?.song)
+  const song = useSong(activeSlide.value?.song)
   const realTitle = `Verse ${Number(tempSlide.title?.split(" ")?.[1]) - 1}` // fake title is the one with the 0th index, but that is what is displayed in UI
 
   if (song) {

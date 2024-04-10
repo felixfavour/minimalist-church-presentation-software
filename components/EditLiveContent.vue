@@ -22,7 +22,7 @@
             v-if="
               slide?.type === slideTypes?.bible ||
               slide?.type === slideTypes?.hymn ||
-              slide?.type === slideTypes?.lyrics
+              slide?.type === slideTypes?.song
             "
             class="button-group bg-primary-200 rounded-md mx-1 flex items-center gap-1 h-[36px] px-1"
           >
