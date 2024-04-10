@@ -7,7 +7,7 @@
   >
     <Transition name="fade-sm">
       <!-- ACTIONS HOME SECTION -->
-      <div v-if="page === ''" class="main min-h-[90vh]" ref="quickActions">
+      <div v-if="page === ''" class="main min-h-[100%]" ref="quickActions">
         <div class="flex gap-2">
           <UInput
             icon="i-bx-search"
@@ -27,7 +27,7 @@
         <!-- BASIC ACTIONS -->
         <div
           v-if="searchInput.length < 2"
-          class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]"
+          class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]"
         >
           <ActionCard
             v-for="(action, index) in actions?.filter((a) => !a.searchableOnly)"
@@ -41,7 +41,10 @@
         </div>
 
         <!-- SEARCHING ACTIONS -->
-        <div v-else class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]">
+        <div
+          v-else
+          class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]"
+        >
           <ActionCard
             v-for="(action, index) in searchedActions"
             :key="action.name"

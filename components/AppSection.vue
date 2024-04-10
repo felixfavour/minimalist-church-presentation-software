@@ -21,7 +21,7 @@
         </span>
       </h2>
     </div>
-    <div :class="`slot-ctn p-3 text-sm ${slotCtnStyles}`">
+    <div :class="`slot-ctn p-3 text-sm ${slotCtnStyles || ''}`">
       <slot></slot>
     </div>
   </section>

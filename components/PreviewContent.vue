@@ -302,7 +302,7 @@ const gotoHymnVerse = (title: string) => {
 const gotoSongVerse = (title: string) => {
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  const song = useSong(activeSlide.value?.song)
+  const song = useSong(activeSlide.value?.data as Song)
   const realTitle = title // fake title is the one with the 0th index, but that is what is displayed in UI
 
   if (song) {

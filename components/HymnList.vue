@@ -12,7 +12,10 @@
       <UButton icon="i-bx-x" color="primary" @click="$emit('close')"></UButton>
     </div>
 
-    <div v-if="loading" class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]">
+    <div
+      v-if="loading"
+      class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]"
+    >
       <USkeleton
         v-for="i in 15"
         :key="i"
@@ -23,7 +26,7 @@
       <!-- BASIC SONGS -->
       <div
         v-if="searchInput.length < 2"
-        class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]"
+        class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]"
       >
         <SongCard
           v-for="(hymn, index) in hymns"
@@ -38,7 +41,10 @@
       </div>
 
       <!-- SEARCHING SONGS -->
-      <div v-else class="actions-ctn mt-2 overflow-y-auto max-h-[85vh]">
+      <div
+        v-else
+        class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]"
+      >
         <SongCard
           v-for="(hymn, index) in hymns"
           :key="hymn?.number"
