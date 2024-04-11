@@ -9,7 +9,7 @@ export default defineNuxtConfig({
       link: [
         {
           rel: 'manifest',
-          href: '/manifest.webmanifest'
+          href: '/manifest.json'
         },
         {
           rel: 'preconnect',
@@ -71,6 +71,7 @@ export default defineNuxtConfig({
       registerType: 'autoUpdate',
       manifest: false,
       workbox: {
+        globPatterns: ['**/*.{js,json,css,html,ico,png,jpg,jpeg,webp,svg,mp4}'],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
