@@ -29,7 +29,7 @@ export default defineNuxtConfig({
       ]
     }
   },
-  ssr: false,
+  ssr: true,
   colorMode: {
     preference: 'light',
   },
@@ -71,6 +71,7 @@ export default defineNuxtConfig({
       registerType: 'autoUpdate',
       manifest: false,
       workbox: {
+        navigateFallback: '/',
         globPatterns: ['**/*.{js,json,css,html,ico,png,jpg,jpeg,webp,svg,mp4}'],
         runtimeCaching: [
           {
