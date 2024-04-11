@@ -6,13 +6,30 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      link: [{
-        rel: 'manifest',
-        href: '/manifest.webmanifest'
-      }]
+      link: [
+        {
+          rel: 'manifest',
+          href: '/manifest.webmanifest'
+        },
+        {
+          rel: 'preconnect',
+          crossorigin: 'anonymous',
+          href: 'https://fonts.googleapis.com'
+        },
+        {
+          rel: 'preconnect',
+          crossorigin: 'anonymous',
+          href: 'https://fonts.gstatic.com'
+        },
+        {
+          rel: 'stylesheet',
+          crossorigin: 'anonymous',
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@100..600&display=swap'
+        }
+      ]
     }
   },
-  ssr: true,
+  ssr: false,
   colorMode: {
     preference: 'light',
   },
@@ -23,7 +40,6 @@ export default defineNuxtConfig({
       AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
       AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY
     }
-
   },
   modules: [
     '@nuxt/ui',
@@ -55,7 +71,78 @@ export default defineNuxtConfig({
       registerType: 'autoUpdate',
       manifest: false,
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,mp4}']
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'gstatic-fonts-cache',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              },
+            }
+          },
+          {
+            urlPattern: /^https:\/\/revaise\.s3\.us-east-2\.amazonaws\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'media-cache',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              },
+            }
+          },
+          {
+            urlPattern: /^https:\/\/presentation-software\.s3\.eu-west-3\.amazonaws\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'data-cache',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              },
+            }
+          },
+          {
+            urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'unsplash-images-cache',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              },
+            }
+          }
+        ]
       },
       devOptions: {
         enabled: true,

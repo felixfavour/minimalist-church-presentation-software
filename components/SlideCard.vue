@@ -40,6 +40,7 @@
       <ConfirmDialog
         button-icon="i-bx-trash"
         header="Delete slide"
+        button-styles="px-1.5 text-white hover:bg-primary"
         label="Are you sure you want to delete this slide? This action is not reversible"
         @confirm="$emit('delete', slide?.id)"
       >
@@ -68,14 +69,16 @@
     </div>
     <LiveSlideIndicator :visible="live" class="mr-2 mt-4" />
     <!-- DELETE SLIDE BUTTON -->
-    <ConfirmDialog
-      class="absolute bottom-2 right-2 invisible group-hover:visible"
-      button-icon="i-bx-trash"
-      header="Delete slide"
-      label="Are you sure you want to delete this slide? This action is not reversible"
-      @confirm="$emit('delete', slide?.id)"
-    >
-    </ConfirmDialog>
+    <div class="actions absolute bottom-2 right-2 flex gap-1">
+      <ConfirmDialog
+        button-icon="i-bx-trash"
+        button-styles="px-1.5 text-primary-500 hover:bg-primary-white"
+        header="Delete slide"
+        label="Are you sure you want to delete this slide? This action is not reversible"
+        @confirm="$emit('delete', slide?.id)"
+      >
+      </ConfirmDialog>
+    </div>
   </button>
 </template>
 

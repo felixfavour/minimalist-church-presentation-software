@@ -1,11 +1,11 @@
 <template>
   <div>
-    <UTooltip text="Delete Slide">
+    <UTooltip text="Delete Slide" :popper="{ placement: 'top' }">
       <UButton
         :icon="buttonIcon"
         size="xs"
         variant="ghost"
-        class="px-1.5 text-white hover:bg-primary-500"
+        :class="buttonStyles"
         @click.stop.prevent="isOpen = true"
         >{{ buttonLabel }}
       </UButton>
@@ -42,6 +42,7 @@ const isOpen = ref(false)
 const props = defineProps<{
   buttonIcon: string
   buttonLabel: string
+  buttonStyles: string
   header: string
   label: string
 }>()

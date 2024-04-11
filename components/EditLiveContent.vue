@@ -11,10 +11,7 @@
             class="slide-name flex items-center gap-2 top-1 text-primary-900"
           >
             <h4 class="font-medium text-nowrap">{{ slide?.name }}</h4>
-            <SlideChip
-              :slide-type="slide?.type"
-              class="text-primary-900 bg-primary text-white"
-            />
+            <SlideChip :slide-type="slide?.type" />
           </div>
         </TransitionGroup>
         <div class="actions flex items-center">
@@ -186,6 +183,7 @@
         v-if="slide?.backgroundType === backgroundTypes.video"
         :src="slide?.background"
         class="h-[100%] w-[100%] object-cover absolute inset-0"
+        crossorigin="anonymous"
       ></video>
       <div class="bg-black opacity-30 absolute inset-0"></div>
       <TipTap

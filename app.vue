@@ -40,6 +40,7 @@
 <script setup lang="ts">
 import mitt from "mitt"
 import { useAppStore } from "./store/app"
+import { createPartialResponse } from "workbox-range-requests"
 
 const nuxtApp = useNuxtApp()
 const emitter = mitt()
@@ -50,6 +51,24 @@ appStore.setEmitter(emitter)
 const appVersion = ref<string>("0.1.1")
 const loadingResources = ref<boolean>(true)
 const downloadProgress = ref<number>(5)
+
+self.addEventListener("fetch", (event) => {
+  console.log("fetch - event", event)
+  // const { request } = event
+  // if (request.headers.has("range")) {
+  //   event.respondWith(
+  //     (async () => {
+  //       const cache = await caches.open("media")
+  //       const fullResponse = await cache.match(request)
+  //       if (fullResponse) {
+  //         return createPartialResponse(request, fullResponse)
+  //       }
+  //       // If there's a cache miss, fall back to the network.
+  //       return fetch(request)
+  //     })()
+  //   )
+  // }
+})
 
 const downloadEssentialResources = async () => {
   loadingResources.value = true

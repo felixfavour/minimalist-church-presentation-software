@@ -12,20 +12,19 @@ export const useAppStore = defineStore('app', {
       liveSlideId: null as string | null,
       emitter: null as Emitter | null,
       settings: {
-        bibleVersions: ['KJV', 'NKJV', 'NIV', 'AMP'] as Array<string>,
         defaultBibleVersion: 'KJV',
         defaultBackground: {
           hymn: {
             backgroundType: "video",
-            background: 'https://revaise.s3.us-east-2.amazonaws.com/video-bg-3.mp4'
+            background: 'https://revaise.s3.us-east-2.amazonaws.com/video-bg-1.mp4'
           },
           bible: {
             backgroundType: "video",
-            background: 'https://revaise.s3.us-east-2.amazonaws.com/video-bg-1.mp4'
+            background: 'https://revaise.s3.us-east-2.amazonaws.com/video-bg-3.mp4'
           },
           text: {
             backgroundType: "video",
-            background: 'https://revaise.s3.us-east-2.amazonaws.com/video-bg-2.mp4'
+            background: 'https://revaise.s3.us-east-2.amazonaws.com/video-bg-4.mp4'
           }
         },
         slideStyles: { blur: 0.5, brightness: 50 } as SlideStyle
@@ -57,9 +56,6 @@ export const useAppStore = defineStore('app', {
     },
     setSlideStyles(styles: SlideStyle) {
       this.settings = { ...this.settings, slideStyles: styles }
-    },
-    setBibleVersions(versions: Array<string>) {
-      this.settings = { ...this.settings, bibleVersions: versions }
     },
     setDefaultBibleVersion(version: string) {
       this.settings = { ...this.settings, defaultBibleVersion: version }

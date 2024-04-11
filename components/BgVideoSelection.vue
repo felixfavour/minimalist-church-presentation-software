@@ -12,6 +12,7 @@
         :src="video"
         muted
         autoplay
+        crossorigin="anonymous"
       ></video>
       <IconWrapper
         v-if="video === value"
@@ -32,5 +33,8 @@ const backgroundVideos = [
   "https://revaise.s3.us-east-2.amazonaws.com/video-bg-1.mp4",
   "https://revaise.s3.us-east-2.amazonaws.com/video-bg-2.mp4",
   "https://revaise.s3.us-east-2.amazonaws.com/video-bg-3.mp4",
+  "https://revaise.s3.us-east-2.amazonaws.com/video-bg-4.mp4",
+  "https://revaise.s3.us-east-2.amazonaws.com/video-bg-5.mp4",
+  "https://revaise.s3.us-east-2.amazonaws.com/video-bg-6.mp4",
 ]
 </script>

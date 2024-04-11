@@ -18,13 +18,16 @@
     "@tiptap/extension-text-align": "^2.2.4",
     "@vueuse/core": "^10.9.0",
     "fuzzysort": "^2.0.4",
+    "i": "^0.3.7",
     "mitt": "^3.0.1",
+    "npm": "^10.5.2",
     "nuxt": "^3.10.3",
     "nuxt-tiptap-editor": "^1.1.0",
     "pinia": "^2.1.7",
     "pinia-shared-state": "^0.5.1",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "workbox-range-requests": "^7.0.0"
   },
   "devDependencies": {
     "@pinia-plugin-persistedstate/nuxt": "^1.0.0",

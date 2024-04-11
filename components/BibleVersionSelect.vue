@@ -6,7 +6,7 @@
       searchable-placeholder="Search version"
       select-class="bg-white border-3 shadow-none outline-none w-[16ch] text-center"
       size="xs"
-      :options="settings.bibleVersions"
+      :options="bibleVersions"
       v-model="bibleVersion"
       variant="none"
       color="primary"
