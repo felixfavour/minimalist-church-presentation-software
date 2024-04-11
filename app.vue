@@ -104,7 +104,7 @@ const downloadEssentialResources = async () => {
   }, 500)
 }
 
-// registerServiceWorker()
+registerServiceWorker()
 downloadEssentialResources()
 </script>
 
