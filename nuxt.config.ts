@@ -1,5 +1,3 @@
-import { VitePWA } from 'vite-plugin-pwa'
-
 export default defineNuxtConfig({
   experimental: {
     renderJsonPayloads: false
@@ -46,7 +44,6 @@ export default defineNuxtConfig({
     'nuxt-tiptap-editor',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
-    '@vite-pwa/nuxt'
   ],
   css: [
     '~/assets/css/main.css',
@@ -64,18 +61,5 @@ export default defineNuxtConfig({
   },
   pinia: {
     storesDirs: ['./stores/**']
-  },
-  vite: {
-    plugins: [VitePWA({
-      manifest: false,
-      strategies: 'injectManifest',
-      devOptions: {
-        enabled: true,
-        suppressWarnings: true,
-        navigateFallback: '/',
-        navigateFallbackAllowlist: [/^\/$/],
-        type: 'module',
-      }
-    })]
   }
 })

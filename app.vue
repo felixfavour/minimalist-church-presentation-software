@@ -1,6 +1,5 @@
 <template>
   <div>
-    <NuxtPwaManifest />
     <NuxtLoadingIndicator />
 
     <NuxtLayout v-if="!loadingResources" :app-version="appVersion">
