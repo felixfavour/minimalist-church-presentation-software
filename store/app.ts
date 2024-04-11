@@ -16,15 +16,15 @@ export const useAppStore = defineStore('app', {
         defaultBackground: {
           hymn: {
             backgroundType: "video",
-            background: 'https://revaise.s3.us-east-2.amazonaws.com/video-bg-1.mp4'
+            background: '/video-bg-1.mp4'
           },
           bible: {
             backgroundType: "video",
-            background: 'https://revaise.s3.us-east-2.amazonaws.com/video-bg-3.mp4'
+            background: '/video-bg-3.mp4'
           },
           text: {
             backgroundType: "video",
-            background: 'https://revaise.s3.us-east-2.amazonaws.com/video-bg-4.mp4'
+            background: '/video-bg-4.mp4'
           }
         },
         slideStyles: { blur: 0.5, brightness: 50 } as SlideStyle
