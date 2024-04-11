@@ -69,9 +69,6 @@ export default defineNuxtConfig({
     plugins: [VitePWA({
       manifest: false,
       strategies: 'injectManifest',
-      injectManifest: {
-        globPatterns: ['**/*.{js,json,css,html,ico,png,jpg,jpeg,webp,svg,mp4}']
-      },
       devOptions: {
         enabled: true,
         suppressWarnings: true,

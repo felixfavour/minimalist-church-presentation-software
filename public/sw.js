@@ -6,10 +6,7 @@ import {
 } from "workbox-precaching"
 import { registerRoute, NavigationRoute } from "workbox-routing"
 
-self.skipWaiting()
-clientsClaim()
-precacheAndRoute([
-  ...self.__WB_MANIFEST,
+const cacheableURLs = [
   "/live",
   "https://revaise.s3.us-east-2.amazonaws.com/video-bg-1.mp4",
   "https://revaise.s3.us-east-2.amazonaws.com/video-bg-2.mp4",
@@ -35,7 +32,12 @@ precacheAndRoute([
   "https://presentation-software.s3.eu-west-3.amazonaws.com/niv.json?x-id=GetObject",
   "https://presentation-software.s3.eu-west-3.amazonaws.com/amp.json?x-id=GetObject",
   "https://presentation-software.s3.eu-west-3.amazonaws.com/hymns.json?x-id=GetObject",
-])
+].map((url) => ({ url }))
+console.log(cacheableURLs)
+
+self.skipWaiting()
+clientsClaim()
+precacheAndRoute([...self.__WB_MANIFEST, ...cacheableURLs])
 cleanupOutdatedCaches()
 
 //You can remove this code if you aren't precaching anything, or leave it in and live with the warning message
