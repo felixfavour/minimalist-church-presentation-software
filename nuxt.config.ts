@@ -27,7 +27,7 @@ export default defineNuxtConfig({
       ]
     }
   },
-  ssr: true,
+  ssr: false,
   colorMode: {
     preference: 'light',
   },

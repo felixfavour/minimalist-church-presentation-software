@@ -7,8 +7,6 @@ import {
 import { registerRoute, NavigationRoute } from "workbox-routing"
 
 const cacheableURLs = [
-  "/",
-  "/live",
   "https://revaise.s3.us-east-2.amazonaws.com/video-bg-1.mp4",
   "https://revaise.s3.us-east-2.amazonaws.com/video-bg-2.mp4",
   "https://revaise.s3.us-east-2.amazonaws.com/video-bg-3.mp4",
