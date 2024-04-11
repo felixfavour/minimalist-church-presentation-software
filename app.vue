@@ -3,11 +3,6 @@
     <NuxtPwaManifest />
     <NuxtLoadingIndicator />
 
-    <div class="ctn bg-primary-200 absolute inset-0 bottom-auto">
-      Hello world
-      {{ $pwa }}
-    </div>
-
     <NuxtLayout v-if="!loadingResources" :app-version="appVersion">
       <NuxtPage />
       <UNotifications />

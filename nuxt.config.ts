@@ -67,84 +67,10 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [VitePWA({
-      injectRegister: 'auto',
-      registerType: 'autoUpdate',
       manifest: false,
-      workbox: {
-        navigateFallback: '/',
-        globPatterns: ['**/*.{js,json,css,html,ico,png,jpg,jpeg,webp,svg,mp4}'],
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'google-fonts-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
-          },
-          {
-            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'gstatic-fonts-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              },
-            }
-          },
-          {
-            urlPattern: /^https:\/\/revaise\.s3\.us-east-2\.amazonaws\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'media-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              },
-            }
-          },
-          {
-            urlPattern: /^https:\/\/presentation-software\.s3\.eu-west-3\.amazonaws\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'data-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              },
-            }
-          },
-          {
-            urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'unsplash-images-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              },
-            }
-          }
-        ]
+      strategies: 'injectManifest',
+      injectManifest: {
+        globPatterns: ['**/*.{js,json,css,html,ico,png,jpg,jpeg,webp,svg,mp4}']
       },
       devOptions: {
         enabled: true,
