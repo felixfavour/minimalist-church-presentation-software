@@ -1,10 +1,11 @@
 export const slideTypes = {
-  sermon: 'sermon',
   song: 'song',
   hymn: 'hymn',
-  carousel: 'carousel',
   bible: 'bible',
-  text: 'text'
+  text: 'text',
+  media: 'media',
+  sermon: 'sermon',
+  carousel: 'carousel',
 }
 
 export const quickActionsArr = [
@@ -43,6 +44,15 @@ export const quickActionsArr = [
     type: slideTypes.text,
   },
   {
+    icon: "i-bx-image",
+    name: "Add Media",
+    desc: "Display video or image media",
+    action: "new-media",
+    meta: "",
+    type: slideTypes.media,
+    // type: slideTypes.text
+  },
+  {
     icon: "i-bx-search",
     name: "Search Bible",
     desc: "Find scriptures with familiar words",
@@ -50,15 +60,6 @@ export const quickActionsArr = [
     meta: "",
     unreleased: true,
     type: slideTypes.bible,
-  },
-  {
-    icon: "i-bx-image",
-    name: "Add Media",
-    desc: "Display video or image media",
-    action: "new-media",
-    meta: "",
-    unreleased: true,
-    // type: slideTypes.text
   },
   {
     icon: "i-carbon-overlay",

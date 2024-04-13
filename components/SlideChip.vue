@@ -30,6 +30,8 @@ const getIconBySlideType = (slideType) => {
       return "i-bx-bible"
     case slideTypes.text:
       return "i-bx-cloud"
+    case slideTypes.media:
+      return "i-bx-image"
     case slideTypes.carousel:
       return "i-bx-carousel"
   }
@@ -45,6 +47,8 @@ const getBGBySlideType = (slideType) => {
       return "bg-primary-200 border border-primary-500 text-primary-700"
     case slideTypes.text:
       return "bg-cyan-100 border border-cyan-500 text-cyan-700"
+    case slideTypes.media:
+      return "bg-orange-100 border border-orange-500 text-orange-700"
   }
   return ""
 }

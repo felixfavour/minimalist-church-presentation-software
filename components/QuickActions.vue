@@ -2,7 +2,7 @@
   <AppSection
     heading="Quick Actions"
     :sub-heading="searchInput.length < 2 ? page : 'Search'"
-    class="max-w-[330px]"
+    class="max-w-[330px] relative"
     @header-click="searchInput.length < 2 ? (page = '') : (searchInput = '')"
   >
     <Transition name="fade-sm">
@@ -61,6 +61,9 @@
 
       <!-- HYMN SECTION -->
       <HymnList v-else-if="page === 'hymn'" @close="page = ''" />
+
+      <!-- MEDIA(IMAGE/VIDEO) SECTION-->
+      <AddMedia v-else-if="page === 'media'" @close="page = ''" />
     </Transition>
   </AppSection>
 </template>
@@ -115,6 +118,10 @@ emitter.on("new-song", () => {
 
 emitter.on("new-hymn", () => {
   page.value = "hymn"
+})
+
+emitter.on("new-media", () => {
+  page.value = "media"
 })
 
 onMounted(() => {

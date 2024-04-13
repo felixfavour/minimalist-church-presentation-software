@@ -124,6 +124,12 @@ emitter.on("new-song", (data: Song) => {
   }
 })
 
+emitter.on("new-media", (data: any) => {
+  if (data) {
+    createNewMediaSlide(data)
+  }
+})
+
 const preSlideCreation = (): Slide => {
   // Update slide names to be correctly indexed
   slides.value?.forEach((slide, index) => {
@@ -249,6 +255,18 @@ const createNewSongSlide = (song: Song) => {
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide, true)
   toast.add({ title: "Song slide created", icon: "i-bx-music" })
+}
+
+const createNewMediaSlide = (file: any) => {
+  const tempSlide = { ...preSlideCreation() }
+  tempSlide.type = slideTypes.media
+  tempSlide.backgroundType = file.type
+  tempSlide.background = file.url
+  tempSlide.data = file
+
+  slides.value?.push(tempSlide)
+  makeSlideActive(tempSlide, true)
+  toast.add({ title: "Media slide created", icon: "i-bx-image" })
 }
 
 const updateLiveOutput = (updatedSlide: Slide) => {

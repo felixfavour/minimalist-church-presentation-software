@@ -1,7 +1,11 @@
 <template>
   <div
-    class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-cover bg-no-repeat transition-all backdrop-blur-0 bg-black"
-    :class="{ 'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen }"
+    class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-no-repeat transition-all backdrop-blur-0 bg-black"
+    :class="{
+      'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen,
+      'bg-cover': slide?.type !== slideTypes.media,
+      'bg-center bg-contain': slide?.type === slideTypes.media,
+    }"
     :style="useSlideBackground(slide)"
   >
     <!-- VIDEO BACKGROUND -->
@@ -10,10 +14,13 @@
       v-if="slide?.backgroundType === backgroundTypes.video"
       :src="slide?.background"
       autoplay
-      loop
-      muted
+      :loop="slide?.type !== slideTypes.media"
+      :muted="fullScreen && slide?.type !== slideTypes.media"
       playsinline="true"
-      class="h-[100%] w-[100%] object-cover absolute inset-0"
+      :class="[
+        'h-[100%] w-[100%] absolute inset-0',
+        slide?.type === slideTypes.media ? 'object-contain' : 'object-cover',
+      ]"
       crossorigin="anonymous"
     ></video>
 
@@ -38,7 +45,11 @@
       class="relative come-up-1"
       :class="fullScreen ? '' : 'min-h-[220px] rounded-md'"
       :padding="fullScreen ? '6' : '0'"
-      :style="`backdrop-filter: blur(${slideStyles.blur}px) brightness(${slideStyles.brightness}%);`"
+      :style="
+        slide?.type === slideTypes.media
+          ? ''
+          : `backdrop-filter: blur(${slideStyles.blur}px) brightness(${slideStyles.brightness}%);`
+      "
     />
   </div>
 </template>
