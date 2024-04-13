@@ -24,7 +24,7 @@ const useSong = (song: Song, linesPerDisplay: number = 4): Song | null => {
       if (line.toLocaleLowerCase().includes('[verse') || line.toLocaleLowerCase().includes('[intro]') || line.toLocaleLowerCase().includes('[chorus]')) {
         continue
       }
-      line = line.replaceAll("â", "'").replaceAll('solo: ', '')
+      line = line.replaceAll("â", "'").replaceAll('solo: ', '')?.replaceAll(' ??? ', '')?.replaceAll(' ?? ', '')
       tempVerse += `${line}\n`
       lineCount += 1
 
