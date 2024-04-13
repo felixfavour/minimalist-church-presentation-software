@@ -20,7 +20,7 @@
           <button
             class="group slide-card flex w-[100%] text-left gap-3 p-2 border-t first:border-t-0 border-gray-100 rounded-md hover:bg-primary-50 transition-all cursor-pointer relative"
             :class="{ 'bg-red-100': liveSlide?.id === slide?.id }"
-            @click="$emit('click')"
+            @click="appStore.setLiveSlide(slide?.id || '0')"
           >
             <div
               class="slide-preview w-24 min-w-24 h-16 text-white overflow-hidden sm-preview relative"
