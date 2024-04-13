@@ -1,20 +1,24 @@
 <template>
   <AppSection heading="Live Output" class="max-w-[330px]">
     <div class="main">
-      <draggable
-        v-model="liveOutputSlides"
-        group="slides"
-        class="slides-ctn h-[calc(100vh-80px-220px-80px)] overflow-auto mb-4 overflow-x-hidden"
-        item-key="name"
+      <div
+        v-if="liveOutputSlides?.length === 0 || !liveOutputSlides"
+        class="ctn h-[calc(100vh-80px-220px-80px)] overflow-auto mb-4 overflow-x-hidden"
       >
         <EmptyState
-          v-if="liveOutputSlides?.length === 0 || !liveOutputSlides"
           icon="i-bx-slideshow"
           sub="No slides yet"
           action=""
           action-text=""
         />
-
+      </div>
+      <draggable
+        v-show="!(liveOutputSlides?.length === 0 || !liveOutputSlides)"
+        v-model="liveOutputSlides"
+        group="slides"
+        class="slides-ctn h-[calc(100vh-80px-220px-80px)] overflow-auto mb-4 overflow-x-hidden"
+        item-key="name"
+      >
         <!-- SLIDE CARD (DUPLICATED FROM THE SLIDECARD.VUE, TO MAKE DRAGGABLE WORK AS IT COULD NOT WORK IN COMPONENT) -->
         <template #item="{ element: slide }">
           <button
