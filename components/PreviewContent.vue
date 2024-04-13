@@ -54,6 +54,7 @@ const toast = useToast()
 const windowHeight = ref<number>(0)
 const slides = ref<Array<Slide>>(appStore.activeSlides || [])
 const activeSlide = ref<Slide>()
+const { activeSlides } = storeToRefs(appStore)
 const slidesGrid = ref<HTMLDivElement | null>(null)
 
 watch(
@@ -72,6 +73,11 @@ watch(
   },
   { deep: true }
 )
+
+// Update Slides order when they are updated in live content
+watch(activeSlides, () => {
+  slides.value = activeSlides.value
+})
 
 const makeSlideActive = (slide: Slide, goLive: boolean = false) => {
   activeSlide.value = slide
