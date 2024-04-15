@@ -11,7 +11,7 @@
             class="slide-name flex items-center gap-2 top-1 text-primary-900"
           >
             <h4 class="font-medium text-nowrap">{{ slide?.name }}</h4>
-            <SlideChip :slide-type="slide?.type" />
+            <SlideChip :slide-type="slide?.type" dark-mode />
           </div>
         </TransitionGroup>
         <div class="actions flex items-center">
@@ -288,6 +288,7 @@ const onUpdateSlideContent = (editorIndex: number, content: string) => {
     ...props.slide,
     contents: [...slideContents.value],
   }
+  tempSlide.name = useSlideName(tempSlide)
   emit("slide-update", tempSlide)
   // emit("update-live-output-slides")
 }

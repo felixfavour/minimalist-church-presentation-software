@@ -131,16 +131,9 @@ emitter.on("new-media", (data: any) => {
 })
 
 const preSlideCreation = (): Slide => {
-  console.log("slides", slides.value)
-  console.log("active-slides", activeSlides.value)
-  // Update slide names to be correctly indexed
-  // slides.value?.forEach((slide, index) => {
-  //   slide.id = (index + 1).toString()
-  //   slide.name = `Slide ${index + 1}`
-  // })
   const tempSlide: Slide = {
-    id: (slides.value?.length + 1 || 1).toString(),
-    name: `Slide ${slides.value?.length + 1 || 1}`,
+    id: useID(),
+    name: "Untitled",
     type: slideTypes.text,
     layout: slideLayoutTypes.full_text,
     contents: [],
@@ -157,9 +150,8 @@ const createNewSlide = (duplicateSlide?: Slide) => {
     tempSlide.backgroundType =
       appStore.settings.defaultBackground.text.backgroundType
   }
+  tempSlide.id = useID()
 
-  tempSlide.id = (slides.value?.length + 1 || 1).toString()
-  tempSlide.name = `Slide ${slides.value?.length + 1 || 1}`
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide)
   toast.add({
@@ -194,6 +186,7 @@ const createNewBibleSlide = (scripture: Scripture) => {
   tempSlide.backgroundType =
     appStore.settings.defaultBackground.bible.backgroundType
   tempSlide.title = scripture?.label
+  tempSlide.name = useSlideName(tempSlide)
 
   // Calculate font-size of scripture content
   let fontSize = useScreenFontSize(scripture?.content)
@@ -215,6 +208,7 @@ const createNewHymnSlide = (hymn: Hymn) => {
   tempSlide.songId = hymn.number
   tempSlide.hasChorus = !!hymn.chorus
   tempSlide.title = "Verse 1"
+  tempSlide.name = useSlideName(tempSlide)
 
   const currentHymnVerse = hymn.verses?.[0].trim()
 
@@ -253,6 +247,7 @@ const createNewSongSlide = (song: Song) => {
     fontSize,
     currentSongVerse
   )
+  tempSlide.name = useSlideName(tempSlide)
 
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide, true)
@@ -265,6 +260,7 @@ const createNewMediaSlide = (file: any) => {
   tempSlide.backgroundType = file.type
   tempSlide.background = file.url
   tempSlide.data = file
+  tempSlide.name = useSlideName(tempSlide)
 
   slides.value?.push(tempSlide)
   makeSlideActive(tempSlide, true)
@@ -308,6 +304,7 @@ const gotoScripture = (title: string, version: string) => {
     let fontSize = useScreenFontSize(scripture?.content)
 
     tempSlide.contents = useSlideContent(tempSlide, scripture, fontSize)
+    tempSlide.name = useSlideName(tempSlide)
     activeSlide.value = tempSlide
     slides.value.splice(slideIndex, 1, tempSlide)
     updateLiveOutput(activeSlide.value)

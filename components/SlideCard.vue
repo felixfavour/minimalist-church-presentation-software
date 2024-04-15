@@ -19,8 +19,10 @@
       <div
         class="texts flex items-center gap-2 text-white absolute top-1 right-2 left-2"
       >
-        <h4 class="font-medium ws-nowrap mt-1">{{ slide?.name }}</h4>
-        <SlideChip :slide-type="slide?.type" class="mt-1" />
+        <h4 class="font-medium ws-nowrap mt-1 text-left text-xs">
+          {{ slide?.name }}
+        </h4>
+        <SlideChip :slide-type="slide?.type" class="mt-1" dark-mode />
       </div>
     </button>
 
