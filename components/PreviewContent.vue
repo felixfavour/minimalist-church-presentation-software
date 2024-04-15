@@ -131,11 +131,13 @@ emitter.on("new-media", (data: any) => {
 })
 
 const preSlideCreation = (): Slide => {
+  console.log("slides", slides.value)
+  console.log("active-slides", activeSlides.value)
   // Update slide names to be correctly indexed
-  slides.value?.forEach((slide, index) => {
-    slide.id = (index + 1).toString()
-    slide.name = `Slide ${index + 1}`
-  })
+  // slides.value?.forEach((slide, index) => {
+  //   slide.id = (index + 1).toString()
+  //   slide.name = `Slide ${index + 1}`
+  // })
   const tempSlide: Slide = {
     id: (slides.value?.length + 1 || 1).toString(),
     name: `Slide ${slides.value?.length + 1 || 1}`,
