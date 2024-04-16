@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.540.0",
+    "@hotjar/browser": "^1.0.9",
     "@nuxt/ui": "npm:@nuxt/ui-edge@latest",
     "@pinia/nuxt": "^0.5.1",
     "@tiptap/extension-highlight": "^2.3.0",
