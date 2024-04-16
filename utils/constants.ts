@@ -140,5 +140,8 @@ export const bibleBooks = [
 ];
 
 export const bibleVersions = [
-  'KJV', 'NKJV', 'NIV', 'AMP'
+  'KJV',
+  // 'NKJV', 
+  // 'NIV', 
+  // 'AMP'
 ]
