@@ -15,6 +15,15 @@
           </div>
         </TransitionGroup>
         <div class="actions flex items-center">
+          <UTooltip text="Take slide live" :popper="{ arrow: true }">
+            <UButton
+              class="p-2 px-2 pr-3 bg-red-200 text-red-600 hover:bg-red-300"
+              icon="i-bx-video"
+              @click="$emit('take-live')"
+            >
+              Live</UButton
+            >
+          </UTooltip>
           <div
             v-if="
               slide?.type === slideTypes?.bible ||

@@ -44,9 +44,22 @@
             />
             <!-- DELETE SLIDE BUTTON -->
             <div class="actions absolute bottom-2 right-2 flex gap-1">
+              <UTooltip
+                text="Preview/Edit Slide"
+                :popper="{ placement: 'top' }"
+              >
+                <UButton
+                  icon="i-bx-edit"
+                  size="xs"
+                  variant="ghost"
+                  class="px-1 text-primary-500 hover:bg-primary-white"
+                  @click.stop.prevent="useGlobalEmit('new-active-slide', slide)"
+                />
+              </UTooltip>
+
               <ConfirmDialog
                 button-icon="i-bx-trash"
-                button-styles="px-1.5 text-primary-500 hover:bg-primary-white"
+                button-styles="px-1 text-primary-500 hover:bg-primary-white"
                 header="Delete slide"
                 label="Are you sure you want to delete this slide? This action is not reversible"
                 @confirm="deleteSlide(slide?.id)"
@@ -93,6 +106,13 @@ const liveOutputSlides = computed({
   },
 })
 
+const makeSlideActive = (slide: Slide, goLive: boolean = false) => {
+  if (goLive) {
+    appStore.setActiveSlides(slides.value)
+    appStore.setLiveSlide(activeSlide.value.id)
+  }
+}
+
 const deleteSlide = (slideId: string) => {
   const slides = appStore.activeSlides || []
   const tempSlide = appStore.activeSlides.find((s) => s.id === slideId)
@@ -102,3 +122,17 @@ const deleteSlide = (slideId: string) => {
   toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-bx-trash" })
 }
 </script>
+
+<style scoped>
+.slide-card .actions {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: 0.3s;
+}
+.slide-card:hover .actions {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0);
+}
+</style>

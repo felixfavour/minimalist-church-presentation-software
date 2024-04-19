@@ -40,6 +40,7 @@
       @goto-verse="gotoAction"
       @goto-chorus="gotoChorus"
       @update-bible-version="gotoScripture(activeSlide?.title!!, $event)"
+      @take-live="makeSlideActive(activeSlide, true)"
     />
   </AppSection>
 </template>
@@ -127,6 +128,12 @@ emitter.on("new-song", (data: Song) => {
 emitter.on("new-media", (data: any) => {
   if (data) {
     createNewMediaSlide(data)
+  }
+})
+
+emitter.on("new-active-slide", (data: Slide) => {
+  if (data) {
+    makeSlideActive(data)
   }
 })
 
