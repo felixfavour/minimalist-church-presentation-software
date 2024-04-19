@@ -44,6 +44,7 @@ export default defineNuxtConfig({
     'nuxt-tiptap-editor',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
+    'nuxt-electron'
   ],
   css: [
     '~/assets/css/main.css',
@@ -61,5 +62,10 @@ export default defineNuxtConfig({
   },
   pinia: {
     storesDirs: ['./stores/**']
+  },
+  electron: {
+    build: [
+      { entry: 'electron/main.ts' }
+    ]
   }
 })
