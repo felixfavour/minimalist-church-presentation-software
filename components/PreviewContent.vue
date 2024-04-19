@@ -229,7 +229,7 @@ const createNewHymnSlide = (hymn: Hymn) => {
   )
 
   slides.value?.push(tempSlide)
-  makeSlideActive(tempSlide, true)
+  makeSlideActive(tempSlide)
   toast.add({ title: "Hymn slide created", icon: "i-bx-church" })
 }
 
@@ -257,7 +257,7 @@ const createNewSongSlide = (song: Song) => {
   tempSlide.name = useSlideName(tempSlide)
 
   slides.value?.push(tempSlide)
-  makeSlideActive(tempSlide, true)
+  makeSlideActive(tempSlide)
   toast.add({ title: "Song slide created", icon: "i-bx-music" })
 }
 
@@ -270,7 +270,7 @@ const createNewMediaSlide = (file: any) => {
   tempSlide.name = useSlideName(tempSlide)
 
   slides.value?.push(tempSlide)
-  makeSlideActive(tempSlide, true)
+  makeSlideActive(tempSlide)
   toast.add({ title: "Media slide created", icon: "i-bx-image" })
 }
 
