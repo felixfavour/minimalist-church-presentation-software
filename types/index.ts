@@ -32,6 +32,13 @@ export interface Scripture {
   content: string
 }
 
+export interface BibleVerse {
+  book: string
+  chapter: string
+  verse: string
+  scripture: string
+}
+
 export interface Hymn {
   number: string
   title: string

@@ -1,7 +1,7 @@
 <template>
   <AppSection
     heading="Quick Actions"
-    :sub-heading="searchInput.length < 2 ? page : 'Search'"
+    :sub-heading="searchInput.length < 2 ? page?.replace('-', ' ') : 'Search'"
     class="max-w-[330px] relative"
     @header-click="searchInput.length < 2 ? (page = '') : (searchInput = '')"
   >
@@ -64,6 +64,9 @@
 
       <!-- MEDIA(IMAGE/VIDEO) SECTION-->
       <AddMedia v-else-if="page === 'media'" @close="page = ''" />
+
+      <!-- SEARCH BIBLE SECTION-->
+      <SearchBibleList v-else-if="page === 'search-bible'" @close="page = ''" />
     </Transition>
   </AppSection>
 </template>
@@ -122,6 +125,10 @@ emitter.on("new-hymn", () => {
 
 emitter.on("new-media", () => {
   page.value = "media"
+})
+
+emitter.on("new-search-bible", () => {
+  page.value = "search-bible"
 })
 
 onMounted(() => {

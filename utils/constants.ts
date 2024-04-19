@@ -20,6 +20,15 @@ export const quickActionsArr = [
     type: slideTypes.bible,
   },
   {
+    icon: "i-bx-search",
+    name: "Search Bible",
+    desc: "Find scriptures with familiar words",
+    action: "new-search-bible",
+    meta: "",
+    unreleased: false,
+    type: slideTypes.bible,
+  },
+  {
     icon: "i-bx-church",
     name: "Display Hymns",
     desc: "Find verses and chorus to all hymns",
@@ -51,15 +60,6 @@ export const quickActionsArr = [
     meta: "",
     type: slideTypes.media,
     // type: slideTypes.text
-  },
-  {
-    icon: "i-bx-search",
-    name: "Search Bible",
-    desc: "Find scriptures with familiar words",
-    action: "new-bible-search",
-    meta: "",
-    unreleased: true,
-    type: slideTypes.bible,
   },
   {
     icon: "i-carbon-overlay",

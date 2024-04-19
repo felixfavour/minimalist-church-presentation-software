@@ -1,6 +1,6 @@
 <template>
   <p
-    class="text-xs font-medium rounded-full bg-gray-100 px-2 py-1 inline-flex gap-1 capitalize"
+    class="text-xs font-medium rounded-full px-2 py-1 inline-flex gap-1 capitalize"
     :class="[getBGBySlideType(slideType)]"
   >
     <IconWrapper :name="getIconBySlideType(slideType)" size="4" />
