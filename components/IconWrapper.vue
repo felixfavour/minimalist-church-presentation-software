@@ -2,7 +2,7 @@
   <div
     :class="
       roundedBg
-        ? `icon-bg bg-primary-50 rounded-full flex items-center justify-center p-2 max-h-${
+        ? `icon-bg bg-primary-50 dark:bg-primary-900 rounded-full flex items-center justify-center p-2 max-h-${
             size + 4
           }`
         : ''

@@ -34,7 +34,8 @@
             :key="action.name"
             :action="action"
             :class="{
-              'bg-primary-50 rounded-md': index === focusedActionIndex,
+              'bg-primary-50 dark:bg-primary-800 rounded-md':
+                index === focusedActionIndex,
             }"
             @click="focusedActionIndex = index"
           />
@@ -50,7 +51,8 @@
             :key="action.name"
             :action="{ ...action, bibleChapterAndVerse }"
             :class="{
-              'bg-primary-50 rounded-md': index === focusedActionIndex,
+              'bg-primary-50 dark:bg-primary-800 rounded-md':
+                index === focusedActionIndex,
             }"
           />
         </div>

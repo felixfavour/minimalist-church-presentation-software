@@ -1,10 +1,14 @@
 <template>
   <button
-    class="action-card flex gap-3 p-2 py-4 border-t first:border-t-0 border-gray-100 hover:rounded-md hover:bg-primary-50 transition-all cursor-pointer text-left w-[100%]"
+    class="action-card flex gap-3 p-2 py-4 border-t first:border-t-0 border-gray-100 dark:border-primary-950 hover:rounded-md hover:bg-primary-50 dark:hover:bg-primary-800 transition-all cursor-pointer text-left w-[100%]"
     :class="{ 'pointer-events-none opacity-30': action?.unreleased }"
     @click="useGlobalEmit(action?.action, emitParameter)"
   >
-    <IconWrapper :name="action?.icon" class="mt-1 text-primary" rounded-bg />
+    <IconWrapper
+      :name="action?.icon"
+      class="mt-1 text-primary dark:text-primary-300"
+      rounded-bg
+    />
     <div class="texts">
       <h4 v-if="action.searchableOnly">
         <span class="font-light italic pr-1 capitalize">

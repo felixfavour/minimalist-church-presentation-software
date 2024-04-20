@@ -26,7 +26,7 @@
         class="file-preview mt-[100%] absolute inset-0 top-auto p-4"
       >
         <h3
-          class="bg-primary-100 rounded-md p-4 py-2 text-md font-semibold capitalize"
+          class="bg-primary-100 dark:bg-primary-900 rounded-md p-4 py-2 text-md font-semibold capitalize"
         >
           {{ fileObj?.type }} Preview
         </h3>

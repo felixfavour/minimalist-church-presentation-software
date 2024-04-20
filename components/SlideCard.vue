@@ -53,7 +53,7 @@
   <!-- LIST TYPE CARD -->
   <button
     v-else
-    class="group slide-card flex w-[100%] text-left gap-3 p-2 border-t first:border-t-0 border-gray-100 rounded-md hover:bg-primary-50 transition-all cursor-pointer relative"
+    class="group slide-card flex w-[100%] text-left gap-3 p-2 border-t first:border-t-0 border-gray-100 dark:border-primary-950 rounded-md hover:bg-primary-50 transition-all cursor-pointer relative"
     :class="{ 'bg-red-100': live }"
     @click="$emit('click')"
   >

@@ -40,7 +40,7 @@
       @goto-verse="gotoAction"
       @goto-chorus="gotoChorus"
       @update-bible-version="gotoScripture(activeSlide?.title!!, $event)"
-      @take-live="makeSlideActive(activeSlide, true)"
+      @take-live="makeSlideActive(activeSlide!!, true)"
     />
   </AppSection>
 </template>

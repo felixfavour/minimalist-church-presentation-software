@@ -22,8 +22,10 @@
         <!-- SLIDE CARD (DUPLICATED FROM THE SLIDECARD.VUE, TO MAKE DRAGGABLE WORK AS IT COULD NOT WORK IN COMPONENT) -->
         <template #item="{ element: slide }">
           <button
-            class="group slide-card flex w-[100%] text-left gap-3 p-2 border-t first:border-t-0 border-gray-100 rounded-md hover:bg-primary-50 transition-all cursor-pointer relative"
-            :class="{ 'bg-red-100': liveSlide?.id === slide?.id }"
+            class="group slide-card flex w-[100%] text-left gap-3 p-2 border-t first:border-t-0 border-gray-100 dark:border-primary-950 rounded-md hover:bg-primary-50 dark:hover:bg-primary-900 transition-all cursor-pointer relative"
+            :class="{
+              'bg-red-100 dark:bg-red-900': liveSlide?.id === slide?.id,
+            }"
             @click="appStore.setLiveSlide(slide?.id || '0')"
           >
             <div

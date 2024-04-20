@@ -1,6 +1,6 @@
 <template>
   <div
-    class="live-output w-[100%] rounded-md absolute inset-0 overflow-hidden border bg-cover bg-no-repeat transition-all backdrop-blur-0 bg-black"
+    class="live-output w-[100%] rounded-md absolute inset-0 overflow-hidden border dark:border-primary-900 bg-cover bg-no-repeat transition-all backdrop-blur-0 bg-black"
     :style="useSlideBackground(slide)"
   >
     <!-- VIDEO BACKGROUND -->

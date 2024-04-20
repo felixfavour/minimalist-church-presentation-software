@@ -31,7 +31,8 @@
           :action="turnToBibleTypeAction(verse)"
           type="bible"
           :class="{
-            'bg-primary-50 rounded-md': index === focusedActionIndex,
+            'bg-primary-50 dark:bg-primary-800 rounded-md':
+              index === focusedActionIndex,
           }"
           @click="focusedActionIndex = index"
         />

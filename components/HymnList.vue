@@ -34,7 +34,8 @@
           :song="hymn"
           type="hymn"
           :class="{
-            'bg-primary-50 rounded-md': index === focusedActionIndex,
+            'bg-primary-50 dark:bg-primary-800 rounded-md':
+              index === focusedActionIndex,
           }"
           @click="focusedActionIndex = index"
         />
@@ -51,7 +52,8 @@
           :song="hymn"
           type="hymn"
           :class="{
-            'bg-primary-50 rounded-md': index === focusedActionIndex,
+            'bg-primary-50 dark:bg-primary-800 rounded-md':
+              index === focusedActionIndex,
           }"
           @click="focusedActionIndex = index"
         />

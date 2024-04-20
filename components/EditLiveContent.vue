@@ -2,27 +2,28 @@
   <div class="main relative min-h-[300px] h-[45vh]">
     <div>
       <div
-        class="toolbar w-[100%] p-2 px-4 bg-primary-100 rounded-t-md flex items-center justify-between overflow-hidden"
+        class="toolbar w-[100%] p-2 px-4 bg-primary-100 dark:bg-primary-800 rounded-t-md flex items-center justify-between overflow-hidden"
       >
         <TransitionGroup name="list">
           <div
             v-for="slide in animatedSlides"
             :key="slide?.id"
-            class="slide-name flex items-center gap-2 top-1 text-primary-900"
+            class="slide-name flex items-center gap-2 top-1 text-primary-900 dark:text-primary-100"
           >
             <h4 class="font-medium text-nowrap">{{ slide?.name }}</h4>
             <SlideChip :slide-type="slide?.type" dark-mode />
           </div>
         </TransitionGroup>
-        <div class="actions flex items-center">
+        <div class="actions flex items-center ml-6">
           <UTooltip text="Take slide live" :popper="{ arrow: true }">
             <UButton
-              class="p-2 px-2 pr-3 bg-red-200 text-red-600 hover:bg-red-300"
-              icon="i-bx-video"
+              variant="ghost"
+              color="primary"
+              class="p-2 px-2 hover:text-red-600 hover:bg-red-300"
+              icon="i-bx-slideshow"
               @click="$emit('take-live')"
             >
-              Live</UButton
-            >
+            </UButton>
           </UTooltip>
           <div
             v-if="
@@ -30,7 +31,7 @@
               slide?.type === slideTypes?.hymn ||
               slide?.type === slideTypes?.song
             "
-            class="button-group bg-primary-200 rounded-md mx-1 flex items-center gap-1 h-[36px] px-1"
+            class="button-group bg-primary-200 dark:bg-primary-900 rounded-md mx-1 flex items-center gap-1 h-[36px] px-1"
           >
             <UTooltip text="Previous verse" :popper="{ arrow: true }">
               <UButton
@@ -45,7 +46,7 @@
               size="xs"
               variant="none"
               v-model="verse"
-              inputClass="bg-white border-0 shadow-none outline-none w-[16ch] text-center"
+              inputClass="bg-white border-0 shadow-none outline-none w-[16ch] text-center dark:text-primary-900"
               @keydown.enter="$emit('goto-verse', verse)"
             />
             <UTooltip text="Next verse" :popper="{ arrow: true }">
@@ -98,7 +99,8 @@
           <div
             class="button-group flex rounded-md mx-1 p-1"
             :class="{
-              'bg-primary-200': slide?.layout !== slideLayoutTypes.bible,
+              'bg-primary-200 dark:bg-primary-900':
+                slide?.layout !== slideLayoutTypes.bible,
             }"
           >
             <UPopover v-model:open="bgEditBgPopoverOpen">

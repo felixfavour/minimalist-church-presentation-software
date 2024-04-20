@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="editor"
-    class="my-2 flex gap-1 w-[100%] overflow-auto absolute z-10 bg-white p-1 right-0 left-0 top-[45px]"
+    class="my-2 flex gap-1 w-[100%] overflow-auto absolute z-10 bg-white dark:bg-black p-1 right-0 left-0 top-[45px]"
   >
     <UButton
       @click="editor.chain().focus().toggleBold().run()"
@@ -32,7 +32,7 @@
       variant="ghost"
     />
     <div
-      class="button-group bg-primary-100 rounded-md mx-1 p-1 flex items-center gap-1"
+      class="button-group bg-primary-100 dark:bg-primary-900 rounded-md mx-1 p-1 flex items-center gap-1"
     >
       <UButton
         v-for="headingSize in 4"
@@ -68,7 +68,7 @@
       variant="ghost"
     />
     <div
-      class="button-group bg-primary-100 rounded-md mx-1 p-1 flex items-center gap-1"
+      class="button-group bg-primary-100 dark:bg-primary-900 rounded-md mx-1 p-1 flex items-center gap-1"
     >
       <UButton
         @click="editor.chain().focus().setTextAlign('left').run()"

@@ -14,10 +14,10 @@ export default defineAppConfig({
       wrapper: 'shadow-none',
       rounded: 'rounded-md',
       color: 'red',
-      base: 'bg-gray-100',
+      base: 'bg-gray-100 dark:bg-primary-900',
       variant: {
         outline: 'shadow-none text-gray-900 dark:text-white ring-1 ring-inset ring-{color}-500 dark:ring-{color}-400 focus:ring-2 focus:ring-{color}-500 dark:focus:ring-{color}-400',
-        none: 'shadow-none bg-gray-100 focus:ring-0 focus:shadow-none',
+        none: 'shadow-none bg-gray-100 dark:bg-primary-200 focus:ring-0 focus:shadow-none',
       },
       default: {
         variant: 'none'

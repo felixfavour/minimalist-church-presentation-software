@@ -1,6 +1,6 @@
 <template>
   <div
-    class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-no-repeat transition-all backdrop-blur-0 bg-black"
+    class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-no-repeat transition-all backdrop-blur-0 bg-black dark:border-none"
     :class="{
       'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen,
       'bg-cover': slide?.type !== slideTypes.media,
