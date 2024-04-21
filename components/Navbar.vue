@@ -16,9 +16,7 @@
       <div class="actions text-sm flex gap-2 items-center">
         <ClientOnly>
           <UButton
-            :icon="
-              isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'
-            "
+            :icon="isDark ? 'i-tabler-moon-filled' : 'i-tabler-sun-filled'"
             color="primary"
             variant="ghost"
             aria-label="Theme"

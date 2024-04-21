@@ -49,7 +49,8 @@ export default defineNuxtConfig({
     '~/assets/css/main.css',
   ],
   ui: {
-    global: true
+    global: true,
+    icons: ['mdi', 'bx', 'bxs', 'bi', 'mingcute', 'tabler', 'ph'],
   },
   vue: {
     compilerOptions: {
