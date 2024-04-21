@@ -13,7 +13,7 @@
             icon="i-bx-search"
             placeholder="Search scripture, hymns, actions"
             v-model="searchInput"
-            color="gray"
+            color="black"
             class="w-[100%]"
           />
           <UButton

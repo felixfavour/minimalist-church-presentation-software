@@ -26,7 +26,7 @@
 
     <div
       v-if="!fullScreen || slideLabel"
-      class="overlay-gradient absolute inset-0"
+      class="overlay-gradient absolute z-10 inset-0"
     ></div>
     <div
       v-if="!fullScreen || slideLabel"
