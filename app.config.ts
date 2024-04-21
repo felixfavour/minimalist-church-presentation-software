@@ -1,7 +1,7 @@
 export default defineAppConfig({
   ui: {
     primary: 'purple',
-    icons: ['mdi', 'bx', 'bxs', 'bi', 'mingcute', 'tabler', 'ph'],
+    icons: ['mdi', 'bx', 'bxs', 'bi', 'mingcute', 'tabler', 'ph', 'lucide'],
     tooltip: {
       rounded: 'rounded-md',
       background: 'bg-primary',
