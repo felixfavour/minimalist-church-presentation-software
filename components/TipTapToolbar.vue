@@ -50,7 +50,7 @@
         @click="
           editor.chain().focus().toggleHeading({ level: headingSize }).run()
         "
-        class="dark:text-primary-400 dark:hover:text-primary-500"
+        class="dark:text-primary-400 dark:hover:text-primary-500 gap-0 items-end"
         :class="{
           'bg-primary text-white dark:text-primary-900': editor.isActive(
             'heading',
@@ -59,9 +59,10 @@
             }
           ),
         }"
-        :icon="`i-lucide-heading-${headingSize}`"
         variant="ghost"
-      />
+      >
+        H<span class="text-xs">{{ headingSize }}</span>
+      </UButton>
     </div>
     <UButton
       @click="editor.chain().focus().setParagraph().run()"

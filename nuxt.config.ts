@@ -50,7 +50,7 @@ export default defineNuxtConfig({
   ],
   ui: {
     global: true,
-    icons: ['mdi', 'bx', 'bxs', 'bi', 'mingcute', 'tabler', 'ph', 'lucide'],
+    icons: ['mdi', 'bx', 'bxs', 'bi', 'mingcute', 'tabler', 'ph'],
   },
   vue: {
     compilerOptions: {
