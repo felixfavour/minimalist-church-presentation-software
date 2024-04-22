@@ -14,8 +14,8 @@
           : 'w-[140px] bg-primary-200 dark:bg-primary-900 dark:text-white'
       }`"
       size="md"
-      :options="['Arial']"
-      v-model="fonts"
+      :options="fonts"
+      v-model="font"
       variant="none"
       color="primary"
       clear-search-on-close
@@ -37,18 +37,47 @@
         },
       }"
       @change="$emit('change', $event)"
-    />
+    >
+      <template #label>
+        <span
+          v-if="font?.length"
+          class="truncate"
+          :class="useURLFriendlyString(font)"
+          >{{ font }}</span
+        >
+        <span v-else>Select people</span>
+      </template>
+      <template #option="{ option: font }">
+        <span
+          v-if="font?.length"
+          class="truncate"
+          :class="useURLFriendlyString(font)"
+          >{{ font }}</span
+        >
+        <span v-else>Select people</span>
+      </template>
+    </USelectMenu>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from "~/store/app"
+import { appFonts } from "~/utils/constants"
 
-defineProps<{
+const props = defineProps<{
   size: string
+  selectedFont: string
 }>()
 
 const appStore = useAppStore()
 const { settings } = storeToRefs(appStore)
-const fonts = ref<string>("Arial")
+const fonts = ref<string[]>(appFonts)
+const font = ref<string>(props.selectedFont || "Inter")
+
+watch(
+  () => props.selectedFont,
+  (newVal, _oldVal) => {
+    font.value = newVal
+  }
+)
 </script>

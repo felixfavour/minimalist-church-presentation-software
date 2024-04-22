@@ -187,6 +187,7 @@
         v-else-if="slide"
         :slide="slide"
         @update-style="onUpdateSlideStyle"
+        @update-font="onUpdateSlideStyle({ ...slide.slideStyle, font: $event })"
       />
     </div>
 
@@ -237,6 +238,7 @@ const emit = defineEmits([
   "goto-verse",
   "goto-chorus",
   "update-bible-version",
+  "take-live",
 ])
 
 const focusedEditor = ref<Editor | undefined>()

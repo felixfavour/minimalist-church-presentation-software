@@ -145,3 +145,26 @@ export const bibleVersions = [
   // 'NIV', 
   // 'AMP'
 ]
+
+export const appFonts = [
+  'Inter',
+  'Roboto',
+  'Raleway',
+  'Bebas Neue',
+  'Overpass',
+  'Playfair Display',
+  'Sedan',
+  'Montserrat',
+  'Jersey 25',
+  'Nunito',
+  'IBM Plex Sans',
+  'Jost',
+  'EB Garamond',
+  'Dancing Script',
+  'Slabo',
+  'IBM Plex Serif',
+  'Great Vibes',
+  'Playball',
+  'Saira Extra Condensed',
+  'Lato'
+]

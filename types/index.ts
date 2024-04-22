@@ -64,4 +64,5 @@ export interface SlideStyle {
   blur?: number
   brightness?: number
   alignment?: string
+  font?: string
 }

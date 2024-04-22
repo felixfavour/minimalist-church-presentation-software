@@ -1,5 +1,67 @@
-* {
+body {
   font-family: Inter;
+}
+
+/* FONT FAMILY CLASSES */
+.inter {
+  font-family: "Inter", sans-serif;
+}
+.roboto {
+  font-family: "Roboto", sans-serif;
+}
+.overpass {
+  font-family: "Overpass", sans-serif;
+}
+.playfair-display {
+  font-family: "Playfair Display", serif;
+}
+.sedan {
+  font-family: "Sedan", serif;
+}
+.montserrat {
+  font-family: "Montserrat", sans-serif;
+}
+.jersey-25 {
+  font-family: "Jersey 25", sans-serif;
+}
+.raleway {
+  font-family: "Raleway", sans-serif;
+}
+.nunito {
+  font-family: "Nunito", sans-serif;
+}
+.ibm-plex-sans {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+.bebas-neue {
+  font-family: "Bebas Neue", sans-serif;
+}
+.jost {
+  font-family: "Jost", sans-serif;
+}
+.eb-garamond {
+  font-family: "EB Garamond", sans-serif;
+}
+.dancing-script {
+  font-family: "Dancing Script", cursive, sans-serif;
+}
+.slabo {
+  font-family: "Slabo", sans-serif;
+}
+.ibm-plex-serif {
+  font-family: "IBM Plex Serif", serif;
+}
+.great-vibes {
+  font-family: "Great Vibes", cursive, sans-serif;
+}
+.playball {
+  font-family: "Playball", cursive, sans-serif;
+}
+.saira-extra-condensed {
+  font-family: "Saira Extra Condensed", serif;
+}
+.lato {
+  font-family: "Lato", sans-serif;
 }
 
 .slides-grid {

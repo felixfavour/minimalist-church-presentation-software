@@ -70,21 +70,25 @@ const props = defineProps<{
 watch(
   () => props.slide,
   (newVal, oldVal) => {
-    if (appMounted) {
-      video.value?.play()
-      if (JSON.stringify(oldVal) !== JSON.stringify(newVal)) {
-        foregroundContentVisible.value = false
-        setTimeout(() => {
-          foregroundContentVisible.value = true
-        }, 100)
+    try {
+      if (appMounted) {
+        video.value?.play()
+        if (JSON.stringify(oldVal) !== JSON.stringify(newVal)) {
+          foregroundContentVisible.value = false
+          setTimeout(() => {
+            foregroundContentVisible.value = true
+          }, 100)
+        }
       }
-    }
+    } catch (err) {}
   }
 )
 
 onMounted(() => {
   appMounted.value = true
-  video.value?.play()
+  try {
+    video.value?.play()
+  } catch (err) {}
 })
 </script>
 

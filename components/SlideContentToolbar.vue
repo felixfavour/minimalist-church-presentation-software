@@ -5,7 +5,8 @@
     <FontSelect
       v-if="slide?.type !== slideTypes?.text"
       size="lg"
-      @change="$emit('update-bible-version', $event)"
+      :selected-font="slide?.slideStyle?.font"
+      @change="$emit('update-font', $event)"
     />
     <div class="button-group rounded-md p-1 flex items-center gap-1">
       <UButton

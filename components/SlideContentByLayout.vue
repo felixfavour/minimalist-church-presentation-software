@@ -7,6 +7,7 @@
     <div
       v-if="contentVisible"
       class="content come-up-1"
+      :class="[useURLFriendlyString(slide?.slideStyle?.font || 'Inter')]"
       v-html="slide?.contents?.[0]"
     ></div>
     <div
@@ -50,6 +51,7 @@
     <div
       v-if="contentVisible"
       class="content come-up-1"
+      :class="[useURLFriendlyString(slide?.slideStyle?.font || 'Inter')]"
       v-html="slide?.contents?.[0]"
     ></div>
     <div
