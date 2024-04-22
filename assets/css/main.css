@@ -224,6 +224,15 @@
   color: #ffffff;
   /* background-color: #000000; */
 }
+.left-live-content {
+  text-align: left;
+}
+.right-live-content {
+  text-align: right;
+}
+.center-live-content {
+  text-align: center;
+}
 .tiptap.live-content {
   padding: 0.75rem;
   border-radius: 0;
@@ -355,6 +364,13 @@
   margin-top: 1%;
   max-width: 50%;
   color: #ffffff80;
+}
+.center-live-content .copyright-content {
+  margin-right: auto;
+  margin-left: auto;
+}
+.right-live-content .copyright-content {
+  margin-left: auto;
 }
 
 /* LIVE CONTENT LG PREVIEW */

@@ -1,6 +1,11 @@
 <template>
   <div
     class="live-content tiptap border-none w-[100%] h-[100%] pointer-events-none text-left"
+    :class="{
+      'center-live-content': slide?.slideStyle?.alignment === 'center',
+      'left-live-content': slide?.slideStyle?.alignment === 'left',
+      'right-live-content': slide?.slideStyle?.alignment === 'right',
+    }"
     :id="slide?.name"
   >
     <!-- <div
@@ -17,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Slide } from "~/types"
+import type { Slide, SlideStyle } from "~/types"
 
 const props = defineProps<{
   slide: Slide

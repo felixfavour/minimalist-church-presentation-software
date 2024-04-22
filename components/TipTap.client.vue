@@ -2,6 +2,11 @@
   <div
     v-if="slide?.layout === slideLayoutTypes.heading_sub"
     class="slide-layout-ctn flex flex-col gap-2 h-[100%] justify-center rounded-md px-12"
+    :class="{
+      'center-live-content': slide?.slideStyle?.alignment === 'center',
+      'left-live-content': slide?.slideStyle?.alignment === 'left',
+      'right-live-content': slide?.slideStyle?.alignment === 'right',
+    }"
   >
     <TiptapEditorContent :editor="editorOne" />
     <TiptapEditorContent :editor="editorTwo" />
@@ -9,12 +14,22 @@
   <div
     v-else-if="slide?.layout === slideLayoutTypes.full_text"
     class="slide-layout-ctn flex flex-col gap-2 h-[100%] justify-center rounded-md px-12"
+    :class="{
+      'center-live-content': slide?.slideStyle?.alignment === 'center',
+      'left-live-content': slide?.slideStyle?.alignment === 'left',
+      'right-live-content': slide?.slideStyle?.alignment === 'right',
+    }"
   >
     <TiptapEditorContent :editor="editorTwo" />
   </div>
   <div
     v-else-if="slide?.layout === slideLayoutTypes.two_column"
     class="slide-layout-ctn flex gap-4 h-[100%] justify-around items-center rounded-md px-12"
+    :class="{
+      'center-live-content': slide?.slideStyle?.alignment === 'center',
+      'left-live-content': slide?.slideStyle?.alignment === 'left',
+      'right-live-content': slide?.slideStyle?.alignment === 'right',
+    }"
   >
     <TiptapEditorContent :editor="editorOne" />
     <TiptapEditorContent :editor="editorTwo" />
@@ -22,6 +37,11 @@
   <div
     v-else-if="slide?.layout === slideLayoutTypes.bible"
     class="slide-layout-ctn flex flex-col gap-2 h-[100%] justify-center rounded-md px-12"
+    :class="{
+      'center-live-content': slide?.slideStyle?.alignment === 'center',
+      'left-live-content': slide?.slideStyle?.alignment === 'left',
+      'right-live-content': slide?.slideStyle?.alignment === 'right',
+    }"
   >
     <TiptapEditorContent :editor="uneditableEditorOne" />
     <TiptapEditorContent :editor="uneditableEditorTwo" />

@@ -10,6 +10,7 @@ export interface Slide {
   songId?: string // only for hymns/songs, could be [hymn.number] or [song.id]
   hasChorus?: boolean // only for hymns, to tell if the hymns include a chorus
   data?: Song | Scripture | Hymn // for song/bible/hymn/file, Object mapped to Slide only on client
+  slideStyle?: SlideStyle
 }
 
 export interface QuickAction {
@@ -60,6 +61,7 @@ export interface Song {
 }
 
 export interface SlideStyle {
-  blur: number
-  brightness: number
+  blur?: number
+  brightness?: number
+  alignment?: string
 }

@@ -15,6 +15,12 @@
           </div>
         </TransitionGroup>
         <div class="actions flex items-center ml-6">
+          <!-- <FontSelect
+            v-if="slide?.type === slideTypes?.text"
+            size="sm"
+            class="mr-2"
+            @change="$emit('update-bible-version', $event)"
+          /> -->
           <UTooltip text="Take slide live" :popper="{ arrow: true }">
             <UButton
               variant="ghost"
@@ -173,7 +179,15 @@
         > -->
         </div>
       </div>
-      <TipTapToolbar :editor="focusedEditor" />
+      <TipTapToolbar
+        v-if="slide?.type === slideTypes.text"
+        :editor="focusedEditor"
+      />
+      <SlideContentToolbar
+        v-else-if="slide"
+        :slide="slide"
+        @update-style="onUpdateSlideStyle"
+      />
     </div>
 
     <!-- MAIN CONTENT -->
@@ -211,7 +225,7 @@
 
 <script setup lang="ts">
 import type { Editor } from "@tiptap/core"
-import type { Slide } from "~/types"
+import type { Slide, SlideStyle } from "~/types"
 
 const props = defineProps<{
   slide: Slide
@@ -302,6 +316,15 @@ const onUpdateSlideContent = (editorIndex: number, content: string) => {
   tempSlide.name = useSlideName(tempSlide)
   emit("slide-update", tempSlide)
   // emit("update-live-output-slides")
+}
+
+const onUpdateSlideStyle = (slideStyle: SlideStyle) => {
+  const tempSlide: Slide = {
+    ...props.slide,
+    slideStyle,
+  }
+  tempSlide.name = useSlideName(tempSlide)
+  emit("slide-update", tempSlide)
 }
 </script>
 

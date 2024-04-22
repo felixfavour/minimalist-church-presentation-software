@@ -144,6 +144,9 @@ const preSlideCreation = (): Slide => {
     type: slideTypes.text,
     layout: slideLayoutTypes.full_text,
     contents: [],
+    slideStyle: {
+      alignment: "left",
+    },
   }
   return tempSlide
 }
