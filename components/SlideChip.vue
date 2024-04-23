@@ -24,7 +24,7 @@ const getIconBySlideType = (slideType) => {
     case slideTypes.bible:
       return "i-bx-bible"
     case slideTypes.text:
-      return "i-bx-cloud"
+      return "i-bx-text"
     case slideTypes.media:
       return "i-bx-image"
     case slideTypes.carousel:

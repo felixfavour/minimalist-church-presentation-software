@@ -1,5 +1,5 @@
 <template>
-  <AppSection heading="Live Output" class="max-w-[330px]">
+  <AppSection heading="Live Output" class="max-w-[400px]">
     <div class="main">
       <div
         v-if="liveOutputSlides?.length === 0 || !liveOutputSlides"

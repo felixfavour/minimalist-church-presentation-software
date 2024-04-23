@@ -17,6 +17,7 @@
       <input
         type="file"
         class="invisible"
+        accept="video/*,image/*"
         @change="file = $event.target?.files?.[0]"
       />
     </label>

@@ -45,9 +45,9 @@ export const quickActionsArr = [
     type: slideTypes.song,
   },
   {
-    icon: "i-bx-slideshow",
-    name: "Create Slide",
-    desc: "Create slides for sermons and more",
+    icon: "i-bx-text",
+    name: "Create Text Slide",
+    desc: "Create slides with notes and more",
     action: "new-slide",
     meta: "",
     type: slideTypes.text,

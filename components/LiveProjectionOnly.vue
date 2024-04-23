@@ -3,6 +3,7 @@
     class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-no-repeat transition-all backdrop-blur-0 bg-black dark:border-none"
     :class="{
       'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen,
+      'h-[88vh] rounded-none border-none min-h-[100%]': fullScreenHeight,
       'bg-cover': slide?.type !== slideTypes.media,
       'bg-center bg-contain': slide?.type === slideTypes.media,
     }"
@@ -51,6 +52,52 @@
           : `backdrop-filter: blur(${slideStyles.blur}px) brightness(${slideStyles.brightness}%);`
       "
     />
+    <template v-if="!fullScreen">
+      <UTooltip
+        class="absolute bottom-3 right-3 z-10"
+        text="Expand preview"
+        :popper="{ arrow: true }"
+      >
+        <UButton
+          variant="ghost"
+          size="xs"
+          color="slate"
+          icon="i-bx-expand-alt"
+          class="hover:bg-primary-500"
+          @click="isLargePreviewOpen = true"
+        ></UButton>
+      </UTooltip>
+
+      <UModal v-model="isLargePreviewOpen" fullscreen>
+        <UCard>
+          <div class="flex items-center justify-between h-[60px] mb-4">
+            <div class="logo flex items-center gap-2 w-[250px]">
+              <Logo class="w-[32px]" />
+              <h1 class="text-sm font-semibold">Cloud of Worshippers</h1>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+              Large Preview
+            </h3>
+            <div class="close-ctn w-[250px] flex justify-end">
+              <UButton
+                color="gray"
+                variant="ghost"
+                icon="i-mdi-close"
+                class="my-1"
+                @click="isLargePreviewOpen = false"
+              />
+            </div>
+          </div>
+          <LiveProjectionOnly
+            :full-screen="true"
+            full-screen-height="80vh"
+            :slide="slide"
+            :slide-label="false"
+            :slide-styles="slideStyles"
+          />
+        </UCard>
+      </UModal>
+    </template>
   </div>
 </template>
 
@@ -59,11 +106,13 @@ import type { Slide, SlideStyle } from "~/types"
 const appMounted = ref<boolean>(false)
 const video = ref<HTMLVideoElement | null>(null)
 const foregroundContentVisible = ref<boolean>(true)
+const isLargePreviewOpen = ref<boolean>(false)
 
 const props = defineProps<{
   slideLabel: Boolean
   slide: Slide
   fullScreen: Boolean
+  fullScreenHeight: string
   slideStyles: SlideStyle
 }>()
 
