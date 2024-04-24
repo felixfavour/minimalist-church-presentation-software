@@ -3,9 +3,15 @@
   <div
     v-if="gridType"
     class="slide-card gap-3 h-[120px] rounded-md bg-primary hover:bg-primary-700 transition-all cursor-pointer relative overflow-hidden"
-    :class="[selected ? 'border-black' : 'border-transparent']"
+    :class="[
+      selected ? 'border-black' : 'border-transparent',
+      { selectable: selectable },
+    ]"
   >
-    <button class=" " @click="$emit('click')">
+    <button
+      :class="['transition-all', { 'opacity-70 ': selectable }]"
+      @click="$emit('click')"
+    >
       <div class="slide-preview text-white overflow-hidden md-preview">
         <LiveContentWithBackground
           :slide="slide"
@@ -48,40 +54,18 @@
       >
       </ConfirmDialog>
     </div>
-  </div>
-
-  <!-- LIST TYPE CARD -->
-  <button
-    v-else
-    class="group slide-card flex w-[100%] text-left gap-3 p-2 border-t first:border-t-0 border-gray-100 dark:border-primary-950 rounded-md hover:bg-primary-50 transition-all cursor-pointer relative"
-    :class="{ 'bg-red-100': live }"
-    @click="$emit('click')"
-  >
     <div
-      class="slide-preview w-24 min-w-24 h-16 text-white overflow-hidden sm-preview relative"
+      v-if="selectable"
+      class="selectable-actions absolute bottom-4 right-3 flex gap-1"
     >
-      <LiveContentWithBackground
-        :slide="slide"
-        :slide-styles="settings.slideStyles"
+      <UCheckbox
+        name="select"
+        :model-value="checkboxSelected"
+        :ui="{ base: 'h-8 w-8' }"
+        @change="$emit('bulk-selected', $event)"
       />
     </div>
-    <div class="texts flex-col justify-between">
-      <h4 class="font-medium mt-2">{{ slide?.name }}</h4>
-      <SlideChip :slide-type="slide?.type" class="mt-1" />
-    </div>
-    <LiveSlideIndicator :visible="live" class="mr-2 mt-4" />
-    <!-- DELETE SLIDE BUTTON -->
-    <div class="actions absolute bottom-2 right-2 flex gap-1">
-      <ConfirmDialog
-        button-icon="i-bx-trash"
-        button-styles="px-1.5 text-primary-500 hover:bg-primary-white"
-        header="Delete slide"
-        label="Are you sure you want to delete this slide? This action is not reversible"
-        @confirm="$emit('delete', slide?.id)"
-      >
-      </ConfirmDialog>
-    </div>
-  </button>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -96,6 +80,8 @@ const props = defineProps<{
   live: boolean
   gridType: boolean
   selected: boolean
+  selectable: boolean
+  checkboxSelected: boolean
 }>()
 </script>
 
@@ -110,5 +96,8 @@ const props = defineProps<{
   visibility: visible;
   opacity: 1;
   transform: translateX(0);
+}
+.slide-card.selectable .actions {
+  display: none;
 }
 </style>

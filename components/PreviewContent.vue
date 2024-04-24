@@ -1,8 +1,27 @@
 <template>
   <AppSection
     heading="Preview and Edit Content"
+    :secondary-buttons="[
+      {
+        label: bulkActionLabel,
+        action: 'select-slides',
+        icon: bulkActionIcon,
+        color: 'primary',
+        confirmAction: false,
+        visible: true,
+      },
+      {
+        label: 'Delete Slides',
+        action: 'delete-selected-slides',
+        icon: 'i-bx-trash',
+        color: 'red',
+        confirmAction: true,
+        visible: bulkSelectedSlides.length > 0,
+      },
+    ]"
     slot-ctn-styles="flex flex-col justify-between h-[calc(100vh-182px)]"
     class="flex-[2]"
+    @delete-selected-slides="deleteMultipleSlides(bulkSelectedSlides)"
   >
     <div
       class="slides-ctn overflow-y-scroll mb-4 rounded-md transition h-[50%]"
@@ -18,12 +37,15 @@
           :key="slide.id"
           :slide="slide"
           :live="false"
+          :selectable="bulkSelectSlides"
           :id="useURLFriendlyString(`${slide.name}-${index}`)"
+          :checkbox-selected="bulkSelectedSlides.includes(slide?.id)"
           grid-type
           :selected="activeSlide?.id === slide?.id"
-          @click="makeSlideActive(slide)"
+          @click="bulkSelectSlides ? null : makeSlideActive(slide)"
           @duplicate="createNewSlide(slide)"
           @delete="deleteSlide"
+          @bulk-selected="addToSelectedSlides(slide?.id, $event)"
         />
       </div>
       <EmptyState
@@ -57,6 +79,10 @@ const slides = ref<Array<Slide>>(appStore.activeSlides || [])
 const activeSlide = ref<Slide>()
 const { activeSlides } = storeToRefs(appStore)
 const slidesGrid = ref<HTMLDivElement | null>(null)
+const bulkActionLabel = ref<string>("Select Slides")
+const bulkActionIcon = ref<string>("")
+const bulkSelectSlides = ref<boolean>(false)
+const bulkSelectedSlides = ref<string[]>([])
 
 watch(
   slides,
@@ -137,6 +163,24 @@ emitter.on("new-active-slide", (data: Slide) => {
   }
 })
 
+emitter.on("select-slides", () => {
+  if (bulkActionLabel.value === "Select Slides") {
+    bulkSelectSlides.value = !bulkSelectSlides.value
+    bulkActionLabel.value = "Select All"
+    bulkActionIcon.value = "i-bx-checkbox"
+    // bulkActionIcon.value = "i-bxs-checkbox-checked"
+  } else if (bulkActionLabel.value === "Select All") {
+    addAllSlidesToSelectedSlides()
+    bulkActionLabel.value = "Cancel"
+    bulkActionIcon.value = "i-mdi-close"
+  } else if (bulkActionLabel.value === "Cancel") {
+    removeAllSelectedSlides()
+    bulkActionLabel.value = "Select Slides"
+    bulkActionIcon.value = ""
+    bulkSelectSlides.value = !bulkSelectSlides.value
+  }
+})
+
 const preSlideCreation = (): Slide => {
   const tempSlide: Slide = {
     id: useID(),
@@ -170,12 +214,25 @@ const createNewSlide = (duplicateSlide?: Slide) => {
   })
 }
 
-const deleteSlide = (slideId: string) => {
+const deleteSlide = (slideId: string, addToast: boolean = true) => {
   const tempSlide = appStore.activeSlides.find((s) => s.id === slideId)
   const slideIndex = slides.value.findIndex((s) => s.id === slideId)
   slides.value.splice(slideIndex, 1)
   appStore.setActiveSlides(slides.value)
-  toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-bx-trash" })
+  if (addToast) {
+    toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-bx-trash" })
+  }
+}
+
+const deleteMultipleSlides = (slideIds: Array<string>) => {
+  slideIds.forEach((slideId) => {
+    deleteSlide(slideId, false)
+  })
+  toast.add({ title: "Multiple slides deleted", icon: "i-bx-trash" })
+  bulkSelectedSlides.value = []
+  bulkActionLabel.value = "Select Slides"
+  bulkActionIcon.value = ""
+  bulkSelectSlides.value = false
 }
 
 const onUpdateSlide = (slide: Slide) => {
@@ -381,6 +438,43 @@ const gotoChorus = () => {
     slides.value.splice(slideIndex, 1, tempSlide)
     updateLiveOutput(activeSlide.value)
   }
+}
+
+const addAllSlidesToSelectedSlides = () => {
+  bulkSelectedSlides.value = activeSlides.value.map((slide) => slide?.id)
+}
+
+const removeAllSelectedSlides = () => {
+  bulkSelectedSlides.value = []
+}
+
+const addToSelectedSlides = (slideId: string, isSelected: boolean) => {
+  if (isSelected) {
+    bulkSelectedSlides.value.push(slideId)
+  } else {
+    bulkSelectedSlides.value.splice(
+      bulkSelectedSlides.value.findIndex((id) => id === slideId),
+      1
+    )
+  }
+  // if (bulkSelectedSlides.value.includes(slideId)) {
+  //   bulkSelectedSlides.value.splice(
+  //     bulkSelectedSlides.value.findIndex((id) => id === slideId),
+  //     1
+  //   )
+  // }
+  // console.log(
+  //   slideId,
+  //   bulkSelectedSlides.value.findIndex((id) => id === slideId)
+  // )
+  // bulkSelectedSlides.value.push(slideId)
+}
+
+const removeFromSelectedSlides = (slideId: string) => {
+  bulkSelectedSlides.value.splice(
+    bulkSelectedSlides.value.findIndex((id) => id === slideId),
+    0
+  )
 }
 </script>
 

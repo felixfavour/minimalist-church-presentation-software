@@ -5,7 +5,10 @@
     <div
       class="heading p-2 px-3 bg-primary-100 dark:bg-primary-900 border dark:border-none"
     >
-      <h2 class="font-medium text-sm flex items-center top-0 bottom-[auto]">
+      <h2
+        class="font-medium text-sm flex items-center top-0 bottom-[auto]"
+        :class="[secondaryButtons ? 'justify-between' : '']"
+      >
         <template v-if="subHeading">
           <UButton
             variant="ghost"
@@ -22,6 +25,32 @@
         <span v-else class="p-1 px-2">
           {{ heading }}
         </span>
+        <div class="actions flex flex-row-reverse items-center gap-1">
+          <div class="action-inner" v-for="secondaryButton in secondaryButtons">
+            <ConfirmDialog
+              v-if="secondaryButton.visible && secondaryButton.confirmAction"
+              :button-label="secondaryButton.label"
+              :button-icon="secondaryButton.icon"
+              :button-color="secondaryButton.color"
+              button-size="md"
+              header="Delete selected slides"
+              button-styles="p-1 px-2"
+              label="Are you sure you want to delete all of the selected slides? This action is irreversible."
+              @confirm="$emit(secondaryButton.action, slide?.id)"
+            >
+            </ConfirmDialog>
+            <UButton
+              v-if="secondaryButton.visible && !secondaryButton.confirmAction"
+              variant="ghost"
+              class="p-1 px-2"
+              size="md"
+              :color="secondaryButton.color"
+              :icon="secondaryButton.icon"
+              @click="useGlobalEmit(secondaryButton.action)"
+              >{{ secondaryButton.label }}</UButton
+            >
+          </div>
+        </div>
       </h2>
     </div>
     <div :class="`slot-ctn p-3 text-sm ${slotCtnStyles || ''}`">
@@ -35,6 +64,7 @@ const props = defineProps({
   heading: String,
   subHeading: String,
   slotCtnStyles: String,
+  secondaryButtons: Array,
 })
 </script>
 

@@ -74,6 +74,7 @@ const fileObj = computed(() =>
 )
 
 const addMediaEmitter = () => {
+  console.log("file", file.value)
   emitter.emit("new-media", fileObj.value)
   emit("close")
 }
