@@ -66,3 +66,14 @@ export interface SlideStyle {
   alignment?: string
   font?: string
 }
+
+export interface AppSettings {
+  appVersion: string,
+  defaultBibleVersion: string,
+  defaultBackground: {
+    hymn: { backgroundType: string, background: string },
+    bible: { backgroundType: string, background: string },
+    text: { backgroundType: string, background: string },
+  },
+  slideStyles: SlideStyle
+}

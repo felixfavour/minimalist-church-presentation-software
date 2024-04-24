@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Slide, SlideStyle } from '~/types/index'
+import { AppSettings, Slide, SlideStyle } from '~/types/index'
 import type { Emitter } from 'mitt'
 
 // console.log(usePinia())
@@ -12,6 +12,7 @@ export const useAppStore = defineStore('app', {
       liveSlideId: null as string | null,
       emitter: null as Emitter | null,
       settings: {
+        appVersion: '0.1.0',
         defaultBibleVersion: 'KJV',
         defaultBackground: {
           hymn: {
@@ -53,6 +54,9 @@ export const useAppStore = defineStore('app', {
     },
     setEmitter(emitter: Emitter) {
       this.emitter = emitter
+    },
+    setAppSettings(settings: AppSettings) {
+      this.settings = settings
     },
     setSlideStyles(styles: SlideStyle) {
       this.settings = { ...this.settings, slideStyles: styles }

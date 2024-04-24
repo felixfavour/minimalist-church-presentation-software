@@ -38,6 +38,7 @@
 
 <script setup lang="ts">
 import mitt from "mitt"
+import type { AppSettings } from "./types"
 import { useAppStore } from "./store/app"
 
 import kjvBible from "./public/kjv.json"
@@ -52,7 +53,7 @@ const appStore = useAppStore()
 nuxtApp.provide("emitter", emitter)
 appStore.setEmitter(emitter)
 
-const appVersion = ref<string>("0.5.5")
+const appVersion = ref<string>("0.5.6")
 const loadingResources = ref<boolean>(true)
 const downloadProgress = ref<number>(5)
 
@@ -110,8 +111,34 @@ const downloadEssentialResources = async () => {
   }, 500)
 }
 
+const overrideAppSettings = () => {
+  const currentAppSettings = appStore.settings
+  // Override App Settings if current app version mismatches appVersion in state
+  if (currentAppSettings.appVersion !== appVersion.value) {
+    appStore.setAppSettings({
+      ...currentAppSettings,
+      appVersion: appVersion.value,
+      defaultBackground: {
+        hymn: {
+          backgroundType: "video",
+          background: "/video-bg-1.mp4",
+        },
+        bible: {
+          backgroundType: "video",
+          background: "/video-bg-3.mp4",
+        },
+        text: {
+          backgroundType: "video",
+          background: "/video-bg-4.mp4",
+        },
+      },
+    })
+  }
+}
+
 registerServiceWorker()
 downloadEssentialResources()
+overrideAppSettings()
 </script>
 
 <style>
