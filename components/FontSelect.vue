@@ -45,7 +45,7 @@
           :class="useURLFriendlyString(font)"
           >{{ font }}</span
         >
-        <span v-else>Select people</span>
+        <span v-else>Select font</span>
       </template>
       <template #option="{ option: font }">
         <span
@@ -54,7 +54,7 @@
           :class="useURLFriendlyString(font)"
           >{{ font }}</span
         >
-        <span v-else>Select people</span>
+        <span v-else>Select font</span>
       </template>
     </USelectMenu>
   </div>

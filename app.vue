@@ -114,6 +114,7 @@ const downloadEssentialResources = async () => {
 const overrideAppSettings = () => {
   const currentAppSettings = appStore.settings
   // Override App Settings if current app version mismatches appVersion in state
+  // TODO: When appSettings is editable by user, it must take preference over system settings and override
   if (currentAppSettings.appVersion !== appVersion.value) {
     appStore.setAppSettings({
       ...currentAppSettings,

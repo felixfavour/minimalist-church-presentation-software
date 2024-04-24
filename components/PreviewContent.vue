@@ -168,7 +168,11 @@ emitter.on("select-slides", () => {
     bulkSelectSlides.value = !bulkSelectSlides.value
     bulkActionLabel.value = "Select All"
     bulkActionIcon.value = "i-bx-checkbox"
-    // bulkActionIcon.value = "i-bxs-checkbox-checked"
+    toast.add({
+      title: "Click button twice to cancel",
+      icon: "i-bx-info-circle",
+      color: "green",
+    })
   } else if (bulkActionLabel.value === "Select All") {
     addAllSlidesToSelectedSlides()
     bulkActionLabel.value = "Cancel"
@@ -457,17 +461,6 @@ const addToSelectedSlides = (slideId: string, isSelected: boolean) => {
       1
     )
   }
-  // if (bulkSelectedSlides.value.includes(slideId)) {
-  //   bulkSelectedSlides.value.splice(
-  //     bulkSelectedSlides.value.findIndex((id) => id === slideId),
-  //     1
-  //   )
-  // }
-  // console.log(
-  //   slideId,
-  //   bulkSelectedSlides.value.findIndex((id) => id === slideId)
-  // )
-  // bulkSelectedSlides.value.push(slideId)
 }
 
 const removeFromSelectedSlides = (slideId: string) => {
