@@ -111,6 +111,23 @@ const downloadEssentialResources = async () => {
   }, 500)
 }
 
+const retrieveAllMediaFilesFromDB = async () => {
+  const slides = [...appStore.activeSlides]
+  slides.forEach(async (slide) => {
+    if (slide.type === slideTypes.media) {
+      const mediaObj = await useIndexedDB()
+        .media.where({ id: slide.id })
+        .toArray()
+      if (mediaObj[0]) {
+        const fileUrl = URL.createObjectURL(mediaObj[0].content)
+        slide.data.url = fileUrl
+        slide.background = fileUrl
+        appStore.setActiveSlides(slides)
+      }
+    }
+  })
+}
+
 const overrideAppSettings = () => {
   const currentAppSettings = appStore.settings
   // Override App Settings if current app version mismatches appVersion in state
@@ -138,7 +155,11 @@ const overrideAppSettings = () => {
 }
 
 registerServiceWorker()
+
 downloadEssentialResources()
+
+retrieveAllMediaFilesFromDB()
+
 overrideAppSettings()
 </script>
 

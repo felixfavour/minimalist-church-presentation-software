@@ -38,7 +38,7 @@ export const quickActionsArr = [
   },
   {
     icon: "i-bx-music",
-    name: "Display Lyrics",
+    name: "Display Song Lyrics",
     desc: "Find lyrics to any song, native too",
     action: "new-song",
     meta: "",
@@ -57,6 +57,15 @@ export const quickActionsArr = [
     name: "Add Media",
     desc: "Display video or image media",
     action: "new-media",
+    meta: "",
+    type: slideTypes.media,
+    // type: slideTypes.text
+  },
+  {
+    icon: "i-bx-save",
+    name: "Add to Personal Library",
+    desc: "Save your favorite songs, slides",
+    action: "new-library",
     meta: "",
     type: slideTypes.media,
     // type: slideTypes.text

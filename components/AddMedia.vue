@@ -65,6 +65,7 @@ const emit = defineEmits(["close"])
 const fileObj = computed(() =>
   file.value
     ? {
+        blob: file.value,
         name: file.value?.name,
         size: file.value?.size,
         type: file.value?.type?.split("/")?.[0],
@@ -74,7 +75,6 @@ const fileObj = computed(() =>
 )
 
 const addMediaEmitter = () => {
-  console.log("file", file.value)
   emitter.emit("new-media", fileObj.value)
   emit("close")
 }

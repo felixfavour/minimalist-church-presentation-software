@@ -218,11 +218,16 @@ const createNewSlide = (duplicateSlide?: Slide) => {
   })
 }
 
-const deleteSlide = (slideId: string, addToast: boolean = true) => {
+const deleteSlide = async (slideId: string, addToast: boolean = true) => {
   const tempSlide = appStore.activeSlides.find((s) => s.id === slideId)
   const slideIndex = slides.value.findIndex((s) => s.id === slideId)
   slides.value.splice(slideIndex, 1)
   appStore.setActiveSlides(slides.value)
+
+  // Delete Probable Media files linked in DB
+  const db = useIndexedDB()
+  await db.media.delete(slideId)
+
   if (addToast) {
     toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-bx-trash" })
   }
@@ -325,8 +330,16 @@ const createNewSongSlide = (song: Song) => {
   toast.add({ title: "Song slide created", icon: "i-bx-music" })
 }
 
-const createNewMediaSlide = (file: any) => {
+const createNewMediaSlide = async (file: any) => {
   const tempSlide = { ...preSlideCreation() }
+
+  // Store Blob in DB for easy retrieval on reload
+  await useIndexedDB().media.add({
+    id: tempSlide.id,
+    content: file.blob,
+  })
+  delete file.blob
+
   tempSlide.type = slideTypes.media
   tempSlide.backgroundType = file.type
   tempSlide.background = file.url

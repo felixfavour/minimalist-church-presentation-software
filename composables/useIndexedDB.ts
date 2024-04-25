@@ -1,3 +1,4 @@
+import Dexie from 'dexie'
 import { Song } from '~/types'
 import useURLFriendlyString from './useURLFriendlyString'
 
@@ -9,28 +10,15 @@ const addIdToReturnedSongs = (songs: Array<Song>) => {
 }
 
 const useIndexedDB = () => {
-  const request = window.indexedDB.open('cloud_of_worshippers', 1)
+  const db = new Dexie('worshipcloud')
+  db.version(1).stores({
+    // slides: 'id,name,type,layout,contents,backgroundType,background,title,songId,hasChorus,data,slideStyle',
+    songs: 'id,lyrics,title,album,cover,artist,verses',
+    media: 'id,content', // id === slide.id
+    library: '++id,type,content'
+  })
 
-  request.onerror = (event) => {
-    console.log('DB operation failed', event?.target?.errorCode)
-  };
-  request.onsuccess = (event) => {
-    console.log('DB operation successful', event)
-  };
-
-  request.onupgradeneeded = (event) => {
-    console.log('DB upgrade began', event)
-    const db = event?.target?.result
-
-    // Create songs object in DB
-    const objectStore = db.createObjectStore('songs', { keypath: 'id' })
-    objectStore.createIndex('title', 'title', { unique: false })
-    objectStore.createIndex('artist', 'artist', { unique: false })
-    console.log('DB upgrade Ended', event)
-  }
-
-
-  return null
+  return db
 }
 
 export default useIndexedDB
