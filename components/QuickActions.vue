@@ -69,6 +69,9 @@
 
       <!-- SEARCH BIBLE SECTION-->
       <SearchBibleList v-else-if="page === 'search-bible'" @close="page = ''" />
+
+      <!-- PERSONAL LIBRARY SECTION-->
+      <PersonalLibrary v-else-if="page === 'library'" @close="page = ''" />
     </Transition>
   </AppSection>
 </template>
@@ -131,6 +134,10 @@ emitter.on("new-media", () => {
 
 emitter.on("new-search-bible", () => {
   page.value = "search-bible"
+})
+
+emitter.on("new-library", () => {
+  page.value = "library"
 })
 
 onMounted(() => {

@@ -91,9 +91,7 @@ watch(
 
     setTimeout(() => {
       // Scroll down to newest slide on slide create
-      const slideId = useURLFriendlyString(
-        `${activeSlide.value?.name}-${slides.value?.length - 1}`
-      )
+      const slideId = activeSlide.value?.id
       const newestSlide = slidesGrid.value?.querySelector(`#${slideId}`)
       newestSlide?.scrollIntoView()
     }, 100)

@@ -42,9 +42,9 @@ import type { AppSettings } from "./types"
 import { useAppStore } from "./store/app"
 
 import kjvBible from "./public/kjv.json"
-import nkjvBible from "./public/nkjv.json"
-import nivBible from "./public/niv.json"
-import ampBible from "./public/amp.json"
+// import nkjvBible from "./public/nkjv.json"
+// import nivBible from "./public/niv.json"
+// import ampBible from "./public/amp.json"
 import hymns from "./public/hymns.json"
 
 const nuxtApp = useNuxtApp()
@@ -85,20 +85,20 @@ const downloadEssentialResources = async () => {
   useNuxtApp().provide("kjvBible", kjvBible || "")
   downloadProgress.value = 2
 
-  // Download NKJV Bible
-  // const nkjvBible = await useS3File("nkjv.json")
-  useNuxtApp().provide("nkjvBible", nkjvBible || "")
-  downloadProgress.value = 3
+  // // Download NKJV Bible
+  // // const nkjvBible = await useS3File("nkjv.json")
+  // useNuxtApp().provide("nkjvBible", nkjvBible || "")
+  // downloadProgress.value = 3
 
-  // Download NIV Bible
-  // const nivBible = await useS3File("niv.json")
-  useNuxtApp().provide("nivBible", nivBible || "")
-  downloadProgress.value = 4
+  // // Download NIV Bible
+  // // const nivBible = await useS3File("niv.json")
+  // useNuxtApp().provide("nivBible", nivBible || "")
+  // downloadProgress.value = 4
 
-  // Download AMP Bible
-  // const ampBible = await useS3File("amp.json")
-  useNuxtApp().provide("ampBible", ampBible || "")
-  downloadProgress.value = 5
+  // // Download AMP Bible
+  // // const ampBible = await useS3File("amp.json")
+  // useNuxtApp().provide("ampBible", ampBible || "")
+  // downloadProgress.value = 5
 
   // Download all hymns
   // const hymns = await useS3File("hymns.json")
