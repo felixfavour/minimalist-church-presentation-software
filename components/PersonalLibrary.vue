@@ -22,6 +22,18 @@
       >
       <span v-else>View saved songs</span>
     </UButton>
+    <div v-if="page !== 'add-song'" class="flex gap-2 come-up-1">
+      <UInput
+        icon="i-bx-search"
+        :placeholder="`Search saved ${libraryTabs[activeLibraryTab].label}s`"
+        v-model="searchInput"
+        class="w-[100%]"
+        @input="onSearchInput"
+        @input.capture="loading = true"
+        @keyup.enter="null"
+      />
+      <UButton icon="i-bx-x" color="primary" @click="$emit('close')"></UButton>
+    </div>
     <div
       v-if="loading"
       class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]"
@@ -33,65 +45,97 @@
       ></USkeleton>
     </div>
     <template v-else>
-      <div v-if="page !== 'add-song'" class="flex gap-2 come-up-1">
-        <UInput
-          icon="i-bx-search"
-          :placeholder="`Search saved ${libraryTabs[activeLibraryTab].label}s`"
-          v-model="searchInput"
-          class="w-[100%]"
-          @input="onSearchInput"
-          @keyup.enter="null"
-        />
-        <UButton
-          icon="i-bx-x"
-          color="primary"
-          @click="$emit('close')"
-        ></UButton>
-      </div>
-      <!-- SEARCHING SAVED SONGS -->
-      <div
-        v-if="activeLibraryTab === 0"
-        class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)] come-up-1"
-      >
-        <AddSong
-          v-if="page === 'add-song'"
-          :song="songToEdit"
-          @go-home="page = ''"
-        />
-        <template v-if="page !== 'add-song'">
+      <template v-if="searchInput.length < 2">
+        <!-- SAVED SONGS -->
+        <div
+          v-if="activeLibraryTab === 0"
+          class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)] come-up-1"
+        >
+          <AddSong
+            v-if="page === 'add-song'"
+            :song="songToEdit"
+            @go-home="page = ''"
+          />
+          <template v-if="page !== 'add-song'">
+            <EmptyState
+              v-if="savedSongs?.length === 0"
+              icon="i-tabler-database-search"
+              sub="No songs saved yet."
+              desc="Click the save icon on the Slide card to start saving"
+            />
+            <SongCard
+              v-for="(song, index) in savedSongs"
+              saved
+              :key="song.content.id"
+              :song="song.content"
+              @edit-song="editSong($event)"
+              @delete-song="deleteSong($event)"
+            />
+          </template>
+        </div>
+        <!-- SAVED SLIDES -->
+        <div
+          v-if="activeLibraryTab === 1"
+          class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)] come-up-1"
+        >
           <EmptyState
-            v-if="savedSongs?.length === 0"
+            v-if="savedSlides?.length === 0"
             icon="i-tabler-database-search"
-            sub="No songs saved yet."
+            sub="No slides saved yet."
             desc="Click the save icon on the Slide card to start saving"
           />
-          <SongCard
-            v-for="(song, index) in savedSongs"
-            saved
-            :key="song.content.id"
-            :song="song.content"
-            @edit-song="editSong($event)"
-            @delete-song="deleteSong($event)"
+          <ListSlideCard
+            v-for="(slide, index) in savedSlides"
+            :key="slide.content.id"
+            :slide="slide.content"
           />
-        </template>
-      </div>
-      <!-- SEARCHING SAVED SLIDES -->
-      <div
-        v-if="activeLibraryTab === 1"
-        class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)] come-up-1"
-      >
-        <EmptyState
-          v-if="savedSlides?.length === 0"
-          icon="i-tabler-database-search"
-          sub="No slides saved yet."
-          desc="Click the save icon on the Slide card to start saving"
-        />
-        <ListSlideCard
-          v-for="(slide, index) in savedSlides"
-          :key="slide.content.id"
-          :slide="slide.content"
-        />
-      </div>
+        </div>
+      </template>
+      <!-- SEARCHING LIBRARY ITEMS -->
+      <template v-else>
+        <!-- SAVED SONGS -->
+        <div
+          v-if="activeLibraryTab === 0"
+          class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)] come-up-1"
+        >
+          <AddSong
+            v-if="page === 'add-song'"
+            :song="songToEdit"
+            @go-home="page = ''"
+          />
+          <template v-if="page !== 'add-song'">
+            <EmptyState
+              v-if="savedSongsSearchResults?.length === 0"
+              icon="i-tabler-database-search"
+              sub="We couldn't find a saved song matching your query"
+            />
+            <SongCard
+              v-for="(song, index) in savedSongsSearchResults"
+              saved
+              :key="song.content.id"
+              :song="song.content"
+              @edit-song="editSong($event)"
+              @delete-song="deleteSong($event)"
+            />
+          </template>
+        </div>
+        <!-- SAVED SLIDES -->
+        <div
+          v-if="activeLibraryTab === 1"
+          class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)] come-up-1"
+        >
+          <EmptyState
+            v-if="savedSlidesSearchResults?.length === 0"
+            icon="i-tabler-database-search"
+            sub="We couldn't find a saved slide matching your query"
+          />
+          <ListSlideCard
+            v-for="(slide, index) in savedSlidesSearchResults"
+            :key="slide.content.id"
+            :slide="slide.content"
+          />
+        </div>
+      </template>
     </template>
   </div>
 </template>
@@ -137,6 +181,18 @@ const savedSlides = computed(() => {
   return libraryItems?.value?.filter((item) => item.type === libraryTypes.slide)
 })
 
+const savedSongsSearchResults = computed(() => {
+  return searchedLibraryItems?.value?.filter(
+    (item) => item.type === libraryTypes.song
+  )
+})
+
+const savedSlidesSearchResults = computed(() => {
+  return searchedLibraryItems?.value?.filter(
+    (item) => item.type === libraryTypes.slide
+  )
+})
+
 const deleteSong = async (songId: string) => {
   await useIndexedDB().library.delete(songId)
   toast.add({ icon: "i-tabler-trash", title: "Song has been deleted" })
@@ -147,5 +203,23 @@ const editSong = (song: Song) => {
   songToEdit.value = song
 }
 
-const onSearchInput = useDebounceFn(async () => {}, 500)
+const searchLibraryItems = (query: string = "") => {
+  let results = fuzzysort.go(query, libraryItems.value, {
+    keys: [
+      "id",
+      "content.type",
+      "content.title",
+      "content.name",
+      "content.artist",
+    ],
+  })
+  results = results?.map((result) => result.obj)
+  console.log(results)
+  searchedLibraryItems.value = results
+  loading.value = false
+}
+
+const onSearchInput = useDebounceFn(async () => {
+  searchLibraryItems(searchInput.value)
+}, 500)
 </script>
