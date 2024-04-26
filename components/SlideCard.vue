@@ -3,6 +3,7 @@
   <div
     v-if="gridType"
     class="slide-card gap-3 h-[120px] rounded-md bg-primary hover:bg-primary-700 transition-all cursor-pointer relative overflow-hidden"
+    :id="slide?.id"
     :class="[
       selected ? 'border-black' : 'border-transparent',
       { selectable: selectable },
@@ -26,7 +27,7 @@
         class="texts flex items-center gap-2 text-white absolute top-1 right-2 left-2"
       >
         <h4 class="font-medium ws-nowrap mt-1 text-left text-xs">
-          {{ slide?.name }}
+          {{ useShortSlideName(slide) }}
         </h4>
         <SlideChip :slide-type="slide?.type" class="mt-1" dark-mode />
       </div>

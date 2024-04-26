@@ -370,6 +370,14 @@ const gotoAction = (title: string, version: string) => {
 }
 
 const gotoScripture = (title: string, version: string) => {
+  // Check that [title] is not abbreviated or in short form
+  // If it is, replace to long/unabbreviated form
+  let bibleBook = title.substring(0, title?.lastIndexOf(' '))
+  if (!bibleBooks.includes(bibleBook)) {
+    bibleBook = (bibleBooks.find(book => book.toLowerCase().startsWith(bibleBook.toLowerCase()))) || ''
+    title = `${bibleBook} ${title.substring(title?.lastIndexOf(' ')).trim()}`
+    console.log(title)
+  }
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
   const scriptureSplitted = useScriptureLabel(title || "1:1:1")?.split(":")

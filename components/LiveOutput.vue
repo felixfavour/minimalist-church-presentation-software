@@ -23,6 +23,7 @@
         <template #item="{ element: slide }">
           <button
             class="group slide-card flex w-[100%] text-left gap-3 p-2 border-t first:border-t-0 border-gray-100 dark:border-primary-950 rounded-md hover:bg-primary-50 dark:hover:bg-primary-900 transition-all cursor-pointer relative"
+            :id="slide?.id"
             :class="{
               'bg-red-100 dark:bg-red-900': liveSlide?.id === slide?.id,
             }"

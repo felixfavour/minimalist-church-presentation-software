@@ -52,7 +52,7 @@
               size="xs"
               variant="none"
               v-model="verse"
-              inputClass="bg-white border-0 shadow-none outline-none w-[16ch] text-center dark:text-primary-900"
+              :inputClass="`'bg-white border-0 shadow-none outline-none text-center dark:text-primary-900 transition-all ${slide?.type !== slideTypes.bible ? 'w-[10ch]' : 'w-[16ch]'}`"
               @keydown.enter="$emit('goto-verse', verse)"
             />
             <UTooltip text="Next verse" :popper="{ arrow: true }">
