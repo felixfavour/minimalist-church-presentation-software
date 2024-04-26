@@ -58,6 +58,8 @@
           @click="focusedActionIndex = index"
         />
       </div>
+
+      <EmptyState v-if="!loading && hymns?.length === 0" icon="i-tabler-cloud-search" sub="We couldn't find that hymn" />
     </template>
   </div>
 </template>

@@ -58,6 +58,8 @@
           @click="focusedActionIndex = index"
         />
       </div>
+
+      <EmptyState v-if="!loading && songs?.length === 0" icon="i-tabler-cloud-search" sub="We couldn't find that song" />
     </template>
   </div>
 </template>
