@@ -8,6 +8,11 @@ export const slideTypes = {
   carousel: 'carousel',
 }
 
+export const libraryTypes = {
+  song: 'song',
+  slide: 'slide',
+}
+
 export const quickActionsArr = [
   {
     icon: "i-bx-bible",
@@ -63,10 +68,10 @@ export const quickActionsArr = [
   },
   {
     icon: "i-bx-save",
-    name: "Add to Personal Library",
+    name: "Add to Library",
     desc: "Save your favorite songs, slides",
     action: "new-library",
-    meta: "",
+    meta: "save files images pictures videos songs documents",
     type: slideTypes.media,
     // type: slideTypes.text
   },

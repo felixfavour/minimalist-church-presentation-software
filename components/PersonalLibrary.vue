@@ -1,101 +1,74 @@
 <template>
   <div class="personal-library-main min-h-[90vh]" ref="quickActions">
-    <div class="flex gap-2">
-      <UInput
-        icon="i-bx-search"
-        placeholder="Search library"
-        v-model="searchInput"
-        class="w-[100%]"
-        @input="onSearchInput"
-        @keyup.enter="getLibraryItems($event.target.value)"
-      />
-      <UButton icon="i-bx-x" color="primary" @click="$emit('close')"></UButton>
-    </div>
+    <UTabs :items="libraryTabs" @change="activeLibraryTab = $event">
+      <template #default="{ item }">
+        <div class="flex gap-2 capitalize">
+          <IconWrapper :name="item.icon" size="4" />
+          {{ item.label }}s
+        </div>
+      </template>
+    </UTabs>
+    <UButton class="mb-2 capitalize" size="lg" block icon="i-bx-plus">
+      Add new {{ libraryTabs[activeLibraryTab].label }}
+    </UButton>
 
-    <div
-      v-if="loading"
-      class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]"
-    >
-      <USkeleton
-        v-for="i in 15"
-        :key="i"
-        class="w-[100%] h-[80px] mt-2"
-      ></USkeleton>
+    <div v-if="loading" class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]">
+      <USkeleton v-for="i in 15" :key="i" class="w-[100%] h-[80px] mt-2"></USkeleton>
     </div>
     <template v-else>
-      <!-- SEARCHING BIBLE VERSES -->
-      <div class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]">
-        <ActionCard
-          v-for="(verse, index) in libraryItems"
-          :key="`verse ${index}`"
-          action=""
-          type="bible"
-          :class="{
-            'bg-primary-50 dark:bg-primary-800 rounded-md':
-              index === focusedActionIndex,
-          }"
-          @click="focusedActionIndex = index"
-        />
+      <div class="flex gap-2 come-up-1">
+        <UInput icon="i-bx-search" :placeholder="`Search saved ${libraryTabs[activeLibraryTab].label}s`"
+          v-model="searchInput" class="w-[100%]" @input="onSearchInput" @keyup.enter="null" />
+        <UButton icon="i-bx-x" color="primary" @click="$emit('close')"></UButton>
+      </div>
+      <!-- SEARCHING SAVED SONGS -->
+      <div v-if="activeLibraryTab === 0" class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)] come-up-1">
+
+        <EmptyState v-if="savedSongs?.length === 0" icon="i-tabler-database-search" sub="No songs saved yet."
+          desc="Click the save icon on the Slide card to start saving" />
+        <SongCard v-for="(song, index) in savedSongs" saved :key="song.content.id" :song="song.content" />
+      </div>
+      <!-- SEARCHING SAVED SLIDES -->
+      <div v-if="activeLibraryTab === 1" class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)] come-up-1">
+        <EmptyState v-if="savedSlides?.length === 0" icon="i-tabler-database-search" sub="No slides saved yet."
+          desc="Click the save icon on the Slide card to start saving" />
+        <ListSlideCard v-for="(slide, index) in savedSlides" :key="slide.content.id" :slide="slide.content" />
       </div>
     </template>
   </div>
 </template>
 <script setup lang="ts">
-import type { QuickAction, BibleVerse } from "~/types"
+import type { Slide, Song } from "~/types"
 import { useDebounceFn } from "@vueuse/core"
+import { useObservable } from '@vueuse/rxjs'
 import fuzzysort from "fuzzysort"
+import { liveQuery } from "dexie";
 
+const libraryTabs = [
+  { label: 'song', icon: 'i-bx-music' },
+  { label: 'slide', icon: 'i-bx-slideshow' }
+]
+const activeLibraryTab = ref<number>(0)
 const searchInput = ref<string>("")
 const loading = ref<boolean>(false)
-const libraryItems = ref<BibleVerse[]>()
-const searchedLibraryItems = ref<BibleVerse[]>([])
+const libraryItems = useObservable<{ type: string, content: Slide | Song }[]>(
+  liveQuery(async () => {
+    return await useIndexedDB().library.reverse().toArray()
+  })
+)
+const searchedLibraryItems = ref<any[]>([])
 const focusedActionIndex = ref(0)
 const quickActions = ref<HTMLDivElement | null>(null)
 
-onMounted(() => {
-  quickActions.value?.addEventListener("keydown", (e) => {
-    if (e.defaultPrevented) {
-      e.preventDefault()
-      return
-    }
-    switch (e.key) {
-      case "ArrowDown":
-        focusedActionIndex.value < searchedLibraryItems.value.length - 1
-          ? (focusedActionIndex.value += 1)
-          : null
-        break
-      case "ArrowUp":
-        focusedActionIndex.value > 0 ? (focusedActionIndex.value -= 1) : null
-        break
-      case "Enter":
-        const action = searchedLibraryItems.value?.[focusedActionIndex.value]
-        // useGlobalEmit(
-        //   action.action,
-        //   `${action.bibleBookIndex}:${bibleChapterAndVerse.value}`
-        // )
-        break
-      default:
-        return
-    }
-  })
+const savedSongs = computed(() => {
+  return libraryItems?.value?.filter(item => item.type === libraryTypes.song)
 })
 
-const getLibraryItems = async (query: string = "") => {
-  if (query?.length >= 2) {
-    const library = await useIndexedDB()
-      .library.where({ type: query })
-      .toArray()
-    libraryItems.value = library
-  } else {
-    // Set Library Items from IndexedDB
-    const library = await useIndexedDB().library.reverse().limit(15).toArray()
-    libraryItems.value = library
-  }
-}
-
-getLibraryItems()
+const savedSlides = computed(() => {
+  return libraryItems?.value?.filter(item => item.type === libraryTypes.slide)
+})
 
 const onSearchInput = useDebounceFn(async () => {
-  getLibraryItems(searchInput.value)
+
 }, 500)
 </script>
