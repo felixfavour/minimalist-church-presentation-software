@@ -53,7 +53,7 @@ const appStore = useAppStore()
 nuxtApp.provide("emitter", emitter)
 appStore.setEmitter(emitter)
 
-const appVersion = ref<string>("0.5.6")
+const appVersion = ref<string>("0.5.7")
 const loadingResources = ref<boolean>(true)
 const downloadProgress = ref<number>(5)
 
