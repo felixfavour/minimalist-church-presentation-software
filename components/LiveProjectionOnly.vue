@@ -16,7 +16,7 @@
       :src="slide?.background"
       autoplay
       :loop="slide?.type !== slideTypes.media"
-      :muted="fullScreen && slide?.type !== slideTypes.media"
+      :muted="!(fullScreen && slide?.type === slideTypes.media)"
       playsinline="true"
       :class="[
         'h-[100%] w-[100%] absolute inset-0',
