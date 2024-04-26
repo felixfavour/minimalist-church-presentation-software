@@ -21,6 +21,13 @@ export default defineAppConfig({
         variant: 'none'
       }
     },
+    textarea: {
+      color: {
+        gray: {
+          none: ' bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white ring-0 focus:ring-0',
+        },
+      }
+    },
     notifications: {
       position: 'bottom-4 left-4 top-auto',
     }

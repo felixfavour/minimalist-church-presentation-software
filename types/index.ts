@@ -54,10 +54,10 @@ export interface Song {
   id: string
   lyrics: string
   title: string
-  album: string
-  cover: string
   artist: string
-  verses: Array<string>
+  album?: string
+  cover?: string
+  verses?: Array<string>
 }
 
 export interface SlideStyle {

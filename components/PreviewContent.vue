@@ -1,38 +1,70 @@
 <template>
-  <AppSection heading="Preview and Edit Content" :secondary-buttons="[
-    {
-      label: bulkActionLabel,
-      action: 'select-slides',
-      icon: bulkActionIcon,
-      color: 'primary',
-      confirmAction: false,
-      visible: true,
-    },
-    {
-      label: 'Delete Slides',
-      action: 'delete-selected-slides',
-      icon: 'i-bx-trash',
-      color: 'red',
-      confirmAction: true,
-      visible: bulkSelectedSlides.length > 0,
-    },
-  ]" slot-ctn-styles="flex flex-col justify-between h-[calc(100vh-182px)]" class="flex-[2]"
-    @delete-selected-slides="deleteMultipleSlides(bulkSelectedSlides)">
-    <div class="slides-ctn overflow-y-scroll mb-4 rounded-md transition h-[50%]"
-      :class="[slides?.length === 0 ? 'bg-primary-100' : '']">
-      <div v-if="slides?.length > 0" ref="slidesGrid" class="grid slides-grid gap-3">
-        <SlideCard v-for="(slide, index) in slides" :key="slide.id" :slide="slide" :live="false"
-          :selectable="bulkSelectSlides" :id="useURLFriendlyString(`${slide.name}-${index}`)"
-          :checkbox-selected="bulkSelectedSlides.includes(slide?.id)" grid-type :selected="activeSlide?.id === slide?.id"
-          @click="bulkSelectSlides ? null : makeSlideActive(slide)" @duplicate="createNewSlide(slide)"
-          @delete="deleteSlide" @save-slide="saveSlide(slide)" @bulk-selected="addToSelectedSlides(slide?.id, $event)" />
+  <AppSection
+    heading="Preview and Edit Content"
+    :secondary-buttons="[
+      {
+        label: bulkActionLabel,
+        action: 'select-slides',
+        icon: bulkActionIcon,
+        color: 'primary',
+        confirmAction: false,
+        visible: true,
+      },
+      {
+        label: 'Delete Slides',
+        action: 'delete-selected-slides',
+        icon: 'i-bx-trash',
+        color: 'red',
+        confirmAction: true,
+        visible: bulkSelectedSlides.length > 0,
+      },
+    ]"
+    slot-ctn-styles="flex flex-col justify-between h-[calc(100vh-182px)]"
+    class="flex-[2]"
+    @delete-selected-slides="deleteMultipleSlides(bulkSelectedSlides)"
+  >
+    <div
+      class="slides-ctn overflow-y-scroll mb-4 rounded-md transition h-[50%]"
+      :class="[slides?.length === 0 ? 'bg-primary-100' : '']"
+    >
+      <div
+        v-if="slides?.length > 0"
+        ref="slidesGrid"
+        class="grid slides-grid gap-3"
+      >
+        <SlideCard
+          v-for="(slide, index) in slides"
+          :key="slide.id"
+          :slide="slide"
+          :live="false"
+          :selectable="bulkSelectSlides"
+          :id="useURLFriendlyString(`${slide.name}-${index}`)"
+          :checkbox-selected="bulkSelectedSlides.includes(slide?.id)"
+          grid-type
+          :selected="activeSlide?.id === slide?.id"
+          @click="bulkSelectSlides ? null : makeSlideActive(slide)"
+          @duplicate="createNewSlide(slide)"
+          @delete="deleteSlide"
+          @save-slide="saveSlide(slide)"
+          @bulk-selected="addToSelectedSlides(slide?.id, $event)"
+        />
       </div>
-      <EmptyState v-else icon="i-tabler-device-desktop-plus" sub="No slides yet" action="new-slide"
-        action-text="Create new slide" />
+      <EmptyState
+        v-else
+        icon="i-tabler-device-desktop-plus"
+        sub="No slides yet"
+        action="new-slide"
+        action-text="Create new slide"
+      />
     </div>
-    <EditLiveContent :slide="activeSlide" @slide-update="onUpdateSlide" @goto-verse="gotoAction" @goto-chorus="gotoChorus"
+    <EditLiveContent
+      :slide="activeSlide"
+      @slide-update="onUpdateSlide"
+      @goto-verse="gotoAction"
+      @goto-chorus="gotoChorus"
       @update-bible-version="gotoScripture(activeSlide?.title!!, $event)"
-      @take-live="makeSlideActive(activeSlide!!, true)" />
+      @take-live="makeSlideActive(activeSlide!!, true)"
+    />
   </AppSection>
 </template>
 
@@ -197,10 +229,11 @@ const deleteSlide = async (slideId: string, addToast: boolean = true) => {
 
   // Delete Probable Media files linked in DB (as long as they are not saved in Library)
   const db = useIndexedDB()
-  const itemSaved = await db.library.get(slideId)
-  if (!itemSaved) {
-    await db.media.delete(slideId)
-  }
+  // const itemSaved = await db.library.get(slideId)
+  // if (!itemSaved) {
+  //   await db.media.delete(slideId)
+  // }
+  await db.media.delete(slideId)
 
   if (addToast) {
     toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-bx-trash" })
@@ -348,17 +381,21 @@ const gotoAction = (title: string, version: string) => {
 const gotoScripture = (title: string, version: string) => {
   // Check that [title] is not abbreviated or in short form
   // If it is, replace to long/unabbreviated form
-  let bibleBook = title.substring(0, title?.lastIndexOf(' '))
+  let bibleBook = title.substring(0, title?.lastIndexOf(" "))
   if (!bibleBooks.includes(bibleBook)) {
-    bibleBook = (bibleBooks.find(book => book.toLowerCase().startsWith(bibleBook.toLowerCase()))) || ''
-    title = `${bibleBook} ${title.substring(title?.lastIndexOf(' ')).trim()}`
+    bibleBook =
+      bibleBooks.find((book) =>
+        book.toLowerCase().startsWith(bibleBook.toLowerCase())
+      ) || ""
+    title = `${bibleBook} ${title.substring(title?.lastIndexOf(" ")).trim()}`
     console.log(title)
   }
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
   const scriptureSplitted = useScriptureLabel(title || "1:1:1")?.split(":")
-  const scriptureLabel = `${title?.slice(0, title.lastIndexOf(" "))} ${scriptureSplitted?.[1]
-    }:${scriptureSplitted?.[2]}`
+  const scriptureLabel = `${title?.slice(0, title.lastIndexOf(" "))} ${
+    scriptureSplitted?.[1]
+  }:${scriptureSplitted?.[2]}`
   const scriptureShortLabel = `${scriptureSplitted?.[0]}:${scriptureSplitted?.[1]}:${scriptureSplitted?.[2]}`
 
   const scripture = useScripture(scriptureShortLabel, version)
@@ -446,25 +483,41 @@ const saveSlide = async (item: Slide) => {
   tempItem.contents = [...tempItem?.contents]
   tempItem.data = { ...tempItem.data } as any
   try {
-
     if (tempItem.type === slideTypes.song) {
-      tempSong.verses = [...tempSong.verses] as []
-      await db.library.add({ id: tempSong.id, type: 'song', content: tempSong }, tempSong.id)
-      toast.add({ icon: 'i-bx-save', title: 'Song saved to Library' })
+      tempSong.verses = [...tempSong?.verses] as []
+      await db.library.add(
+        { id: tempSong.id, type: "song", content: tempSong },
+        tempSong.id
+      )
+      toast.add({ icon: "i-bx-save", title: "Song saved to Library" })
     } else {
-      await db.library.add({ id: tempItem.id, type: 'slide', content: tempItem }, tempItem.id)
-      toast.add({ icon: 'i-bx-save', title: 'Slide saved to Library' })
+      await db.library.add(
+        { id: tempItem.id, type: "slide", content: tempItem },
+        tempItem.id
+      )
+      toast.add({ icon: "i-bx-save", title: "Slide saved to Library" })
     }
   } catch (err: any) {
-    if (err.name === 'ConstraintError') {
+    if (err.name === "ConstraintError") {
       if (tempItem.type === slideTypes.song) {
-        db.library.update(tempSong.id, { id: tempSong.id, type: 'song', content: tempSong })
-        toast.add({ icon: 'i-bx-save', title: 'Updated song saved to Library' })
+        db.library.update(tempSong.id, {
+          id: tempSong.id,
+          type: "song",
+          content: tempSong,
+        })
+        toast.add({ icon: "i-bx-save", title: "Updated song saved to Library" })
       } else {
-        db.library.update(tempItem.id, { id: tempItem.id, type: 'slide', content: tempItem })
-        toast.add({ icon: 'i-bx-save', title: 'Updated slide saved to Library' })
+        db.library.update(tempItem.id, {
+          id: tempItem.id,
+          type: "slide",
+          content: tempItem,
+        })
+        toast.add({
+          icon: "i-bx-save",
+          title: "Updated slide saved to Library",
+        })
       }
-    } else if (err.name === 'DataCloneError') {
+    } else if (err.name === "DataCloneError") {
       // toast.add({ icon: 'i-bx-save', title: 'Item added to Library' })
     } else {
       console.log(err)
