@@ -53,7 +53,11 @@
         v-if="activeLibraryTab === 0"
         class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)] come-up-1"
       >
-        <AddSong v-if="page === 'add-song'" />
+        <AddSong
+          v-if="page === 'add-song'"
+          :song="songToEdit"
+          @go-home="page = ''"
+        />
         <template v-if="page !== 'add-song'">
           <EmptyState
             v-if="savedSongs?.length === 0"
@@ -66,6 +70,8 @@
             saved
             :key="song.content.id"
             :song="song.content"
+            @edit-song="editSong($event)"
+            @delete-song="deleteSong($event)"
           />
         </template>
       </div>
@@ -95,6 +101,7 @@ import { useDebounceFn } from "@vueuse/core"
 import { useObservable } from "@vueuse/rxjs"
 import fuzzysort from "fuzzysort"
 import { liveQuery } from "dexie"
+const toast = useToast()
 
 const libraryTabs = [
   { label: "song", icon: "i-bx-music" },
@@ -104,6 +111,7 @@ const activeLibraryTab = ref<number>(0)
 const searchInput = ref<string>("")
 const loading = ref<boolean>(false)
 const page = ref<string>("")
+const songToEdit = ref<Song>()
 const libraryItems = useObservable<
   { id: string; type: String; content: Slide | Song }[]
 >(
@@ -115,6 +123,12 @@ const searchedLibraryItems = ref<any[]>([])
 const focusedActionIndex = ref(0)
 const quickActions = ref<HTMLDivElement | null>(null)
 
+watch(page, (newVal, oldVal) => {
+  if (oldVal === "add-song" && songToEdit.value) {
+    songToEdit.value = undefined
+  }
+})
+
 const savedSongs = computed(() => {
   return libraryItems?.value?.filter((item) => item.type === libraryTypes.song)
 })
@@ -122,6 +136,16 @@ const savedSongs = computed(() => {
 const savedSlides = computed(() => {
   return libraryItems?.value?.filter((item) => item.type === libraryTypes.slide)
 })
+
+const deleteSong = async (songId: string) => {
+  await useIndexedDB().library.delete(songId)
+  toast.add({ icon: "i-tabler-trash", title: "Song has been deleted" })
+}
+
+const editSong = (song: Song) => {
+  page.value = "add-song"
+  songToEdit.value = song
+}
 
 const onSearchInput = useDebounceFn(async () => {}, 500)
 </script>

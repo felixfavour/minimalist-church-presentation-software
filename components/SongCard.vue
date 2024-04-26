@@ -1,7 +1,8 @@
 <template>
   <button
-    class="action-card flex gap-3 p-2 py-4 border-t first:border-t-0 border-gray-100 dark:border-primary-950 hover:rounded-md hover:bg-primary-50 dark:hover:bg-primary-800 transition-all cursor-pointer text-left w-[100%]"
-    @click="useGlobalEmit(`new-song`, { ...song, fromSaved: saved })">
+    class="action-card flex gap-3 p-2 py-4 border-t first:border-t-0 border-gray-100 dark:border-primary-950 hover:rounded-md hover:bg-primary-50 dark:hover:bg-primary-800 transition-all cursor-pointer text-left w-[100%] relative"
+    @click="useGlobalEmit(`new-song`, { ...song, fromSaved: saved })"
+  >
     <IconWrapper name="i-bx-music" class="mt-1 text-primary" rounded-bg />
     <div class="texts">
       <h4 class="font-semibold">
@@ -10,6 +11,32 @@
       <p class="font-light text-xs mt-1">
         {{ song?.artist || song?.author || "" }}
       </p>
+      <p
+        v-if="song?.author === 'me'"
+        class="font-light text-primary-500 text-2xs mt-1"
+      >
+        compiled by <b class="font-bold">me</b>
+      </p>
+    </div>
+    <div v-if="saved" class="actions flex absolute bottom-1 right-1">
+      <UTooltip text="Edit song" :popper="{ arrow: true }">
+        <UButton
+          size="xs"
+          variant="ghost"
+          icon="i-bx-edit"
+          @click.stop.prevent="$emit('edit-song', song)"
+        ></UButton>
+      </UTooltip>
+
+      <ConfirmDialog
+        button-icon="i-tabler-trash"
+        button-styles="px-1 text-xs text-red-500 hover:bg-primary-white"
+        button-size="xs"
+        header="Delete song"
+        label="Are you sure you want to delete this song from your library? This action is not reversible"
+        @confirm="$emit('delete-song', song?.id)"
+      >
+      </ConfirmDialog>
     </div>
   </button>
 </template>
@@ -23,4 +50,17 @@ const props = defineProps<{
 }>()
 </script>
 
-<style scoped></style>
+<style scoped>
+.action-card .actions {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: 0.3s;
+}
+
+.action-card:hover .actions {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0);
+}
+</style>

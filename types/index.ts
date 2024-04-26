@@ -57,6 +57,7 @@ export interface Song {
   artist: string
   album?: string
   cover?: string
+  author?: string
   verses?: Array<string>
 }
 

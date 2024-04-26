@@ -13,7 +13,7 @@
       {
         label: 'Delete Slides',
         action: 'delete-selected-slides',
-        icon: 'i-bx-trash',
+        icon: 'i-tabler-trash',
         color: 'red',
         confirmAction: true,
         visible: bulkSelectedSlides.length > 0,
@@ -236,7 +236,7 @@ const deleteSlide = async (slideId: string, addToast: boolean = true) => {
   await db.media.delete(slideId)
 
   if (addToast) {
-    toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-bx-trash" })
+    toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-tabler-trash" })
   }
 }
 
@@ -244,7 +244,7 @@ const deleteMultipleSlides = (slideIds: Array<string>) => {
   slideIds.forEach((slideId) => {
     deleteSlide(slideId, false)
   })
-  toast.add({ title: "Multiple slides deleted", icon: "i-bx-trash" })
+  toast.add({ title: "Multiple slides deleted", icon: "i-tabler-trash" })
   bulkSelectedSlides.value = []
   bulkActionLabel.value = "Select Slides"
   bulkActionIcon.value = ""

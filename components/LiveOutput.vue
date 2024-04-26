@@ -61,8 +61,9 @@
               </UTooltip>
 
               <ConfirmDialog
-                button-icon="i-bx-trash"
-                button-styles="px-1 text-primary-500 hover:bg-primary-white"
+                button-icon="i-tabler-trash"
+                button-styles="px-1 text-red-500 hover:bg-primary-white"
+                button-color="red"
                 header="Delete slide"
                 label="Are you sure you want to delete this slide? This action is not reversible"
                 @confirm="deleteSlide(slide?.id)"
@@ -122,7 +123,7 @@ const deleteSlide = (slideId: string) => {
   const slideIndex = slides.findIndex((s) => s.id === slideId)
   slides.splice(slideIndex, 1)
   appStore.setActiveSlides(slides)
-  toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-bx-trash" })
+  toast.add({ title: `${tempSlide?.name} deleted`, icon: "i-tabler-trash" })
 }
 </script>
 

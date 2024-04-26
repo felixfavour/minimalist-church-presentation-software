@@ -20,47 +20,63 @@
 
       <UButton
         block
-        icon="i-bx-plus"
+        :icon="song ? 'i-bx-edit' : 'i-bx-plus'"
         size="lg"
         class="mt-4"
         :disabled="!(artist && title && lyrics)"
         :loading="loading"
         @click="addSong"
       >
-        Add Song
+        {{ song ? "Edit Song" : "Add Song" }}
       </UButton>
     </form>
   </div>
 </template>
 <script setup lang="ts">
 import type { Song } from "~/types"
+const props = defineProps<{
+  song: Song
+}>()
 const loading = ref<boolean>(false)
-const artist = ref<string>("")
-const title = ref<string>("")
-const lyrics = ref<string>("")
+const artist = ref<string>(props.song?.artist || "")
+const title = ref<string>(props.song?.title || "")
+const lyrics = ref<string>(props.song?.lyrics || "")
 const toast = useToast()
+const emit = defineEmits(["go-home"])
 
 const addSong = async () => {
+  const db = useIndexedDB()
+  const songId = useURLFriendlyString(`${artist.value} ${title.value}`)
+  const song: Song = {
+    id: songId,
+    title: title.value,
+    artist: artist.value,
+    lyrics: lyrics.value,
+    author: "me",
+  }
   try {
     loading.value = true
-    const db = useIndexedDB()
-
-    const songId = useURLFriendlyString(`${artist.value} ${title.value}`)
-    const song: Song = {
-      id: songId,
-      title: title.value,
-      artist: artist.value,
-      lyrics: lyrics.value,
-    }
     await db.library.add({ id: songId, type: "song", content: song }, songId)
     toast.add({ icon: "i-bx-save", title: "Song saved to Library" })
   } catch (err: any) {
     if (err.name === "ConstraintError") {
-      toast.add({
-        icon: "i-bx-error",
-        title: "Can't add a song twice",
-        color: "red",
-      })
+      if (props.song) {
+        await db.library.update(songId, {
+          id: songId,
+          type: "song",
+          content: song,
+        })
+        toast.add({
+          icon: "i-bx-save",
+          title: "Song updated in library",
+        })
+      } else {
+        toast.add({
+          icon: "i-bx-error",
+          title: "Can't add a song twice",
+          color: "red",
+        })
+      }
     } else if (err.name === "DataCloneError") {
       // toast.add({ icon: 'i-bx-save', title: 'Item added to Library' })
     } else {
@@ -68,6 +84,7 @@ const addSong = async () => {
     }
   } finally {
     loading.value = false
+    emit("go-home")
   }
 }
 </script>
