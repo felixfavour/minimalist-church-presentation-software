@@ -194,6 +194,12 @@
         :slide="slide"
         @update-style="onUpdateSlideStyle"
         @update-font="onUpdateSlideStyle({ ...slide.slideStyle, font: $event })"
+        @update-bg-fill-type="
+          onUpdateSlideStyle({
+            ...slide.slideStyle,
+            backgroundFillType: $event,
+          })
+        "
       />
     </div>
 

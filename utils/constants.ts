@@ -136,6 +136,13 @@ export const backgroundTypes = {
   video: 'video'
 }
 
+export const backgroundFillTypes = {
+  fit: 'Fit',
+  crop: 'Crop',
+  stretch: 'Stretch',
+  center: 'Center',
+}
+
 export const bibleBooks = [
   "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy",
   "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel",

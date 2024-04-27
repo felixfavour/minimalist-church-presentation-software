@@ -27,7 +27,7 @@ const useShortSlideName = (slide: Slide) => {
       if (slide?.name?.length <= 12) {
         return slide.name
       } else {
-        return `${slide?.name?.slice(0, 6)}..${slide.name.substring(slide.name.indexOf('.'))}`
+        return `${slide?.name?.slice(0, 6).trim()}..${slide.name.substring(slide.name.lastIndexOf('.'))}`
       }
     default:
       return slide.name

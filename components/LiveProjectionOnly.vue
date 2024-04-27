@@ -5,7 +5,14 @@
       'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen,
       'h-[88vh] rounded-none border-none min-h-[100%]': fullScreenHeight,
       'bg-cover': slide?.type !== slideTypes.media,
-      'bg-center bg-contain': slide?.type === slideTypes.media,
+      'bg-center bg-cover':
+        slide?.slideStyle?.backgroundFillType === backgroundFillTypes.crop,
+      'bg-center bg-contain':
+        slide?.slideStyle?.backgroundFillType === backgroundFillTypes.fit,
+      'bg-center bg-fixed bg-stretch':
+        slide?.slideStyle?.backgroundFillType === backgroundFillTypes.stretch,
+      'bg-center bg-repeat':
+        slide?.slideStyle?.backgroundFillType === backgroundFillTypes.center,
     }"
     :style="useSlideBackground(slide)"
   >
@@ -17,12 +24,24 @@
       autoplay
       :loop="slide?.type !== slideTypes.media"
       :muted="
-        !(fullScreen && slide?.type === slideTypes.media) ? 'true' : 'false'
+        !(fullScreen && slide?.type === slideTypes.media) ? 'muted' : 'false'
       "
       playsinline="true"
       :class="[
         'h-[100%] w-[100%] absolute inset-0',
         slide?.type === slideTypes.media ? 'object-contain' : 'object-cover',
+        {
+          'object-center object-cover':
+            slide?.slideStyle?.backgroundFillType === backgroundFillTypes.crop,
+          'object-center object-contain':
+            slide?.slideStyle?.backgroundFillType === backgroundFillTypes.fit,
+          'object-center bg-fixed bg-stretch object-fill':
+            slide?.slideStyle?.backgroundFillType ===
+            backgroundFillTypes.stretch,
+          'object-center bg-repeat':
+            slide?.slideStyle?.backgroundFillType ===
+            backgroundFillTypes.center,
+        },
       ]"
       crossorigin="anonymous"
     ></video>

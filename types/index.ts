@@ -66,6 +66,7 @@ export interface SlideStyle {
   brightness?: number
   alignment?: string
   font?: string
+  backgroundFillType?: string
 }
 
 export interface AppSettings {

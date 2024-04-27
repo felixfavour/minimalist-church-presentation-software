@@ -46,6 +46,51 @@
         variant="ghost"
       />
     </div>
+    <UTooltip
+      v-if="slide?.type === slideTypes.media"
+      text="Background fill type"
+      :popper="{ placement: 'top' }"
+    >
+      <USelectMenu
+        v-model="backgroundFillType"
+        size="lg"
+        :select-class="`border-3 shadow-none outline-none text-center w-[150px] bg-primary-100 dark:bg-primary-900 dark:text-white`"
+        variant="none"
+        color="primary"
+        clear-search-on-close
+        :ui="{
+          base: 'bg-primary-500',
+          input: 'bg-primary-500',
+          color: {
+            primary: {
+              outline: 'shadow-sm bg-primary-500 ',
+            },
+          },
+        }"
+        :ui-menu="{
+          width: 'w-[150px]',
+          input: 'text-xs',
+          empty: 'text-xs',
+          option: {
+            size: 'text-xs',
+          },
+        }"
+        :options="Object.values(backgroundFillTypes)"
+        @change="$emit('update-bg-fill-type', $event)"
+      >
+        <template #label>
+          <IconWrapper name="i-mdi-arrow-expand-vertical" size="4">
+          </IconWrapper>
+          <span
+            v-if="backgroundFillType?.length"
+            class="truncate"
+            :class="useURLFriendlyString(backgroundFillType)"
+            >{{ backgroundFillType }}</span
+          >
+          <span v-else>Select fill type</span>
+        </template>
+      </USelectMenu>
+    </UTooltip>
   </div>
 </template>
 
@@ -54,6 +99,9 @@ import type { Slide } from "~/types"
 const props = defineProps<{
   slide: Slide
 }>()
+const backgroundFillType = ref<string>(
+  props.slide?.slideStyle?.backgroundFillType || "normal"
+)
 </script>
 
 <style scoped></style>

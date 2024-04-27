@@ -39,6 +39,7 @@
       @change="$emit('change', $event)"
     >
       <template #label>
+        <IconWrapper name="i-bx-font-family" size="4"> </IconWrapper>
         <span
           v-if="font?.length"
           class="truncate"
