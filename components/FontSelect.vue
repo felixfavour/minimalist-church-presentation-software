@@ -1,7 +1,7 @@
 <template>
   <div
     class="select-menu-ctn"
-    :class="size === 'lg' ? 'w-[200px]' : 'w-[140px]'"
+    :class="size === 'lg' ? 'w-[170px]' : 'w-[140px]'"
   >
     <USelectMenu
       class="absolute top-[6px] border-0 shadow-none"
@@ -10,7 +10,7 @@
       searchable-placeholder="Search fonts"
       :select-class="`border-3 shadow-none outline-none text-center ${
         size === 'lg'
-          ? 'w-[200px] bg-primary-100 dark:bg-primary-800'
+          ? 'w-[170px] bg-primary-100 dark:bg-primary-800'
           : 'w-[140px] bg-primary-200 dark:bg-primary-900 dark:text-white'
       }`"
       size="md"
@@ -29,7 +29,7 @@
         },
       }"
       :ui-menu="{
-        width: size === 'lg' ? 'w-[200px]' : 'w-[140px]',
+        width: size === 'lg' ? 'w-[170px]' : 'w-[140px]',
         input: 'text-xs',
         empty: 'text-xs',
         option: {

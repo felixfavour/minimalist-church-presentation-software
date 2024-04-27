@@ -31,13 +31,15 @@
             >
             </UButton>
           </UTooltip>
+
+          <!-- VERSE SWITCH -->
           <div
             v-if="
               slide?.type === slideTypes?.bible ||
               slide?.type === slideTypes?.hymn ||
               slide?.type === slideTypes?.song
             "
-            class="button-group bg-primary-200 dark:bg-primary-900 rounded-md mx-1 flex items-center gap-1 h-[36px] px-1"
+            class="verse-switch button-group bg-primary-200 dark:bg-primary-900 rounded-md mx-1 flex items-center gap-1 h-[36px] px-1"
           >
             <UTooltip text="Previous verse" :popper="{ arrow: true }">
               <UButton
@@ -52,7 +54,9 @@
               size="xs"
               variant="none"
               v-model="verse"
-              :inputClass="`'bg-white border-0 shadow-none outline-none text-center dark:text-primary-900 transition-all ${slide?.type !== slideTypes.bible ? 'w-[10ch]' : 'w-[16ch]'}`"
+              :inputClass="`'bg-white border-0 shadow-none outline-none text-center dark:text-primary-900 transition-all ${
+                slide?.type !== slideTypes.bible ? 'w-[10ch]' : 'w-[16ch]'
+              }`"
               @keydown.enter="$emit('goto-verse', verse)"
             />
             <UTooltip text="Next verse" :popper="{ arrow: true }">
@@ -76,14 +80,15 @@
               @change="$emit('update-bible-version', $event)"
             />
           </div>
-          <!-- <div class="button-group bg-primary-200 rounded-md mx-1">
-            <UTooltip text="Increase font size" :popper="{ arrow: true }">
-              <UButton variant="ghost" icon="i-mdi-format-font-size-increase" />
-            </UTooltip>
-            <UTooltip text="Decrease font size" :popper="{ arrow: true }">
-              <UButton variant="ghost" icon="i-mdi-format-font-size-decrease" />
-            </UTooltip>
-          </div> -->
+          <PreviewVerses
+            v-if="
+              slide?.type === slideTypes.hymn || slide?.type === slideTypes.song
+            "
+            class="preview-verses"
+            :slide="slide"
+            :verse="verse"
+            @goto-verse="$emit('goto-verse', $event)"
+          />
           <UPopover
             v-if="slide?.layout !== slideLayoutTypes.bible"
             v-model:open="layoutPopoverOpen"
@@ -179,6 +184,7 @@
         > -->
         </div>
       </div>
+
       <TipTapToolbar
         v-if="slide?.type === slideTypes.text"
         :editor="focusedEditor"
@@ -330,4 +336,16 @@ const onUpdateSlideStyle = (slideStyle: SlideStyle) => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.verse-preview {
+  visibility: hidden;
+  max-height: 0px;
+  transition: 0.2s;
+}
+.verse-switch:hover + .verse-preview,
+.verse-preview:hover {
+  opacity: 1;
+  visibility: visible;
+  max-height: 350px;
+}
+</style>
