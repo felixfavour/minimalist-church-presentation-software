@@ -59,7 +59,11 @@
         />
       </div>
 
-      <EmptyState v-if="!loading && songs?.length === 0" icon="i-tabler-cloud-search" sub="We couldn't find that song" />
+      <EmptyState
+        v-if="!loading && songs?.length === 0"
+        icon="i-tabler-cloud-search"
+        sub="We couldn't find that song"
+      />
     </template>
   </div>
 </template>
@@ -105,7 +109,7 @@ onMounted(() => {
 const getSongs = async (query: string = "") => {
   loading.value = true
   const promise = await useFetch(
-    `https://revaise-api.onrender.com/v1/song?search=${query}`
+    `https://worshipcloud-api-6xak8.ondigitalocean.app/v1/song?search=${query}`
   )
   let songsData = promise.data.value.data?.map((song) => ({
     ...song,
