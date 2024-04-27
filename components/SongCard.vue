@@ -1,7 +1,12 @@
 <template>
   <button
     class="action-card flex gap-3 p-2 py-4 border-t first:border-t-0 border-gray-100 dark:border-primary-950 hover:rounded-md hover:bg-primary-50 dark:hover:bg-primary-800 transition-all cursor-pointer text-left w-[100%] relative"
-    @click="useGlobalEmit(`new-song`, { ...song, fromSaved: saved })"
+    @click="
+      useGlobalEmit(
+        `new-${type || slideTypes.song}`,
+        type === slideTypes.hymn ? song?.number : { ...song, fromSaved: saved }
+      )
+    "
   >
     <IconWrapper name="i-bx-music" class="mt-1 text-primary" rounded-bg />
     <div class="texts">
