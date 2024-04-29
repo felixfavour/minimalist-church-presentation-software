@@ -29,7 +29,7 @@ export default defineAppConfig({
       }
     },
     notifications: {
-      position: 'bottom-4 left-4 top-auto',
+      position: 'top-4 right-4 bottom-auto',
     }
   }
 })

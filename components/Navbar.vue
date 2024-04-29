@@ -27,7 +27,14 @@
             <div class="w-8 h-8" />
           </template>
         </ClientOnly>
-        <UButton icon="i-bx-slideshow" to="/live" target="_blank">
+        <UButton
+          icon="i-bx-slideshow"
+          to="/live"
+          onclick="window.open('/live', 
+                         'live-view', 
+                         'width=1200,height=800'); 
+              return false;"
+        >
           Go Live
         </UButton>
       </div>

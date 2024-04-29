@@ -14,6 +14,7 @@
       'bg-center bg-repeat':
         slide?.slideStyle?.backgroundFillType === backgroundFillTypes.center,
     }"
+    @dblclick="activateFullScreen()"
     :style="useSlideBackground(slide)"
   >
     <!-- VIDEO BACKGROUND -->
@@ -73,6 +74,7 @@
           : `backdrop-filter: blur(${slideStyles.blur}px) brightness(${slideStyles.brightness}%);`
       "
     />
+
     <template v-if="!fullScreen">
       <UTooltip
         class="absolute bottom-3 right-3 z-10"
@@ -160,6 +162,22 @@ onMounted(() => {
     video.value?.play()
   } catch (err) {}
 })
+
+const activateFullScreen = () => {
+  const toast = useToast()
+  const route = useRoute()
+  if (props.fullScreen && route.name === "live") {
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    } else {
+      document.documentElement.requestFullscreen()
+      toast.add({
+        icon: "i-bx-info-circle",
+        title: "Double tap display to exit full screen",
+      })
+    }
+  }
+}
 </script>
 
 <style scoped></style>

@@ -17,6 +17,14 @@ const { liveSlideId, activeSlide, activeSlides, settings } =
 const liveSlide = computed(() => {
   return activeSlides.value.find((slide) => slide.id === liveSlideId.value)
 })
+
+onMounted(() => {
+  const toast = useToast()
+  toast.add({
+    icon: "i-bx-info-circle",
+    title: "Double tap display to go full screen",
+  })
+})
 </script>
 
 <style scoped></style>
