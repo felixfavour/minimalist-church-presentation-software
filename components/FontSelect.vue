@@ -36,6 +36,7 @@
           size: 'text-xs',
         },
       }"
+      :disabled="disabled"
       @change="$emit('change', $event)"
     >
       <template #label>
@@ -68,6 +69,7 @@ import { appFonts } from "~/utils/constants"
 const props = defineProps<{
   size: string
   selectedFont: string
+  disabled: boolean
 }>()
 
 const appStore = useAppStore()

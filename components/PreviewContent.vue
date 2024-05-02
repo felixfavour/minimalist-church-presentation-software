@@ -339,6 +339,7 @@ const createNewSongSlide = (song: Song) => {
 
 const createNewMediaSlide = async (file: any) => {
   const tempSlide = { ...preSlideCreation() }
+  tempSlide.layout = slideLayoutTypes.empty
 
   // Store Blob in DB for easy retrieval on reload
   await useIndexedDB().media.add({

@@ -20,7 +20,7 @@ const useSlideContent = (slide: Slide, data: Scripture | Hymn | Song, size: stri
       return [
         `<p class="song-content" style="font-size: ${size}vw">${nextVerse?.replaceAll("\n", "<br>")}</>`,
         `<p class="song-label"><b>${data?.title}</b> • HYMN</p>
-        <p class="copyright-content">${data?.source}</p>`,
+        <p class="copyright-content">${data?.source?.replace('undefined -', '').trim()}</p>`,
       ]
     case slideTypes.song:
       data = data as Song

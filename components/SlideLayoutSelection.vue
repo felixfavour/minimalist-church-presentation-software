@@ -3,9 +3,12 @@
     <UButton
       v-for="layout in slideLayouts"
       :key="layout"
-      @click="$emit('select', layout)"
-      class="group/item w-[80px] h-[80px] overflow-hidden text-black shadow-none bg-gray-100 dark:bg-primary-900 hover:bg-primary-100 transition"
+      @click="
+        $emit('select', layout === slideLayoutTypes.full_text ? null : '')
+      "
+      class="group/item w-[80px] h-[80px] overflow-hidden text-black shadow-none bg-gray-100 dark:bg-primary-900 hover:bg-primary-100 transition disabled:bg-gray-50 disabled:opacity-30"
       :class="{ 'bg-primary-100': layout === value }"
+      :disabled="layout !== slideLayoutTypes.full_text"
     >
       <div
         v-if="layout === slideLayoutTypes.heading_sub"

@@ -131,6 +131,65 @@ body {
   top: 0.8rem;
 }
 
+
+.fade-list-move, /* apply transition to moving elements */
+.fade-list-enter-active,
+.fade-list-leave-active {
+  transition: all 0.7s ease;
+  -webkit-transition: all 0.7s ease;
+  -moz-transition: all 0.7s ease;
+  -ms-transition: all 0.7s ease;
+  -o-transition: all 0.7s ease;
+}
+
+.fade-list-leave-to {
+  opacity: 0;
+  transition: 0.2s ease;
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -ms-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
+}
+
+.fade-list-enter-from {
+  opacity: 0;
+}
+.fade-list-leave-active {
+  position: absolute;
+}
+
+
+.zoom-list-move, /* apply transition to moving elements */
+.zoom-list-enter-active,
+.zoom-list-leave-active {
+  transition: transform 0.7s ease;
+  -webkit-transition: transform 0.7s ease;
+  -moz-transition: transform 0.7s ease;
+  -ms-transition: transform 0.7s ease;
+  -o-transition: transform 0.7s ease;
+}
+
+.zoom-list-leave-to {
+  /*opacity: 0;
+  */transform: scale(1) translate(0);
+  -webkit-transform: scale(1) translate(0) ;
+  -moz-transform: scale(1) translate(0);
+  -ms-transform: scale(1) translate(0);
+  -o-transform: scale(1) translate(0);
+}
+
+.zoom-list-enter-from {
+  /*opacity: 0;
+  */transform: scale(0) translate(0);
+  -webkit-transform: scale(0) translate(0);
+  -moz-transform: scale(0) translate(0);
+  -ms-transform: scale(0) translate(0);
+  -o-transform: scale(0) translate(0);
+}
+.zoom-list-leave-active {
+  position: absolute;
+}
+
 .come-up-1 {
   animation: come-up 0.3s ease-in-out forwards;
   -webkit-animation: come-up 0.3s ease-in-out forwards;

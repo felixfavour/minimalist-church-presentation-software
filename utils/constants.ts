@@ -127,6 +127,7 @@ export const slideLayoutTypes = {
   full_text: 'full-text',
   two_column: 'two-column',
   bible: 'bible',
+  empty: 'empty',
 }
 
 export const backgroundTypes = {

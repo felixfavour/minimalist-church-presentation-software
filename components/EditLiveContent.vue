@@ -108,6 +108,7 @@
             </template>
           </UPopover>
           <div
+            v-show="slide?.type !== slideTypes.media"
             class="button-group flex rounded-md mx-1 p-1"
             :class="{
               'bg-primary-200 dark:bg-primary-900':

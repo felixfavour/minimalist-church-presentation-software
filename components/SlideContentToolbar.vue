@@ -6,6 +6,7 @@
       v-if="slide?.type !== slideTypes?.text"
       size="lg"
       :selected-font="slide?.slideStyle?.font"
+      :disabled="slide?.type === slideTypes.media"
       @change="$emit('update-font', $event)"
     />
     <div class="button-group rounded-md p-1 flex items-center gap-1">
@@ -20,6 +21,7 @@
         }"
         icon="i-bi-text-left"
         variant="ghost"
+        :disabled="slide?.type === slideTypes.media"
       />
       <UButton
         @click="
@@ -32,6 +34,7 @@
         }"
         icon="i-bi-text-center"
         variant="ghost"
+        :disabled="slide?.type === slideTypes.media"
       />
       <UButton
         @click="
@@ -44,6 +47,7 @@
         }"
         icon="i-bi-text-right"
         variant="ghost"
+        :disabled="slide?.type === slideTypes.media"
       />
     </div>
     <UTooltip

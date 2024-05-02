@@ -1,126 +1,130 @@
 <template>
-  <div
-    class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-no-repeat transition-all backdrop-blur-0 bg-black dark:border-none"
-    :class="{
-      'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen,
-      'h-[88vh] rounded-none border-none min-h-[100%]': fullScreenHeight,
-      'bg-cover': slide?.type !== slideTypes.media,
-      'bg-center bg-cover':
-        slide?.slideStyle?.backgroundFillType === backgroundFillTypes.crop,
-      'bg-center bg-contain':
-        slide?.slideStyle?.backgroundFillType === backgroundFillTypes.fit,
-      'bg-center bg-fixed bg-stretch':
-        slide?.slideStyle?.backgroundFillType === backgroundFillTypes.stretch,
-      'bg-center bg-repeat':
-        slide?.slideStyle?.backgroundFillType === backgroundFillTypes.center,
-    }"
-    @dblclick="activateFullScreen()"
-    :style="useSlideBackground(slide)"
-  >
-    <!-- VIDEO BACKGROUND -->
-    <video
-      ref="video"
-      v-if="slide?.backgroundType === backgroundTypes.video"
-      :src="slide?.background"
-      autoplay
-      :loop="slide?.type !== slideTypes.media"
-      :muted="
-        !(fullScreen && slide?.type === slideTypes.media) ? 'muted' : 'false'
-      "
-      playsinline="true"
-      :class="[
-        'h-[100%] w-[100%] absolute inset-0',
-        slide?.type === slideTypes.media ? 'object-contain' : 'object-cover',
-        {
-          'object-center object-cover':
-            slide?.slideStyle?.backgroundFillType === backgroundFillTypes.crop,
-          'object-center object-contain':
-            slide?.slideStyle?.backgroundFillType === backgroundFillTypes.fit,
-          'object-center bg-fixed bg-stretch object-fill':
-            slide?.slideStyle?.backgroundFillType ===
-            backgroundFillTypes.stretch,
-          'object-center bg-repeat':
-            slide?.slideStyle?.backgroundFillType ===
-            backgroundFillTypes.center,
-        },
-      ]"
-      crossorigin="anonymous"
-    ></video>
-
+  <div class="w-[100%] min-h-[220px]">
     <div
-      v-if="!fullScreen || slideLabel"
-      class="overlay-gradient absolute z-10 inset-0"
-    ></div>
-    <div
-      v-if="!fullScreen || slideLabel"
-      class="heading p-3 absolute z-10 inset-0"
+      class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-no-repeat transition-all backdrop-blur-0 bg-black dark:border-none"
+      v-if="contentVisible"
+      :class="{
+        'h-[100vh] rounded-none border-none min-h-[100%]': fullScreen,
+        'h-[88vh] rounded-none border-none min-h-[100%]': fullScreenHeight,
+        'bg-cover': slide?.type !== slideTypes.media,
+        'bg-center bg-cover':
+          slide?.slideStyle?.backgroundFillType === backgroundFillTypes.crop,
+        'bg-center bg-contain':
+          slide?.slideStyle?.backgroundFillType === backgroundFillTypes.fit,
+        'bg-center bg-fixed bg-stretch':
+          slide?.slideStyle?.backgroundFillType === backgroundFillTypes.stretch,
+        'bg-center bg-repeat':
+          slide?.slideStyle?.backgroundFillType === backgroundFillTypes.center,
+      }"
+      @dblclick="activateFullScreen()"
+      :style="useSlideBackground(slide)"
     >
-      <h5 class="font-semibold text-white">
-        {{ slide?.name || "No Live Slide" }}
-      </h5>
-      <LiveSlideIndicator :visible="!!slide?.name" class="mr-4 mt-4" />
-    </div>
+      <!-- VIDEO BACKGROUND -->
+      <video
+        ref="video"
+        v-if="slide?.backgroundType === backgroundTypes.video"
+        :src="slide?.background"
+        autoplay
+        :loop="slide?.type !== slideTypes.media"
+        :muted="
+          !(fullScreen && slide?.type === slideTypes.media) ? 'muted' : 'false'
+        "
+        playsinline="true"
+        :class="[
+          'h-[100%] w-[100%] absolute inset-0',
+          slide?.type === slideTypes.media ? 'object-contain' : 'object-cover',
+          {
+            'object-center object-cover':
+              slide?.slideStyle?.backgroundFillType ===
+              backgroundFillTypes.crop,
+            'object-center object-contain':
+              slide?.slideStyle?.backgroundFillType === backgroundFillTypes.fit,
+            'object-center bg-fixed bg-stretch object-fill':
+              slide?.slideStyle?.backgroundFillType ===
+              backgroundFillTypes.stretch,
+            'object-center bg-repeat':
+              slide?.slideStyle?.backgroundFillType ===
+              backgroundFillTypes.center,
+          },
+        ]"
+        crossorigin="anonymous"
+      ></video>
 
-    <!-- MAIN FOREGROUND CONTENT -->
-    <LiveContent
-      :content-visible="foregroundContentVisible"
-      :slide="slide"
-      class="relative come-up-1"
-      :class="fullScreen ? '' : 'min-h-[220px] rounded-md'"
-      :padding="fullScreen ? '6' : '0'"
-      :style="
-        slide?.type === slideTypes.media
-          ? ''
-          : `backdrop-filter: blur(${slideStyles.blur}px) brightness(${slideStyles.brightness}%);`
-      "
-    />
-
-    <template v-if="!fullScreen">
-      <UTooltip
-        class="absolute bottom-3 right-3 z-10"
-        text="Expand preview"
-        :popper="{ arrow: true }"
+      <div
+        v-if="!fullScreen || slideLabel"
+        class="overlay-gradient absolute z-10 inset-0"
+      ></div>
+      <div
+        v-if="!fullScreen || slideLabel"
+        class="heading p-3 absolute z-10 inset-0"
       >
-        <UButton
-          variant="ghost"
-          size="xs"
-          color="slate"
-          icon="i-bx-expand-alt"
-          class="hover:bg-primary-500"
-          @click="isLargePreviewOpen = true"
-        ></UButton>
-      </UTooltip>
+        <h5 class="font-semibold text-white">
+          {{ slide?.name || "No Live Slide" }}
+        </h5>
+        <LiveSlideIndicator :visible="!!slide?.name" class="mr-4 mt-4" />
+      </div>
 
-      <UModal v-model="isLargePreviewOpen" fullscreen>
-        <UCard>
-          <div class="flex items-center justify-between h-[60px] mb-4">
-            <div class="logo flex items-center gap-2 w-[250px]">
-              <Logo class="w-[32px]" />
-              <h1 class="text-sm font-semibold">Cloud of Worshippers</h1>
+      <!-- MAIN FOREGROUND CONTENT -->
+      <LiveContent
+        :content-visible="foregroundContentVisible"
+        :slide="slide"
+        class="relative come-up-1"
+        :class="fullScreen ? '' : 'min-h-[220px] rounded-md'"
+        :padding="fullScreen ? '6' : '0'"
+        :style="
+          slide?.type === slideTypes.media
+            ? ''
+            : `backdrop-filter: blur(${slideStyles.blur}px) brightness(${slideStyles.brightness}%);`
+        "
+      />
+
+      <template v-if="!fullScreen">
+        <UTooltip
+          class="absolute bottom-3 right-3 z-10"
+          text="Expand preview"
+          :popper="{ arrow: true }"
+        >
+          <UButton
+            variant="ghost"
+            size="xs"
+            color="slate"
+            icon="i-bx-expand-alt"
+            class="hover:bg-primary-500"
+            @click="isLargePreviewOpen = true"
+          ></UButton>
+        </UTooltip>
+
+        <UModal v-model="isLargePreviewOpen" fullscreen>
+          <UCard>
+            <div class="flex items-center justify-between h-[60px] mb-4">
+              <div class="logo flex items-center gap-2 w-[250px]">
+                <Logo class="w-[32px]" />
+                <h1 class="text-sm font-semibold">Cloud of Worshippers</h1>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                Large Preview
+              </h3>
+              <div class="close-ctn w-[250px] flex justify-end">
+                <UButton
+                  color="gray"
+                  variant="ghost"
+                  icon="i-mdi-close"
+                  class="my-1"
+                  @click="isLargePreviewOpen = false"
+                />
+              </div>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              Large Preview
-            </h3>
-            <div class="close-ctn w-[250px] flex justify-end">
-              <UButton
-                color="gray"
-                variant="ghost"
-                icon="i-mdi-close"
-                class="my-1"
-                @click="isLargePreviewOpen = false"
-              />
-            </div>
-          </div>
-          <LiveProjectionOnly
-            :full-screen="true"
-            full-screen-height="80vh"
-            :slide="slide"
-            :slide-label="false"
-            :slide-styles="slideStyles"
-          />
-        </UCard>
-      </UModal>
-    </template>
+            <LiveProjectionOnly
+              :full-screen="true"
+              full-screen-height="80vh"
+              :slide="slide"
+              :slide-label="false"
+              :slide-styles="slideStyles"
+            />
+          </UCard>
+        </UModal>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -134,6 +138,7 @@ const isLargePreviewOpen = ref<boolean>(false)
 const props = defineProps<{
   slideLabel: Boolean
   slide: Slide
+  contentVisible: Boolean
   fullScreen: Boolean
   fullScreenHeight: string
   slideStyles: SlideStyle
