@@ -7,6 +7,7 @@
         v-model="searchInput"
         class="w-[100%]"
         @input="onSearchInput"
+        @input.capture="loading = true"
         @keyup.enter="getVerses($event.target.value)"
       />
       <UButton icon="i-bx-x" color="primary" @click="$emit('close')"></UButton>
@@ -98,6 +99,7 @@ onMounted(() => {
 
 const getVerses = (query: string = "") => {
   if (query?.length >= 2) {
+    loading.value = true
     let results = fuzzysort.go(query, kjvBible, {
       keys: ["scripture"],
     })
@@ -107,6 +109,7 @@ const getVerses = (query: string = "") => {
     const rand = Math.floor(Math.random() * 1115 + 15)
     verses.value = kjvBible.slice(rand - 15, rand)
   }
+  loading.value = false
 }
 
 getVerses()

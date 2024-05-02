@@ -7,6 +7,7 @@
         v-model="searchInput"
         class="w-[100%]"
         @input="onSearchInput"
+        @input.capture="loading = true"
         @keyup.enter="getHymns($event.target.value)"
       />
       <UButton icon="i-bx-x" color="primary" @click="$emit('close')"></UButton>
@@ -59,7 +60,11 @@
         />
       </div>
 
-      <EmptyState v-if="!loading && hymns?.length === 0" icon="i-tabler-cloud-search" sub="We couldn't find that hymn" />
+      <EmptyState
+        v-if="!loading && hymns?.length === 0"
+        icon="i-tabler-cloud-search"
+        sub="We couldn't find that hymn"
+      />
     </template>
   </div>
 </template>
@@ -70,7 +75,7 @@ import fuzzysort from "fuzzysort"
 
 const allHymns = useNuxtApp().$hymns as Hymn[]
 const searchInput = ref<string>("")
-const loading = ref<boolean>(false)
+const loading = ref<boolean>(true)
 const hymns = ref<Hymn[]>()
 const searchedHymns = ref<Song[]>([])
 const focusedActionIndex = ref(0)
@@ -106,6 +111,7 @@ onMounted(() => {
 
 const getHymns = (query: string = "") => {
   if (query?.length >= 2) {
+    loading.value = true
     let results = fuzzysort.go(query, allHymns, {
       keys: ["title", "meta"],
     })
@@ -115,6 +121,7 @@ const getHymns = (query: string = "") => {
     const rand = Math.floor(Math.random() * 1115 + 15)
     hymns.value = allHymns.slice(rand - 15, rand)
   }
+  loading.value = false
 }
 
 getHymns()
