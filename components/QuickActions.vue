@@ -1,31 +1,60 @@
 <template>
-  <AppSection heading="Quick Actions" :sub-heading="searchInput.length < 2 ? page?.replace('-', ' ') : 'Search'"
-    class="max-w-[330px] relative" @header-click="searchInput.length < 2 ? (page = '') : (searchInput = '')">
+  <AppSection
+    heading="Quick Actions"
+    :sub-heading="searchInput.length < 2 ? page?.replace('-', ' ') : 'Search'"
+    class="max-w-[330px] relative"
+    @header-click="searchInput.length < 2 ? (page = '') : (searchInput = '')"
+  >
     <Transition name="fade-sm">
       <!-- ACTIONS HOME SECTION -->
       <div v-if="page === ''" class="main min-h-[100%]" ref="quickActions">
         <div class="flex gap-2">
-          <UInput icon="i-bx-search" placeholder="Search scripture, hymns, actions" v-model="searchInput" color="black"
-            class="w-[100%]" />
-          <UButton v-if="searchInput.length >= 2" icon="i-bx-x" color="primary" @click="searchInput = ''"></UButton>
+          <UInput
+            icon="i-bx-search"
+            placeholder="Search scripture, hymns, actions"
+            v-model="searchInput"
+            color="black"
+            class="w-[100%]"
+          />
+          <UButton
+            v-if="searchInput.length >= 2"
+            icon="i-bx-x"
+            color="primary"
+            @click="searchInput = ''"
+          ></UButton>
         </div>
 
         <!-- BASIC ACTIONS -->
-        <div v-if="searchInput.length < 2" class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]">
-          <ActionCard v-for="(action, index) in actions?.filter((a) => !a.searchableOnly)" :key="action.name"
-            :action="action" :class="{
+        <div
+          v-if="searchInput.length < 2"
+          class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]"
+        >
+          <ActionCard
+            v-for="(action, index) in actions?.filter((a) => !a.searchableOnly)"
+            :key="action.name"
+            :action="action"
+            :class="{
               'bg-primary-50 dark:bg-primary-800 rounded-md':
                 index === focusedActionIndex,
-            }" @click="focusedActionIndex = index" />
+            }"
+            @click="focusedActionIndex = index"
+          />
         </div>
 
         <!-- SEARCHING ACTIONS -->
-        <div v-else class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]">
-          <ActionCard v-for="(action, index) in searchedActions" :key="action.name"
-            :action="{ ...action, bibleChapterAndVerse }" :class="{
+        <div
+          v-else
+          class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]"
+        >
+          <ActionCard
+            v-for="(action, index) in searchedActions"
+            :key="action.name"
+            :action="{ ...action, bibleChapterAndVerse }"
+            :class="{
               'bg-primary-50 dark:bg-primary-800 rounded-md':
                 index === focusedActionIndex,
-            }" />
+            }"
+          />
         </div>
       </div>
 
@@ -97,8 +126,10 @@ emitter.on("new-song", ({ fromSaved }) => {
   }
 })
 
-emitter.on("new-hymn", () => {
-  page.value = "hymn"
+emitter.on("new-hymn", (data) => {
+  if (data === "undefined") {
+    page.value = "hymn"
+  }
 })
 
 emitter.on("new-media", ({ fromSaved }) => {
@@ -144,8 +175,8 @@ onMounted(() => {
 })
 
 const bibleChapterAndVerse = computed(() => {
-  const regex = /\b\d+:\d+\b/g
-  return searchInput.value.match(regex)?.[0]
+  const regex = /\b\d+\s*:\s*\d+\b/g
+  return searchInput.value.match(regex)?.[0]?.replaceAll(" ", "")
 })
 
 const searchedActions = computed(() => {

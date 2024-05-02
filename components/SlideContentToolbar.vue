@@ -100,7 +100,7 @@ const props = defineProps<{
   slide: Slide
 }>()
 const backgroundFillType = ref<string>(
-  props.slide?.slideStyle?.backgroundFillType || "normal"
+  props.slide?.slideStyle?.backgroundFillType || "Fit"
 )
 </script>
 

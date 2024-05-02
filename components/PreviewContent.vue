@@ -368,6 +368,12 @@ const updateLiveOutput = (updatedSlide: Slide) => {
 }
 
 const gotoAction = (title: string, version: string) => {
+  title = title
+    .replaceAll("  ", " ")
+    .replaceAll(" :", ":")
+    .replaceAll(": ", ":")
+    .replaceAll(" : ", ":")
+  // console.log(title)
   switch (activeSlide.value?.type) {
     case slideTypes.bible:
       return gotoScripture(title, version)
@@ -388,7 +394,7 @@ const gotoScripture = (title: string, version: string) => {
         book.toLowerCase().startsWith(bibleBook.toLowerCase())
       ) || ""
     title = `${bibleBook} ${title.substring(title?.lastIndexOf(" ")).trim()}`
-    console.log(title)
+    // console.log(title)
   }
   const tempSlide = { ...activeSlide.value } as Slide
   const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)

@@ -17,7 +17,11 @@
       content-visible
       :slide="slide"
       padding="0"
-      :style="`backdrop-filter: blur(${slideStyles.blur}px) brightness(${slideStyles.brightness}%);`"
+      :style="
+        slide?.type === slideTypes.media
+          ? ''
+          : `backdrop-filter: blur(${slideStyles.blur}px) brightness(${slideStyles.brightness}%);`
+      "
     />
   </div>
 </template>

@@ -17,13 +17,13 @@ const useSong = (song: Song, linesPerDisplay: number = 4): Song | null => {
     const verses = []
     let tempVerse = ''
     let lineCount = 0
-    const lyricLines = song.lyrics?.split('\n')
+    const lyricLines = song.lyrics?.replaceAll('\n\n', '\n')?.replaceAll('\n \n', '\n')?.split('\n')
 
     for (let i = 0; i < lyricLines.length; i++) {
       let line = lyricLines[i]
-      if (line.toLocaleLowerCase().includes('[verse') || line.toLocaleLowerCase().includes('[intro]') || line.toLocaleLowerCase().includes('[chorus]')) {
-        continue
-      }
+      // if (line.toLocaleLowerCase().includes('[verse') || line.toLocaleLowerCase().includes('[intro]') || line.toLocaleLowerCase().includes('[chorus]')) {
+      //   continue
+      // }
       line = line.replaceAll("â", "'").replaceAll('solo: ', '')?.replaceAll(' ??? ', '')?.replaceAll(' ?? ', '')
       tempVerse += `${line}\n`
       lineCount += 1

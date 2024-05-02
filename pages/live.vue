@@ -18,6 +18,11 @@ const liveSlide = computed(() => {
   return activeSlides.value.find((slide) => slide.id === liveSlideId.value)
 })
 
+watch(liveSlide, (newVal, oldVal) => {
+  console.log(newVal)
+  console.log(oldVal)
+})
+
 onMounted(() => {
   const toast = useToast()
   toast.add({
