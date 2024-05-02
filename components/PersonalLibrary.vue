@@ -88,6 +88,7 @@
             v-for="(slide, index) in savedSlides"
             :key="slide.content.id"
             :slide="slide.content"
+            @delete-slide="deleteSlide($event)"
           />
         </div>
       </template>
@@ -133,6 +134,7 @@
             v-for="(slide, index) in savedSlidesSearchResults"
             :key="slide.content.id"
             :slide="slide.content"
+            @delete-slide="deleteSlide($event)"
           />
         </div>
       </template>
@@ -196,6 +198,11 @@ const savedSlidesSearchResults = computed(() => {
 const deleteSong = async (songId: string) => {
   await useIndexedDB().library.delete(songId)
   toast.add({ icon: "i-tabler-trash", title: "Song has been deleted" })
+}
+
+const deleteSlide = async (slideId: string) => {
+  await useIndexedDB().library.delete(slideId)
+  toast.add({ icon: "i-tabler-trash", title: "Slide has been deleted" })
 }
 
 const editSong = (song: Song) => {
