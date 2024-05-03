@@ -27,6 +27,14 @@
             <div class="w-8 h-8" />
           </template>
         </ClientOnly>
+        <!-- <UButton
+          icon="i-bx-log-out"
+          color="red"
+          variant="outline"
+          @click="logOut"
+        >
+          Log out
+        </UButton> -->
         <UButton
           icon="i-bx-slideshow"
           to="/live"
@@ -57,6 +65,12 @@ const isDark = computed({
     colorMode.preference = colorMode.value === "dark" ? "light" : "dark"
   },
 })
+
+const logOut = () => {
+  const token = useCookie("token")
+  token.value = undefined
+  navigateTo("/login")
+}
 </script>
 
 <style scoped></style>

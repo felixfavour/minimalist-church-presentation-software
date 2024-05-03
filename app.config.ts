@@ -21,6 +21,11 @@ export default defineAppConfig({
         variant: 'none'
       }
     },
+    button: {
+      default: {
+        loadingIcon: 'i-bx-loader-alt'
+      }
+    },
     textarea: {
       color: {
         gray: {
