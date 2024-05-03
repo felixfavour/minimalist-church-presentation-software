@@ -57,7 +57,7 @@ const downloadEssentialResources = async () => {
 
   // Download KJV Bible
   // const kjvBible = await useS3File("kjv.json")
-  if (useNuxtApp().$kjvBible) {
+  if (!useNuxtApp().$kjvBible) {
     useNuxtApp().provide("kjvBible", kjvBible || "")
     downloadProgress.value = 2
   }
@@ -80,7 +80,7 @@ const downloadEssentialResources = async () => {
   // Download all hymns
   // const hymns = await useS3File("hymns.json")
 
-  if (useNuxtApp().$hymns) {
+  if (!useNuxtApp().$hymns) {
     useNuxtApp().provide("hymns", hymns || "")
     downloadProgress.value = 6
   }

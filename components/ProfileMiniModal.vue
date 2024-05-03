@@ -10,7 +10,7 @@
 
         <h5 class="name font-medium text-md mt-4">Favour Felix</h5>
       </div>
-      <div class="texts text-center p-4 border-t">
+      <div class="texts text-center p-4 border-t dark:border-primary-950">
         <div class="church flex gap-2">
           <div class="text-left">
             <p class="text-xs">
@@ -21,7 +21,9 @@
         </div>
       </div>
 
-      <div class="actions p-4 flex flex-col gap-2 border-t">
+      <div
+        class="actions p-4 flex flex-col gap-2 border-t dark:border-primary-950"
+      >
         <UButton
           to="https://cloudofworshippers.featurebase.app"
           target="_blank"
