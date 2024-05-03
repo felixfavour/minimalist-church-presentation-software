@@ -59,7 +59,11 @@
       </div>
 
       <!-- SONG SECTION -->
-      <SongsList v-else-if="page === 'song'" @close="page = ''" />
+      <SongsList
+        v-else-if="page === 'song'"
+        :query="songSearchQuery"
+        @close="page = ''"
+      />
 
       <!-- HYMN SECTION -->
       <HymnList v-else-if="page === 'hymn'" @close="page = ''" />
@@ -89,6 +93,7 @@ const focusedActionIndex = ref<number>(0)
 const quickActions = ref<HTMLDivElement | null>(null)
 const appStore = useAppStore()
 const page = ref<string>("") // song, search
+const songSearchQuery = ref<string>("")
 const hymns = useNuxtApp().$hymns as Array<Hymn>
 const emitter = useNuxtApp().$emitter as Emitter<any>
 
@@ -124,6 +129,11 @@ emitter.on("new-song", ({ fromSaved }) => {
   if (!fromSaved) {
     page.value = "song"
   }
+})
+
+emitter.on("new-song-search", (query) => {
+  songSearchQuery.value = query
+  page.value = "song"
 })
 
 emitter.on("new-hymn", (data) => {

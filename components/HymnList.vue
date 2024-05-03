@@ -13,6 +13,17 @@
       <UButton icon="i-bx-x" color="primary" @click="$emit('close')"></UButton>
     </div>
 
+    <Transition name="fade-sm">
+      <NotFoundBanner
+        v-if="!isHymnAvailable"
+        icon="i-tabler-cloud-search"
+        sub="Can't find the Hymn you are looking for?"
+        action="new-song-search"
+        :query="searchInput"
+        action-text="Search in songs"
+      />
+    </Transition>
+
     <div
       v-if="loading"
       class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]"
@@ -125,6 +136,16 @@ const getHymns = (query: string = "") => {
 }
 
 getHymns()
+
+const isHymnAvailable = computed(() => {
+  const isHymnTitleInResult = !!hymns.value?.find((hymn) =>
+    hymn.title.toLowerCase().includes(searchInput.value.toLowerCase())
+  )
+  // if (searchInput.value.length > 5 && hymns.value!!.length < 8 && ) {
+  //   return false
+  // }
+  return isHymnTitleInResult
+})
 
 const onSearchInput = useDebounceFn(async () => {
   getHymns(searchInput.value)

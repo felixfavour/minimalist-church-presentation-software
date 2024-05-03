@@ -10,7 +10,9 @@
             :key="slide?.id"
             class="slide-name flex items-center gap-2 top-1 text-primary-900 dark:text-primary-100"
           >
-            <h4 class="font-medium text-nowrap">{{ slide?.name }}</h4>
+            <h4 class="font-medium text-nowrap">
+              {{ useShortSlideName(slide, { longer: true }) }}
+            </h4>
             <SlideChip :slide-type="slide?.type" dark-mode />
           </div>
         </TransitionGroup>

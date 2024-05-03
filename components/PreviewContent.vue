@@ -154,6 +154,10 @@ emitter.on("new-song", (data: Song) => {
   }
 })
 
+emitter.on("new-song-search", (query: string) => {
+  // Do nothing
+})
+
 emitter.on("new-media", (data: any) => {
   if (data) {
     createNewMediaSlide(data)

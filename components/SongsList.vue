@@ -71,7 +71,11 @@
 import type { Song } from "~/types"
 import { useDebounceFn } from "@vueuse/core"
 
-const searchInput = ref<string>("")
+const props = defineProps<{
+  query: string
+}>()
+
+const searchInput = ref<string>(props.query || "")
 const loading = ref<boolean>(true)
 const songs = ref<Song[]>([])
 const searchedSongs = ref<Song[]>([])
@@ -119,7 +123,7 @@ const getSongs = async (query: string = "") => {
   loading.value = false
 }
 
-getSongs()
+getSongs(props.query || "")
 
 const onSearchInput = useDebounceFn(async () => {
   getSongs(searchInput.value)
