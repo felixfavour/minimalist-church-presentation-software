@@ -41,7 +41,7 @@
               <UButton
                 :color="
                   header?.split(' ')[0] === 'Delete' ||
-                  header?.split(' ')[0] === 'Log'
+                  header?.split(' ')[0] === 'Sign'
                     ? 'red'
                     : 'primary'
                 "

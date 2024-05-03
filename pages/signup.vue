@@ -7,7 +7,10 @@
         <span class="font-semibold">Cloud of Worshippers</span>
       </p>
       <p v-show="step === 2" class="max-w-[200px] mx-auto come-up-1">
-        <span class="font-semibold">Welcome, you</span> <br />
+        <span class="font-semibold"
+          >Welcome, {{ user?.fullname?.split(" ")?.[0] }}</span
+        >
+        <br />
         Tell us about your church
       </p>
     </div>
@@ -164,22 +167,27 @@
   </div>
 </template>
 <script setup>
+import { useAuthStore } from "~/store/auth"
 definePageMeta({
   layout: "auth",
 })
 
+const token = useCookie("token")
+const authStore = useAuthStore()
+
+const step = ref(1)
 const fullName = ref("")
 const email = ref("")
 const password = ref("")
 const passwordType = ref("password")
 const passwordInputHover = ref(false)
-
-const step = ref(2)
+const loading = ref(false)
 const church = ref("")
 const otherChurch = ref("")
 const churchIdentity = ref("")
 const churchAddress = ref("")
 const churchPastor = ref("")
+const { user } = storeToRefs(authStore)
 
 const passwordValid = computed(() => {
   const regex =
@@ -207,14 +215,60 @@ onMounted(() => {
         },
       ],
     })
-  }, 1000)
+  }, 1500)
 })
 
 const signup = async () => {
   if (step.value === 1) {
-    step.value = 2
+    loading.value = true
+    const { data, error } = await useAPIFetch("/auth/signup", {
+      method: "POST",
+      body: {
+        fullname: fullName.value,
+        email: email.value,
+        password: password.value,
+      },
+    })
+    if (error.value) {
+      useToast().add({
+        title: error.value?.data?.error?.includes("E11000")
+          ? "Email linked to an account"
+          : error.value?.data?.message,
+        color: "red",
+        icon: "i-bx-error",
+      })
+    } else {
+      token.value = data.value?.token
+      authStore.setUser(data?.value?.data.newUser)
+      step.value = 2
+    }
+    loading.value = false
   } else {
-    // DO nothing
+    loading.value = true
+    const { data, error } = await useAPIFetch("/churches", {
+      method: "POST",
+      body: {
+        name: church.value,
+        type: churchIdentity.value,
+        address: churchAddress.value,
+        pastor: churchPastor.value,
+      },
+    })
+    if (error.value) {
+      useToast().add({
+        title: error.value?.data?.message,
+        color: "red",
+        icon: "i-bx-error",
+      })
+    } else {
+      authStore.setChurch(data?.value)
+      useToast().add({
+        title: "You are all set! 🎉",
+        color: "green",
+      })
+      navigateTo("/?newUser=1")
+    }
+    loading.value = false
   }
 }
 </script>

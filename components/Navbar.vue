@@ -34,10 +34,14 @@
             trailing-icon="i-bx-chevron-down"
             class="p-1"
           >
-            <UAvatar alt="Benjamin Hel" size="sm" class="border-primary-500" />
+            <UAvatar
+              :alt="user?.fullname"
+              size="sm"
+              class="border-primary-500"
+            />
           </UButton>
           <template #panel>
-            <ProfileMiniModal />
+            <ProfileMiniModal :user="user" :church="church" />
           </template>
         </UPopover>
       </div>
@@ -46,9 +50,13 @@
 </template>
 
 <script setup>
+import { useAuthStore } from "~/store/auth"
 const route = useRoute()
 const darkMode = ref(false)
 const colorMode = useColorMode()
+const authStore = useAuthStore()
+
+const { user, church } = storeToRefs(authStore)
 defineProps({
   appVersion: String,
 })

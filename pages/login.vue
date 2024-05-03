@@ -64,9 +64,13 @@
   </div>
 </template>
 <script setup>
+import { useAuthStore } from "~/store/auth"
+
 definePageMeta({
   layout: "auth",
 })
+
+const authStore = useAuthStore()
 
 const toast = useToast()
 const email = ref("")
@@ -97,6 +101,7 @@ const login = async () => {
     })
   } else {
     token.value = data.value.token
+    authStore.setUser(data.value?.data?.user)
     toast.add({
       title: `Successful login as ${email.value}`,
       color: "green",
