@@ -2,12 +2,21 @@
   <div class="login-main section">
     <div class="header flex flex-col items-center text-center mb-12">
       <Logo class="w-24 h-24" />
-      <p class="max-w-[200px] mx-auto">
+      <p v-show="step === 1" class="max-w-[200px] mx-auto come-up-1">
         Sign up to start using
         <span class="font-semibold">Cloud of Worshippers</span>
       </p>
+      <p v-show="step === 2" class="max-w-[200px] mx-auto come-up-1">
+        <span class="font-semibold">Welcome, you</span> <br />
+        Tell us about your church
+      </p>
     </div>
-    <form class="flex flex-col gap-3 max-w-[325px] mx-auto">
+
+    <!-- FORM 1 -->
+    <form
+      v-show="step === 1"
+      class="flex flex-col gap-3 max-w-[325px] mx-auto come-up-2"
+    >
       <UFormGroup size="lg">
         <UInput placeholder="Your full name" v-model="fullName" />
       </UFormGroup>
@@ -54,7 +63,6 @@
           characters, one number, and a special character
         </div>
       </UFormGroup>
-
       <UButton
         block
         size="lg"
@@ -72,6 +80,82 @@
         >
       </p>
     </form>
+
+    <!-- FORM 2 -->
+    <form
+      v-show="step == 2"
+      class="flex flex-col gap-3 max-w-[325px] mx-auto come-up-2"
+    >
+      <UFormGroup size="lg">
+        <USelectMenu
+          placeholder="Your church's name"
+          variant="solid"
+          class="bg-gray-100 rounded-md text-gray-400"
+          v-model="church"
+          :options="churchesArr"
+          searchable
+        >
+          <template #label>
+            <span v-if="church?.length" class="truncate text-black">{{
+              church
+            }}</span>
+            <span v-else>Your church</span>
+          </template>
+        </USelectMenu>
+        <div v-if="church === 'Other Church'" class="come-up-1 mt-1">
+          <UInput placeholder="Your church" v-model="otherChurch" />
+          <div class="help text-gray-400 text-xs mt-2 flex gap-1 come-up-1">
+            <IconWrapper name="i-bx-info-circle" size="3" />
+            Tell us so we will never forget.
+          </div>
+        </div>
+      </UFormGroup>
+      <UFormGroup size="lg">
+        <UInput
+          placeholder="Your branch, zone, district, campus?"
+          v-model="churchIdentity"
+        />
+
+        <div class="help text-gray-400 text-xs mt-2 flex gap-1 come-up-1">
+          <IconWrapper name="i-bx-info-circle" size="3" />
+          How would you identify your church?
+        </div>
+      </UFormGroup>
+      <UFormGroup size="lg">
+        <UInput
+          placeholder="Your senior pastor's name"
+          v-model="churchPastor"
+        />
+      </UFormGroup>
+      <UFormGroup size="lg">
+        <UInput
+          placeholder="Your church's address (optional)"
+          v-model="churchAddress"
+        />
+
+        <div class="help text-gray-400 text-xs mt-2 flex gap-1 come-up-1">
+          <IconWrapper name="i-bx-info-circle" size="3" />
+          [City, State, Country] is enough information
+        </div>
+      </UFormGroup>
+      <UButton
+        block
+        size="lg"
+        class="mt-12"
+        :disabled="
+          !(
+            church &&
+            churchIdentity &&
+            churchPastor &&
+            (church === 'Other Church' ? otherChurch : true)
+          )
+        "
+        :loading="loading"
+        @click="signup"
+      >
+        Start using Cloud of Worshippers
+      </UButton>
+    </form>
   </div>
 </template>
 <script setup>
@@ -84,6 +168,13 @@ const email = ref("")
 const password = ref("")
 const passwordType = ref("password")
 const passwordInputHover = ref(false)
+
+const step = ref(1)
+const church = ref("")
+const otherChurch = ref("")
+const churchIdentity = ref("")
+const churchAddress = ref("")
+const churchPastor = ref("")
 
 const passwordValid = computed(() => {
   const regex =
@@ -113,6 +204,14 @@ onMounted(() => {
     })
   }, 1000)
 })
+
+const signup = async () => {
+  if (step.value === 1) {
+    step.value = 2
+  } else {
+    // DO nothing
+  }
+}
 </script>
 
 <style scoped></style>
