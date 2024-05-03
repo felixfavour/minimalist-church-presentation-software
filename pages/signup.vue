@@ -87,13 +87,18 @@
       class="flex flex-col gap-3 max-w-[325px] mx-auto come-up-2"
     >
       <UFormGroup size="lg">
-        <USelectMenu
+        <UInputMenu
           placeholder="Your church's name"
           variant="solid"
-          class="bg-gray-100 rounded-md text-gray-400"
+          class="bg-gray-100 rounded-md text-black"
           v-model="church"
           :options="churchesArr"
           searchable
+          :ui="{
+            variant: {
+              solid: 'focus:ring-0',
+            },
+          }"
         >
           <template #label>
             <span v-if="church?.length" class="truncate text-black">{{
@@ -101,7 +106,7 @@
             }}</span>
             <span v-else>Your church</span>
           </template>
-        </USelectMenu>
+        </UInputMenu>
         <div v-if="church === 'Other Church'" class="come-up-1 mt-1">
           <UInput placeholder="Your church" v-model="otherChurch" />
           <div class="help text-gray-400 text-xs mt-2 flex gap-1 come-up-1">
@@ -169,7 +174,7 @@ const password = ref("")
 const passwordType = ref("password")
 const passwordInputHover = ref(false)
 
-const step = ref(1)
+const step = ref(2)
 const church = ref("")
 const otherChurch = ref("")
 const churchIdentity = ref("")

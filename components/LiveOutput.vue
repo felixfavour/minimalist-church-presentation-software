@@ -1,5 +1,19 @@
 <template>
-  <AppSection heading="Live Output" class="max-w-[400px]">
+  <AppSection
+    heading="Live Output"
+    class="max-w-[400px]"
+    :secondary-buttons="[
+      {
+        label: 'Go Live',
+        action: 'go-live',
+        icon: 'i-bx-slideshow',
+        color: 'primary',
+        confirmAction: false,
+        visible: true,
+        variant: 'solid',
+      },
+    ]"
+  >
     <div class="main">
       <div
         v-if="liveOutputSlides?.length === 0 || !liveOutputSlides"
@@ -77,6 +91,7 @@
         slide-label
         :slide="liveSlide"
         :full-screen="false"
+        :content-visible="true"
         :slide-styles="settings.slideStyles"
         class="lg-preview"
       />

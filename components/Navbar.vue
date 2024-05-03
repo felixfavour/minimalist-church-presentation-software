@@ -27,24 +27,19 @@
             <div class="w-8 h-8" />
           </template>
         </ClientOnly>
-        <!-- <UButton
-          icon="i-bx-log-out"
-          color="red"
-          variant="outline"
-          @click="logOut"
-        >
-          Log out
-        </UButton> -->
-        <UButton
-          icon="i-bx-slideshow"
-          to="/live"
-          onclick="window.open('/live', 
-                         'live-view', 
-                         'width=1200,height=800'); 
-              return false;"
-        >
-          Go Live
-        </UButton>
+
+        <UPopover v-model:open="bgImagePopoverOpen">
+          <UButton
+            variant="ghost"
+            trailing-icon="i-bx-chevron-down"
+            class="p-1"
+          >
+            <UAvatar alt="Benjamin Hel" size="sm" class="border-primary-500" />
+          </UButton>
+          <template #panel>
+            <ProfileMiniModal />
+          </template>
+        </UPopover>
       </div>
     </div>
   </Transition>
@@ -65,12 +60,6 @@ const isDark = computed({
     colorMode.preference = colorMode.value === "dark" ? "light" : "dark"
   },
 })
-
-const logOut = () => {
-  const token = useCookie("token")
-  token.value = undefined
-  navigateTo("/login")
-}
 </script>
 
 <style scoped></style>

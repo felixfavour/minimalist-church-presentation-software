@@ -30,8 +30,10 @@
           class="actions-ctn mt-2 overflow-y-auto max-h-[calc(100vh-180px)]"
         >
           <ActionCard
-            v-for="(action, index) in actions?.filter((a) => !a.searchableOnly)"
-            :key="action.name"
+            v-for="(action, index) in actions?.filter(
+              (a) => !a?.searchableOnly
+            )"
+            :key="action?.name"
             :action="action"
             :class="{
               'bg-primary-50 dark:bg-primary-800 rounded-md':
@@ -48,7 +50,7 @@
         >
           <ActionCard
             v-for="(action, index) in searchedActions"
-            :key="action.name"
+            :key="action?.name"
             :action="{ ...action, bibleChapterAndVerse }"
             :class="{
               'bg-primary-50 dark:bg-primary-800 rounded-md':
@@ -174,8 +176,8 @@ onMounted(() => {
       case "Enter":
         const action = searchedActions.value?.[focusedActionIndex.value]
         useGlobalEmit(
-          action.action,
-          `${action.bibleBookIndex}:${bibleChapterAndVerse.value}`
+          action?.action,
+          `${action?.bibleBookIndex}:${bibleChapterAndVerse.value}`
         )
         break
       default:

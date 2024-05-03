@@ -10,21 +10,21 @@
       rounded-bg
     />
     <div class="texts">
-      <h4 v-if="action.searchableOnly">
+      <h4 v-if="action?.searchableOnly">
         <span class="font-light italic pr-1 capitalize">
-          {{ action.type }}:
+          {{ action?.type }}:
         </span>
         <span class="font-semibold">
-          {{ action.name || "" }}
-          <span v-if="action.type === slideTypes.bible">{{
-            action.bibleChapterAndVerse || ""
+          {{ action?.name || "" }}
+          <span v-if="action?.type === slideTypes.bible">{{
+            action?.bibleChapterAndVerse || ""
           }}</span>
         </span>
       </h4>
       <h4 v-else class="font-semibold">
-        {{ action.name || "" }}
+        {{ action?.name || "" }}
       </h4>
-      <p class="font-light text-xs mt-1">{{ action.desc || "" }}</p>
+      <p class="font-light text-xs mt-1">{{ action?.desc || "" }}</p>
     </div>
   </button>
 </template>
@@ -36,7 +36,7 @@ const props = defineProps<{
 }>()
 
 const emitParameter = computed(() => {
-  switch (props.action.type) {
+  switch (props.action?.type) {
     case slideTypes.bible:
       return `${props.action?.bibleBookIndex}:${
         props.action?.bibleChapterAndVerse || "1:1"

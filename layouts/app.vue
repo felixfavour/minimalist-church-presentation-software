@@ -57,8 +57,10 @@ const downloadEssentialResources = async () => {
 
   // Download KJV Bible
   // const kjvBible = await useS3File("kjv.json")
-  useNuxtApp().provide("kjvBible", kjvBible || "")
-  downloadProgress.value = 2
+  if (useNuxtApp().$kjvBible) {
+    useNuxtApp().provide("kjvBible", kjvBible || "")
+    downloadProgress.value = 2
+  }
 
   // // Download NKJV Bible
   // // const nkjvBible = await useS3File("nkjv.json")
@@ -77,8 +79,11 @@ const downloadEssentialResources = async () => {
 
   // Download all hymns
   // const hymns = await useS3File("hymns.json")
-  useNuxtApp().provide("hymns", hymns || "")
-  downloadProgress.value = 6
+
+  if (useNuxtApp().$hymns) {
+    useNuxtApp().provide("hymns", hymns || "")
+    downloadProgress.value = 6
+  }
 
   setTimeout(() => {
     downloadProgress.value = 7

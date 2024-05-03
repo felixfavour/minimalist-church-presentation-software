@@ -192,7 +192,7 @@ export const appFonts = [
 ]
 
 export const churchesArr = [
-  "Other Church",
+  // "Other Church",
   "Redeemed Christian Church of God (RCCG)",
   "Living Faith Church Worldwide (Winners' Chapel)",
   "Deeper Christian Life Ministry",

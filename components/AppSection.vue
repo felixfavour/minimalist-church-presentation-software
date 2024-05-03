@@ -41,11 +41,13 @@
             </ConfirmDialog>
             <UButton
               v-if="secondaryButton.visible && !secondaryButton.confirmAction"
-              variant="ghost"
               class="p-1 px-2"
               size="md"
+              :variant="secondaryButton?.variant || 'ghost'"
               :color="secondaryButton.color"
               :icon="secondaryButton.icon"
+              target="_blank"
+              :to="secondaryButton.action === 'go-live' ? '/live' : '#'"
               @click="useGlobalEmit(secondaryButton.action)"
               >{{ secondaryButton.label }}</UButton
             >

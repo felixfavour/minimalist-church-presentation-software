@@ -117,6 +117,7 @@
             <LiveProjectionOnly
               :full-screen="true"
               full-screen-height="80vh"
+              :content-visible="true"
               :slide="slide"
               :slide-label="false"
               :slide-styles="slideStyles"
