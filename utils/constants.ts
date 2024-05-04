@@ -85,6 +85,15 @@ export const quickActionsArr = [
     // type: slideTypes.text
   },
   {
+    icon: "i-lucide-music-2",
+    name: "Add Song",
+    desc: "Save songs to your personal library",
+    action: "add-song",
+    meta: "",
+    // unreleased: true,
+    // type: slideTypes.text
+  },
+  {
     icon: "i-bx-trash",
     name: "Remove Alert",
     desc: "Remove current alert",

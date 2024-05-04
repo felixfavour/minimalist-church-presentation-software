@@ -77,7 +77,11 @@
       <SearchBibleList v-else-if="page === 'search-bible'" @close="page = ''" />
 
       <!-- LIBRARY SECTION-->
-      <PersonalLibrary v-else-if="page === 'library'" @close="page = ''" />
+      <PersonalLibrary
+        v-else-if="page === 'library'"
+        :page="libraryPage"
+        @close="page = ''"
+      />
 
       <!-- LIBRARY SECTION-->
       <AddAlert v-else-if="page === 'alert'" @close="page = ''" />
@@ -101,6 +105,7 @@ const page = ref<string>("") // song, search
 const songSearchQuery = ref<string>("")
 const hymns = useNuxtApp().$hymns as Array<Hymn>
 const emitter = useNuxtApp().$emitter as Emitter<any>
+const libraryPage = ref<string>("")
 
 const actions = quickActionsArr.concat(
   bibleBooks?.map((book, index) => {
@@ -171,6 +176,11 @@ emitter.on("remove-alert", () => {
     icon: "i-bx-trash",
     title: "Active alert has been removed",
   })
+})
+
+emitter.on("add-song", () => {
+  libraryPage.value = "add-song"
+  page.value = "library"
 })
 
 onMounted(() => {
@@ -244,6 +254,9 @@ const searchedActions = computed(() => {
 watch(page, () => {
   focusedActionIndex.value = 0
   searchInput.value = ""
+  if (page.value === "") {
+    libraryPage.value = ""
+  }
 })
 </script>
 

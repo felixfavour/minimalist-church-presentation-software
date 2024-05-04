@@ -1,6 +1,9 @@
 <template>
-  <div class="main max-h-[100vh] overflow-hidden bg-black" :id="liveSlideId">
-    <TransitionGroup name="fade-list">
+  <div
+    class="main max-h-[100vh] overflow-hidden bg-black min-h-[100vh]"
+    :id="liveSlideId"
+  >
+    <TransitionGroup name="fade-list" cla>
       <LiveProjectionOnly
         v-for="liveSlide in activeSlides"
         :key="liveSlide.id"

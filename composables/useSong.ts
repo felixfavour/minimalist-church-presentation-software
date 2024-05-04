@@ -24,18 +24,30 @@ const useSong = (song: Song, linesPerDisplay: number = 4): Song | null => {
       // if (line.toLocaleLowerCase().includes('[verse') || line.toLocaleLowerCase().includes('[intro]') || line.toLocaleLowerCase().includes('[chorus]')) {
       //   continue
       // }
+
       line = line.replaceAll("â", "'").replaceAll('solo: ', '')?.replaceAll(' ??? ', '')?.replaceAll(' ?? ', '')
       tempVerse += `${line}\n`
       lineCount += 1
 
-      if (lineCount === linesPerDisplay) {
-        verses.push(tempVerse)
+
+      if (tempVerse.includes('[force-verse-break]')) {
+        console.log(lyricLines[i])
+        console.log(lyricLines[i + 1])
+        verses.push(tempVerse?.replace('[force-verse-break]', ''))
         lineCount = 0
         tempVerse = ''
+        continue
+      }
+
+      if (lineCount === linesPerDisplay) {
+        verses.push(tempVerse?.replace('[force-verse-break]', ''))
+        lineCount = 0
+        tempVerse = ''
+        // }
       }
 
       if ((lyricLines.length - i) === 1) {
-        verses.push(tempVerse)
+        verses.push(tempVerse?.replace('[force-verse-break]\n', ''))
       }
     }
 

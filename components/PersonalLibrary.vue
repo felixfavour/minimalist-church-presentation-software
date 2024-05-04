@@ -149,6 +149,10 @@ import fuzzysort from "fuzzysort"
 import { liveQuery } from "dexie"
 const toast = useToast()
 
+const props = defineProps<{
+  page: string
+}>()
+
 const libraryTabs = [
   { label: "song", icon: "i-bx-music" },
   { label: "slide", icon: "i-bx-slideshow" },
@@ -156,7 +160,7 @@ const libraryTabs = [
 const activeLibraryTab = ref<number>(0)
 const searchInput = ref<string>("")
 const loading = ref<boolean>(false)
-const page = ref<string>("")
+const page = ref<string>(props.page || "")
 const songToEdit = ref<Song>()
 const libraryItems = useObservable<
   { id: string; type: String; content: Slide | Song }[]

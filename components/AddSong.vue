@@ -7,6 +7,23 @@
       <UFormGroup label="Artist" size="lg">
         <UInput placeholder="Nathaniel Bassey" v-model="artist" />
       </UFormGroup>
+
+      <div
+        class="active-alert rounded-md bg-primary-100 dark:bg-primary-900 p-4"
+      >
+        <div
+          class="text-sm text-primary-500 font-semibold flex items-center gap-2"
+        >
+          <IconWrapper name="i-bx-bulb" size="4"></IconWrapper>
+          Hint
+        </div>
+        <p class="mt-2 text-sm">
+          Add an empty line in between verses containing
+          <span class="font-bold">[force-verse-break]</span> if you wish to
+          force the lyrics to broken into verses. This feature is especially
+          useful for adding worship lineup.
+        </p>
+      </div>
       <UFormGroup label="Lyrics" size="lg">
         <UTextarea
           placeholder="Hallelujah Eh! It's the sound of Victory"
