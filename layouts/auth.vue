@@ -8,7 +8,7 @@
       Your church's power point.
     </h2>
     <div
-      class="auth-box bg-white rounded-2xl shadow-xl p-[4%] py-[5%] max-w-[450px] w-[100%] shadow-primary-200 relative"
+      class="auth-box bg-white rounded-2xl shadow-xl p-[3rem] py-[5%] max-w-[450px] w-[100%] shadow-primary-200 relative"
     >
       <slot />
     </div>
