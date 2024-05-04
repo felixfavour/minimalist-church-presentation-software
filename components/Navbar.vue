@@ -44,6 +44,10 @@
               :alt="user?.fullname"
               size="sm"
               class="border-primary-500"
+              :ui="{
+                background: 'bg-primary-100 ring-0',
+                wrapper: 'bg-red-500',
+              }"
             />
           </UButton>
           <template #panel>

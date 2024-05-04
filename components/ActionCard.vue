@@ -12,7 +12,7 @@
     <div class="texts">
       <h4 v-if="action?.searchableOnly">
         <span class="font-light italic pr-1 capitalize">
-          {{ action?.type }}:
+          {{ action?.type || "Action" }}:
         </span>
         <span class="font-semibold">
           {{ action?.name || "" }}

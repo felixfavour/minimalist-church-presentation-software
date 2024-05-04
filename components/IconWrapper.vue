@@ -8,7 +8,11 @@
         : ''
     "
   >
-    <UIcon :name="name" :class="`w-${size} h-${size}`" dynamic />
+    <UIcon
+      :name="name"
+      :class="`w-${size} h-${size} ${animate ? 'animate-ping' : ''}`"
+      dynamic
+    />
   </div>
 </template>
 
@@ -20,5 +24,6 @@ const props = defineProps({
   },
   name: String,
   roundedBg: Boolean,
+  animate: Boolean,
 })
 </script>

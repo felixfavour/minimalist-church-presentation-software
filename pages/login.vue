@@ -7,7 +7,7 @@
         <span class="font-semibold">Cloud of Worshippers</span>
       </p>
     </div>
-    <form class="flex flex-col gap-3 max-w-[325px] mx-auto">
+    <form class="flex flex-col gap-3 max-w-[325px] mx-auto" @submit="login()">
       <UFormGroup size="lg">
         <UInput placeholder="Your email" v-model="email" />
       </UFormGroup>

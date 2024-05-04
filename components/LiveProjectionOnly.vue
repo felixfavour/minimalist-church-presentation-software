@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[100%] min-h-[220px]">
+  <div class="w-[100%] min-h-[220px] relative">
     <div
       class="live-output w-[100%] min-h-[220px] rounded-md relative overflow-hidden border bg-no-repeat transition-all backdrop-blur-0 bg-black dark:border-none"
       v-if="contentVisible"
@@ -125,6 +125,7 @@
           </UCard>
         </UModal>
       </template>
+      <AlertView v-if="fullScreen" />
     </div>
   </div>
 </template>

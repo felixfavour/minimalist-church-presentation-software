@@ -76,13 +76,32 @@ export const quickActionsArr = [
     // type: slideTypes.text
   },
   {
-    icon: "i-carbon-overlay",
-    name: "Add Overlay",
-    desc: "Place one-third of a slide over another",
-    action: "new-overlay",
+    icon: "i-bx-info-circle",
+    name: "Add Banners/Alert",
+    desc: "Notify your audience without disruption",
+    action: "new-alert",
+    meta: "",
+    // unreleased: true,
+    // type: slideTypes.text
+  },
+  {
+    icon: "i-bx-trash",
+    name: "Remove Alert",
+    desc: "Remove current alert",
+    action: "remove-alert",
+    searchableOnly: true,
+    meta: "trash alert remove banner",
+    // unreleased: true,
+    // type: slideTypes.text
+  },
+  {
+    icon: "i-bx-time",
+    name: "Add Countdown Timer",
+    desc: "Find scriptures with familiar words",
+    action: "new-timer",
     meta: "",
     unreleased: true,
-    // type: slideTypes.text
+    type: slideTypes.text,
   },
   {
     icon: "i-ph-file-ppt",
@@ -111,15 +130,15 @@ export const quickActionsArr = [
     unreleased: true,
     // type: slideTypes.text
   },
-  {
-    icon: "i-bx-time",
-    name: "Add Countdown Timer",
-    desc: "Find scriptures with familiar words",
-    action: "new-timer",
-    meta: "",
-    unreleased: true,
-    type: slideTypes.text,
-  },
+  // {
+  //   icon: "i-carbon-overlay",
+  //   name: "Add Overlay",
+  //   desc: "Place one-third of a slide over another",
+  //   action: "new-overlay",
+  //   meta: "",
+  //   unreleased: true,
+  //   // type: slideTypes.text
+  // },
 ]
 
 export const slideLayoutTypes = {

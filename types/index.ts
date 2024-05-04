@@ -13,6 +13,15 @@ export interface Slide {
   slideStyle?: SlideStyle
 }
 
+export interface Alert {
+  id: string
+  title: string
+  icon: string
+  style: string
+  background: string
+  // position: string // top, bottom
+}
+
 export interface QuickAction {
   icon: string
   name: string

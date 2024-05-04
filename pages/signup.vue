@@ -19,6 +19,7 @@
     <form
       v-show="step === 1"
       class="flex flex-col gap-3 max-w-[325px] mx-auto come-up-2"
+      @submit="signup()"
     >
       <UFormGroup size="lg">
         <UInput placeholder="Your full name" v-model="fullName" />
@@ -88,6 +89,7 @@
     <form
       v-show="step == 2"
       class="flex flex-col gap-3 max-w-[325px] mx-auto come-up-2"
+      @submit="signup()"
     >
       <UFormGroup size="lg">
         <UInputMenu

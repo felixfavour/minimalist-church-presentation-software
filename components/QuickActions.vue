@@ -78,6 +78,9 @@
 
       <!-- LIBRARY SECTION-->
       <PersonalLibrary v-else-if="page === 'library'" @close="page = ''" />
+
+      <!-- LIBRARY SECTION-->
+      <AddAlert v-else-if="page === 'alert'" @close="page = ''" />
     </Transition>
   </AppSection>
 </template>
@@ -156,6 +159,18 @@ emitter.on("new-search-bible", () => {
 
 emitter.on("new-library", () => {
   page.value = "library"
+})
+
+emitter.on("new-alert", () => {
+  page.value = "alert"
+})
+
+emitter.on("remove-alert", () => {
+  appStore.setAlert(null)
+  useToast().add({
+    icon: "i-bx-trash",
+    title: "Active alert has been removed",
+  })
 })
 
 onMounted(() => {

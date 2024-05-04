@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { AppSettings, Slide, SlideStyle } from '~/types/index'
+import type { Alert, AppSettings, Slide, SlideStyle } from '~/types/index'
 import type { Emitter } from 'mitt'
 
 // console.log(usePinia())
@@ -30,6 +30,7 @@ export const useAppStore = defineStore('app', {
         },
         slideStyles: { blur: 0.5, brightness: 50 } as SlideStyle
       },
+      alert: null as Alert | null,
       copyrightContent: {
         'KJV': '',
         'NKJV': 'Scripture taken from the New King James Version®. Copyright © 1982 by Thomas Nelson. All rights reserved.',
@@ -63,6 +64,9 @@ export const useAppStore = defineStore('app', {
     },
     setDefaultBibleVersion(version: string) {
       this.settings = { ...this.settings, defaultBibleVersion: version }
+    },
+    setAlert(alert: Alert | null) {
+      this.alert = alert
     }
   },
   persist: {
