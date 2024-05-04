@@ -28,7 +28,13 @@
           </template>
         </ClientOnly>
 
-        <UPopover v-model:open="bgImagePopoverOpen">
+        <UPopover
+          v-model:open="bgImagePopoverOpen"
+          :ui="{
+            ring: 'ring-0',
+            background: 'bg-white dark-bg-gray-900 border-0',
+          }"
+        >
           <UButton
             variant="ghost"
             trailing-icon="i-bx-chevron-down"

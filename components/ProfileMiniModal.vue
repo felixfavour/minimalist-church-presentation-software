@@ -1,6 +1,6 @@
 <template>
   <div class="profile-modal-ctn flex">
-    <div class="profile-modal text-center max-w-52">
+    <div class="profile-modal text-center w-48">
       <div class="avatar-ctn bg-primary-100 dark:bg-primary-800 p-4">
         <UAvatar
           alt="Favour Felix"
@@ -26,26 +26,37 @@
         </div>
       </div>
 
-      <div
-        class="actions p-4 flex flex-col gap-2 border-t dark:border-primary-950"
-      >
+      <div class="actions flex flex-col border-t dark:border-primary-950">
         <UButton
           to="https://cloudofworshippers.featurebase.app"
           target="_blank"
-          icon="i-bxs-heart"
-          variant="outline"
+          size="xl"
+          variant="ghost"
+          class="px-5 py-3 text-md rounded-none justify-start items-start"
+          color="gray"
           block
-          >Share Feedback</UButton
-        >
+          >Share Feedback 💜
+        </UButton>
+        <UButton
+          to="https://cloudofworshippers.featurebase.app"
+          target="_blank"
+          size="xl"
+          variant="ghost"
+          color="gray"
+          disabled
+          class="px-5 py-3 text-md rounded-none justify-start items-start opacity-30"
+          block
+          >App Settings
+        </UButton>
         <ConfirmDialog
           button-label="Sign out"
           button-icon="i-bx-log-out"
           button-color="red"
-          button-variant="solid"
-          button-size="md"
+          button-variant="ghost"
+          button-size="xl"
           no-tooltip
           header="Sign out"
-          button-styles="p-1 px-2 text-xs"
+          button-styles="py-4 px-6 text-md rounded-none border-t dark:border-primary-950"
           label="Are you sure you want to sign out of your account?"
           @confirm="authStore.signOut()"
         />
