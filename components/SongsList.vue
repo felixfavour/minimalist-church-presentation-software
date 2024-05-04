@@ -112,9 +112,7 @@ onMounted(() => {
 
 const getSongs = async (query: string = "") => {
   loading.value = true
-  const promise = await useFetch(
-    `https://worshipcloud-api-6xak8.ondigitalocean.app/v1/song?search=${query}`
-  )
+  const promise = await useAPIFetch(`/song?search=${query}`)
   let songsData = promise.data.value.data?.map((song) => ({
     ...song,
     title: song.title.replaceAll("â", "'"),

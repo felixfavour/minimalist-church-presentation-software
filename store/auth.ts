@@ -30,6 +30,13 @@ export const useAuthStore = defineStore('auth', {
     },
     setChurch(church: Church) {
       this.church = church
+    },
+    signOut() {
+      const cookie = useCookie('token')
+      cookie.value = undefined
+      this.user = null
+      this.church = null
+      navigateTo('/login')
     }
   },
   persist: {
