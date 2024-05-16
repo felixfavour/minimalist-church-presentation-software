@@ -1,23 +1,23 @@
 {
-  "name": "Cloud of Worshippers",
+  "name": "CoW Live",
   "short_name": "CoW",
   "description": "Cloud of Worshippers",
-  "theme_color": "#ffffff",
-  "start_url": "/",
+  "theme_color": "#480000",
+  "start_url": "/live",
   "display": "fullscreen",
   "icons": [
     {
-      "src": "/cloud-w-144.png",
+      "src": "/live-cloud-w-144.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "/cloud-w-192.png",
+      "src": "/live-cloud-w-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/cloud-w-512.png",
+      "src": "/live-cloud-w-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
