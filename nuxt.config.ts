@@ -1,3 +1,5 @@
+// import { VitePWA } from 'vite-plugin-pwa'
+
 export default defineNuxtConfig({
   experimental: {
     renderJsonPayloads: false
@@ -90,7 +92,13 @@ export default defineNuxtConfig({
     'nuxt-tiptap-editor',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
+    "@vite-pwa/nuxt"
   ],
+  pwa: {
+    devOptions: {
+      enabled: true
+    }
+  },
   css: [
     '~/assets/css/main.css',
   ],

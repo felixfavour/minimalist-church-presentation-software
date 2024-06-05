@@ -20,6 +20,7 @@
     "@tiptap/extension-placeholder": "^2.2.4",
     "@tiptap/extension-text-align": "^2.2.4",
     "@tiptap/extension-text-style": "^2.4.0",
+    "@vite-pwa/nuxt": "^0.8.0",
     "@vueuse/core": "^10.9.0",
     "@vueuse/rxjs": "^10.9.0",
     "dexie": "^4.0.4",

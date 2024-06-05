@@ -13,6 +13,9 @@
         >
           Beta v{{ appVersion }}
         </UButton>
+        <div class="stuff">
+          {{ $pwa }}
+        </div>
       </div>
       <div class="actions text-sm flex gap-2 items-center">
         <ClientOnly>
