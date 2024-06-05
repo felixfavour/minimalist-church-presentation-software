@@ -1,4 +1,4 @@
-// import { VitePWA } from 'vite-plugin-pwa'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineNuxtConfig({
   experimental: {
@@ -94,10 +94,39 @@ export default defineNuxtConfig({
     '@pinia-plugin-persistedstate/nuxt',
     "@vite-pwa/nuxt"
   ],
-  pwa: {
-    devOptions: {
-      enabled: true
-    }
+  vite: {
+    plugins: [
+      VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+        workbox: {
+          runtimeCaching: [
+            {
+              urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'google-fonts',
+                expiration: {
+                  maxEntries: 30,
+                  maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                },
+              },
+            },
+            {
+              urlPattern: /^https:\/\/cdn\.example\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'example-cdn',
+                expiration: {
+                  maxEntries: 30,
+                  maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                },
+              },
+            },
+          ],
+        },
+      }),
+    ],
   },
   css: [
     '~/assets/css/main.css',
