@@ -294,7 +294,7 @@ if (isAppOnline.value) {
 } else {
   // Handle offline hymn count
   hymnCount = hymns?.data?.length
-  // console.log("hymnCount", hymnCount)
+  console.log("hymnCount", hymnCount)
 }
 
 // LISTEN TO EVENTS
