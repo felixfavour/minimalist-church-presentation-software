@@ -16,21 +16,12 @@
         <span class="flex items-center gap-2 font-bold"
           ><Logo class="w-[34px] mb-2" /> Cloud of Worship</span
         >
-        <!-- •
-        <UButton
-          size="lg"
-          color="black"
-          class="font-bold"
-          @click="transmitScreenCapture"
-        >
-          Stream via NDI
-        </UButton> -->
       </div>
     </div>
     <!-- :content-visible="liveSlide?.id === liveSlideId" -->
     <!-- Using motionless slides to test bug with Bible Slides not moving to next slide in live view -->
     <TransitionGroup v-if="currentState.settings.motionlessSlides">
-      <LiveProjectionOnly
+      <NDILiveProjection
         v-show="mostUpdatedLiveSlide?.id === currentState.liveSlideId"
         :content-visible="true"
         :id="currentState.liveSlideId"
@@ -45,7 +36,7 @@
       />
     </TransitionGroup>
     <TransitionGroup v-else name="fade-list">
-      <LiveProjectionOnly
+      <NDILiveProjection
         v-for="liveSlide in viewableSlides"
         :key="liveSlide.id"
         v-show="liveSlide?.id === currentState.liveSlideId"
