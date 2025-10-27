@@ -103,6 +103,7 @@ import { appWideActions } from "~/utils/constants"
 const appStore = useAppStore()
 const authStore = useAuthStore()
 const { slides, updateLiveOutput } = useSlides()
+const { startCountdown, clearCountdown } = useCountdown()
 const churchId = authStore.user?.churchId
 const toast = useToast()
 
@@ -114,11 +115,6 @@ const bulkActionLabel = ref<string>("Select Slides")
 const bulkActionIcon = ref<string>("")
 const bulkSelectSlides = ref<boolean>(false)
 const bulkSelectedSlides = ref<string[]>([])
-const activeCountdownInterval = ref<any>(null)
-const countdownTimeLeft = ref<number>(0)
-const countdownStartTime = ref<number>(0)
-const countdownDuration = ref<number>(0)
-const countdownRAF = ref<number>(0)
 
 // Listen to see if active slide is in active schedule, and to scroll to newest slide if in active schedule
 watch(
@@ -689,11 +685,7 @@ const deleteSlide = async (slideId: string, addToast: boolean = true) => {
 
   // Clear countdown animation if slide is a countdown slide before deleting
   if (tempSlide?.type === slideTypes.countdown) {
-    if (countdownRAF.value) {
-      cancelAnimationFrame(countdownRAF.value)
-    }
-    activeCountdownInterval.value = null
-    countdownTimeLeft.value = 0
+    clearCountdown()
   }
 
   const slideIndex = slides.value.findIndex((s) => s.id === slideId)
@@ -994,8 +986,7 @@ const createNewCountdownSlide = (countdown: Countdown) => {
   // console.log(activeSlide.value)
   // Only one countdown slide can be active, clear any active interval
   removeExistingCountdownSlides()
-  clearInterval(activeCountdownInterval.value)
-  countdownTimeLeft.value = 0
+  clearCountdown()
 
   const tempSlide = { ...preSlideCreation() }
   tempSlide.layout = slideLayoutTypes.countdown
@@ -1028,93 +1019,6 @@ const createNewCountdownSlide = (countdown: Countdown) => {
   toast.add({ title: "Countdown slide created", icon: "i-bx-time" })
   usePosthogCapture("NEW_COUNTDOWN_SLIDE_CREATED")
   uploadOfflineSlides()
-}
-
-const updateCountdownSlide = (
-  slide: Slide,
-  timeRemaining: number,
-  isPlaying: boolean = true
-) => {
-  const tempSlide = { ...slide }
-  const slideIndex = slides.value.findIndex((s) => s.id === tempSlide.id)
-  tempSlide.data = {
-    ...tempSlide.data,
-    timeLeft: useMilliToTimeString(timeRemaining),
-  } as Countdown
-  tempSlide.slideStyle = {
-    ...tempSlide.slideStyle,
-    isMediaPlaying: isPlaying,
-  }
-  // console.log("tempSlide", tempSlide.data)
-  tempSlide.contents = useSlideContent(tempSlide, tempSlide?.data!!)
-  // activeSlide.value = tempSlide
-  slides.value.splice(slideIndex, 1, tempSlide)
-  updateLiveOutput(tempSlide)
-}
-
-const startCountdown = (slide: Slide, restartCountdown: boolean = false) => {
-  const countdown = slide?.data as Countdown
-  if (countdown?.time) {
-    const duration = useTimeStringToMilli(
-      restartCountdown
-        ? (slide.data as Countdown)?.time
-        : (slide.data as Countdown)?.timeLeft
-    )
-
-    if (activeCountdownInterval.value === null || restartCountdown) {
-      // Stop any existing animation
-      if (countdownRAF.value) {
-        cancelAnimationFrame(countdownRAF.value)
-      }
-
-      // Reset or initialize countdown state
-      if (restartCountdown) {
-        countdownTimeLeft.value = duration
-        countdownDuration.value = duration
-      } else {
-        countdownTimeLeft.value =
-          countdownTimeLeft.value === 0 ? duration : countdownTimeLeft.value
-        countdownDuration.value = duration
-      }
-
-      // Record start time
-      countdownStartTime.value = performance.now()
-      const startTimeLeft = countdownTimeLeft.value
-
-      // Animation function
-      const animate = (currentTime: number) => {
-        const elapsed = currentTime - countdownStartTime.value
-        const remaining = Math.max(0, startTimeLeft - elapsed)
-
-        // Update only when we cross a second boundary to maintain the same visual update rate
-        if (
-          Math.floor(remaining / 1000) !==
-          Math.floor(countdownTimeLeft.value / 1000)
-        ) {
-          countdownTimeLeft.value = remaining
-          updateCountdownSlide(slide, remaining)
-        }
-
-        if (remaining > 0) {
-          countdownRAF.value = requestAnimationFrame(animate)
-          activeCountdownInterval.value = true
-        } else {
-          countdownTimeLeft.value = 0
-          updateCountdownSlide(slide, 0, false)
-          activeCountdownInterval.value = null
-        }
-      }
-
-      // Start the animation
-      countdownRAF.value = requestAnimationFrame(animate)
-      activeCountdownInterval.value = true
-    } else {
-      // Pause the countdown
-      cancelAnimationFrame(countdownRAF.value)
-      activeCountdownInterval.value = null
-      updateCountdownSlide(slide, countdownTimeLeft.value, false)
-    }
-  }
 }
 
 const gotoAction = (title: string, version: string) => {
@@ -1250,7 +1154,7 @@ const gotoSongVerse = async (title: string) => {
 
       // Every 10 seconds
       // const debouncedSlideUpdate = useDebounceFn(updateSlideOnline, 10000)
-      updateSlideOnline(activeSlide.value)
+      // updateSlideOnline(activeSlide.value)
       updateLiveOutput(activeSlide.value)
     }
     usePosthogCapture("GOTO_SONG_TOOLBAR_USED")
