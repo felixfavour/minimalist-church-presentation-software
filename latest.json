@@ -1,15 +1,15 @@
 {
-  "version": "0.42.0-beta",
-  "tag": "v0.42.0-beta",
-  "releaseDate": "2026-02-05T05:58:42Z",
-  "releaseNotes": "- feat: add song section detection for verse, chorus, bridge labels\n",
+  "version": "0.43.0-beta",
+  "tag": "v0.43.0-beta",
+  "releaseDate": "2026-02-05T05:59:07Z",
+  "releaseNotes": "- feat: add song section detection for verse, chorus, bridge labels\n- Update latest.json for release v0.41.3-beta\n",
   "platforms": {
     "darwin": {
-      "url": "https://github.com/felixfavour/minimalist-church-presentation-software/releases/download/v0.42.0-beta/",
+      "url": "https://github.com/felixfavour/minimalist-church-presentation-software/releases/download/v0.43.0-beta/",
       "signature": ""
     },
     "windows": {
-      "url": "https://github.com/felixfavour/minimalist-church-presentation-software/releases/download/v0.42.0-beta/",
+      "url": "https://github.com/felixfavour/minimalist-church-presentation-software/releases/download/v0.43.0-beta/",
       "signature": ""
     }
   }
