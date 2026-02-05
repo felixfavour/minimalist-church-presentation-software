@@ -1,15 +1,15 @@
 {
-  "version": "0.41.3-beta",
-  "tag": "v0.41.3-beta",
-  "releaseDate": "2026-02-03T21:17:46Z",
-  "releaseNotes": "- fix: remote user can update slide and have it show automatically\n- chore: updated app settings\n- Update latest.json for release v0.41.2-beta\n",
+  "version": "0.42.0-beta",
+  "tag": "v0.42.0-beta",
+  "releaseDate": "2026-02-05T05:58:42Z",
+  "releaseNotes": "- feat: add song section detection for verse, chorus, bridge labels\n",
   "platforms": {
     "darwin": {
-      "url": "https://github.com/felixfavour/minimalist-church-presentation-software/releases/download/v0.41.3-beta/",
+      "url": "https://github.com/felixfavour/minimalist-church-presentation-software/releases/download/v0.42.0-beta/",
       "signature": ""
     },
     "windows": {
-      "url": "https://github.com/felixfavour/minimalist-church-presentation-software/releases/download/v0.41.3-beta/",
+      "url": "https://github.com/felixfavour/minimalist-church-presentation-software/releases/download/v0.42.0-beta/",
       "signature": ""
     }
   }
