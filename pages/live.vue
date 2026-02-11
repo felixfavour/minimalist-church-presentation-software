@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="liveDisplayEl"
     class="main max-h-[100vh] overflow-hidden bg-black min-h-[100vh]"
     :id="currentState.liveSlideId?.toString()"
   >
@@ -57,6 +58,7 @@ import type { Emitter } from "mitt"
 import { useAppStore } from "@/store/app"
 import type { Slide } from "~/types"
 import { useAuthStore } from "~/store/auth"
+import { useSwipe } from "@vueuse/core"
 
 // Use dedicated live layout
 definePageMeta({
@@ -71,6 +73,7 @@ const mediaRecorder = ref<MediaRecorder | null>(null)
 const mediaRecorderInterval = ref()
 const FPS = 10
 const mostUpdatedLiveSlide = ref<Slide | null>(null)
+const liveDisplayEl = ref<HTMLElement | null>(null)
 
 useHead({
   title: "Live Projection - Cloud of Worship",
@@ -127,6 +130,44 @@ const checkFullScreen = () => {
   }
 }
 
+// Swipe gesture support for navigation
+const { direction, lengthX } = useSwipe(liveDisplayEl, {
+  threshold: 50, // Minimum swipe distance in pixels
+  onSwipeEnd() {
+    // Only handle swipes for Bible slides
+    if (mostUpdatedLiveSlide.value?.type === slideTypes.bible) {
+      if (direction.value === 'left' && lengthX.value > 50) {
+        // Swipe left = next verse
+        handleLiveNavigation('next')
+      } else if (direction.value === 'right' && lengthX.value > 50) {
+        // Swipe right = previous verse
+        handleLiveNavigation('previous')
+      }
+    }
+  }
+})
+
+// Handle navigation in live view
+const handleLiveNavigation = async (dir: 'next' | 'previous') => {
+  if (!mostUpdatedLiveSlide.value || mostUpdatedLiveSlide.value.type !== slideTypes.bible) {
+    return
+  }
+
+  const chapterNav = useChapterNavigation()
+  const currentVerse = mostUpdatedLiveSlide.value.title || '1:1:1'
+  const scriptureLabel = useScriptureLabel(currentVerse)
+  const version = mostUpdatedLiveSlide.value.slideStyle?.bibleVersion || 'KJV'
+  
+  const nextRef = dir === 'next' 
+    ? await chapterNav.getNextVerse(scriptureLabel, version)
+    : await chapterNav.getPreviousVerse(scriptureLabel, version)
+  
+  if (nextRef) {
+    // Emit goto-verse event through global event system
+    useGlobalEmit(appWideActions.gotoVerse, nextRef)
+  }
+}
+
 onMounted(() => {
   window.addEventListener("fullscreenchange", checkFullScreen)
   window.addEventListener("webkitfullscreenchange", checkFullScreen)
@@ -149,6 +190,19 @@ onMounted(() => {
       document.exitFullscreen()
     } else {
       document.documentElement.requestFullscreen()
+    }
+  })
+
+  // Arrow key navigation for Bible slides
+  useCreateShortcut("ArrowRight", () => {
+    if (mostUpdatedLiveSlide.value?.type === slideTypes.bible) {
+      handleLiveNavigation('next')
+    }
+  })
+  
+  useCreateShortcut("ArrowLeft", () => {
+    if (mostUpdatedLiveSlide.value?.type === slideTypes.bible) {
+      handleLiveNavigation('previous')
     }
   })
 
