@@ -313,6 +313,7 @@
     />
     <div
       v-else
+      ref="swipeTarget"
       class="h-[100%] relative text-white bg-primary-900 bg-no-repeat transition-all rounded-b-md overflow-hidden"
       :class="{
         'bg-center bg-cover':
@@ -357,6 +358,7 @@ import type { Editor } from "@tiptap/core"
 import type { Emitter } from "mitt"
 import { useAppStore } from "~/store/app"
 import type { ExtendedFileT, Slide, SlideStyle, Song } from "~/types"
+import { useSwipe } from '@vueuse/core'
 
 const props = defineProps<{
   slide?: Slide
@@ -395,6 +397,7 @@ const containerOverflow = ref<string>("overflow-x-auto")
 const selectedBibleVersion = ref<string>(
   appStore.currentState.settings.defaultBibleVersion
 )
+const swipeTarget = ref<HTMLElement | null>(null)
 
 const animatedSlides = computed(() => {
   if (props.slide) {
@@ -480,6 +483,28 @@ watch(
 const emitter = useNuxtApp().$emitter as Emitter<any>
 
 onMounted(() => {
+  // Set up swipe gestures for Bible slides on touch devices
+  if (swipeTarget.value) {
+    const { direction } = useSwipe(swipeTarget, {
+      onSwipe() {
+        // Only apply swipe to Bible, Hymn, and Song slides
+        if (
+          props.slide?.type === slideTypes.bible ||
+          props.slide?.type === slideTypes.hymn ||
+          props.slide?.type === slideTypes.song
+        ) {
+          if (direction.value === 'left') {
+            // Swipe left = next verse
+            navigateToNextVerse()
+          } else if (direction.value === 'right') {
+            // Swipe right = previous verse
+            navigateToPreviousVerse()
+          }
+        }
+      },
+    })
+  }
+
   useCreateShortcut("ArrowRight", () => {
     navigateToNextVerse()
   })
