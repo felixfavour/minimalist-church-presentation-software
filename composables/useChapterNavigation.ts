@@ -6,6 +6,24 @@ import type { BibleVerse } from '~/types'
  */
 export default function useChapterNavigation() {
   const db = useIndexedDB()
+  
+  // Cache Bible data by version to avoid repeated database queries
+  const bibleDataCache = new Map<string, BibleVerse[]>()
+  
+  /**
+   * Get Bible data for a version (with caching)
+   */
+  const getBibleData = async (version: string): Promise<BibleVerse[]> => {
+    if (bibleDataCache.has(version)) {
+      return bibleDataCache.get(version)!
+    }
+    
+    const data = (await db.bibleAndHymns.get(version))?.data as unknown as BibleVerse[]
+    if (data) {
+      bibleDataCache.set(version, data)
+    }
+    return data
+  }
 
   /**
    * Get the maximum verse number for a given chapter
@@ -16,7 +34,7 @@ export default function useChapterNavigation() {
     version: string
   ): Promise<number> => {
     try {
-      const bibleData = (await db.bibleAndHymns.get(version))?.data as unknown as BibleVerse[]
+      const bibleData = await getBibleData(version)
       
       // Find all verses in this chapter
       const chapterVerses = bibleData?.filter(
@@ -107,8 +125,8 @@ export default function useChapterNavigation() {
     if (book > 1) {
       const prevBook = book - 1
       
-      // Get all verses for the previous book in a single query
-      const bibleData = (await db.bibleAndHymns.get(version))?.data as unknown as BibleVerse[]
+      // Get Bible data (using cache)
+      const bibleData = await getBibleData(version)
       const prevBookVerses = bibleData?.filter(
         (verse: BibleVerse) => Number(verse.book) === prevBook
       )
@@ -116,7 +134,11 @@ export default function useChapterNavigation() {
       if (prevBookVerses && prevBookVerses.length > 0) {
         // Find the maximum chapter number
         const maxChapter = Math.max(...prevBookVerses.map(v => Number(v.chapter)))
-        const maxVerse = await getMaxVerseInChapter(prevBook, maxChapter, version)
+        // Find max verse in that chapter directly from filtered data
+        const lastChapterVerses = prevBookVerses.filter(
+          v => Number(v.chapter) === maxChapter
+        )
+        const maxVerse = Math.max(...lastChapterVerses.map(v => Number(v.verse)))
         return `${prevBook}:${maxChapter}:${maxVerse}`
       }
     }

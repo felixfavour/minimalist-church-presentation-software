@@ -133,6 +133,9 @@ const checkFullScreen = () => {
 // Initialize composables at component level for performance
 const chapterNav = useChapterNavigation()
 
+// Default scripture reference (Genesis 1:1)
+const DEFAULT_SCRIPTURE_REF = '1:1:1'
+
 // Swipe gesture support for navigation
 const { direction, lengthX } = useSwipe(liveDisplayEl, {
   threshold: 50, // Minimum swipe distance in pixels
@@ -156,7 +159,7 @@ const handleLiveNavigation = async (dir: 'next' | 'previous') => {
     return
   }
 
-  const currentVerse = mostUpdatedLiveSlide.value.title || '1:1:1'
+  const currentVerse = mostUpdatedLiveSlide.value.title || DEFAULT_SCRIPTURE_REF
   const scriptureLabel = useScriptureLabel(currentVerse)
   const version = mostUpdatedLiveSlide.value.slideStyle?.bibleVersion || 'KJV'
   
