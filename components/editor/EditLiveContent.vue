@@ -485,7 +485,7 @@ const emitter = useNuxtApp().$emitter as Emitter<any>
 onMounted(() => {
   // Set up swipe gestures for Bible slides on touch devices
   if (swipeTarget.value) {
-    const { direction } = useSwipe(swipeTarget, {
+    const { direction } = useSwipe(swipeTarget.value, {
       onSwipe() {
         // Only apply swipe to Bible, Hymn, and Song slides
         if (

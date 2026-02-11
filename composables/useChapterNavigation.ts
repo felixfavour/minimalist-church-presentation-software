@@ -9,7 +9,7 @@ export default function useChapterNavigation() {
   /**
    * Get the next chapter reference from a current scripture reference
    * @param shortLabel - Scripture in short format (e.g., "1:1:31" for Genesis 1:31)
-   * @param version - Bible version
+   * @param version - Bible version (reserved for future use with version-specific chapter counts)
    * @returns Next chapter reference in short format or null if at the end of the Bible
    */
   const getNextChapter = async (
@@ -38,7 +38,7 @@ export default function useChapterNavigation() {
   /**
    * Get the previous chapter reference from a current scripture reference
    * @param shortLabel - Scripture in short format (e.g., "2:1:1" for Exodus 1:1)
-   * @param version - Bible version
+   * @param version - Bible version (reserved for future use with version-specific chapter counts)
    * @returns Previous chapter reference in short format or null if at the beginning of the Bible
    */
   const getPreviousChapter = async (
