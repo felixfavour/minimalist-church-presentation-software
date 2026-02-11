@@ -1,4 +1,5 @@
 import type { BibleVerse } from '~/types'
+import { bibleBooks, chaptersPerBook } from '~/utils/constants'
 
 /**
  * Composable for navigating between Bible chapters
