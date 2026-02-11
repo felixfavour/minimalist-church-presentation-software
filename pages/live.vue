@@ -136,16 +136,19 @@ const chapterNav = useChapterNavigation()
 // Default scripture reference (Genesis 1:1)
 const DEFAULT_SCRIPTURE_REF = '1:1:1'
 
+// Swipe gesture configuration
+const SWIPE_THRESHOLD = 50 // Minimum swipe distance in pixels
+
 // Swipe gesture support for navigation
 const { direction, lengthX } = useSwipe(liveDisplayEl, {
-  threshold: 50, // Minimum swipe distance in pixels
+  threshold: SWIPE_THRESHOLD,
   onSwipeEnd() {
     // Only handle swipes for Bible slides
     if (mostUpdatedLiveSlide.value?.type === slideTypes.bible) {
-      if (direction.value === 'left' && lengthX.value > 50) {
+      if (direction.value === 'left' && lengthX.value > SWIPE_THRESHOLD) {
         // Swipe left = next verse
         handleLiveNavigation('next')
-      } else if (direction.value === 'right' && lengthX.value > 50) {
+      } else if (direction.value === 'right' && lengthX.value > SWIPE_THRESHOLD) {
         // Swipe right = previous verse
         handleLiveNavigation('previous')
       }

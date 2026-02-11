@@ -1,5 +1,8 @@
 import type { BibleVerse } from '~/types'
 
+// Constants
+const MAX_BIBLE_BOOKS = 66
+
 /**
  * Composable for navigating between scripture chapters
  * Handles chapter boundaries and book boundaries
@@ -91,7 +94,7 @@ export default function useChapterNavigation() {
     
     // Try first chapter of next book
     const nextBook = book + 1
-    if (nextBook <= 66) { // Bible has 66 books
+    if (nextBook <= MAX_BIBLE_BOOKS) {
       const firstChapterExists = await chapterExists(nextBook, 1, version)
       if (firstChapterExists) {
         return `${nextBook}:1:1`
