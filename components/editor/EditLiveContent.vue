@@ -80,9 +80,7 @@
                   variant="ghost"
                   class="p-1"
                   icon="i-bx-chevron-left"
-                  @click="
-                    $emit('goto-verse', previousVerse, selectedBibleVersion)
-                  "
+                  @click="navigateToPreviousVerse"
                 />
               </UTooltip>
               <UInput
@@ -112,7 +110,7 @@
                   variant="ghost"
                   class="p-1"
                   icon="i-bx-chevron-right"
-                  @click="$emit('goto-verse', nextVerse, selectedBibleVersion)"
+                  @click="navigateToNextVerse"
                 />
               </UTooltip>
               <UButton
@@ -426,6 +424,44 @@ const previousVerse = computed(() => {
   return `Verse ${Number(verse.value?.split(" ")?.[1]) - 1}`
 })
 
+/**
+ * Navigate to next verse with chapter navigation support
+ * Automatically moves to next chapter when at the last verse
+ */
+const navigateToNextVerse = async () => {
+  if (props.slide?.type === slideTypes.bible) {
+    const chapterNav = useChapterNavigation()
+    const shortLabel = useScriptureLabel(verse.value)
+    const nextRef = await chapterNav.getNextVerse(shortLabel, selectedBibleVersion.value)
+    
+    if (nextRef) {
+      const longForm = useScriptureLabel(nextRef, { toLongForm: true })
+      emit("goto-verse", longForm, selectedBibleVersion.value)
+    }
+  } else if (nextVerse.value) {
+    emit("goto-verse", nextVerse.value, selectedBibleVersion.value)
+  }
+}
+
+/**
+ * Navigate to previous verse with chapter navigation support
+ * Automatically moves to previous chapter when at verse 1
+ */
+const navigateToPreviousVerse = async () => {
+  if (props.slide?.type === slideTypes.bible) {
+    const chapterNav = useChapterNavigation()
+    const shortLabel = useScriptureLabel(verse.value)
+    const prevRef = await chapterNav.getPreviousVerse(shortLabel, selectedBibleVersion.value)
+    
+    if (prevRef) {
+      const longForm = useScriptureLabel(prevRef, { toLongForm: true })
+      emit("goto-verse", longForm, selectedBibleVersion.value)
+    }
+  } else if (previousVerse.value) {
+    emit("goto-verse", previousVerse.value, selectedBibleVersion.value)
+  }
+}
+
 watch(
   () => props.slide,
   () => {
@@ -445,26 +481,18 @@ const emitter = useNuxtApp().$emitter as Emitter<any>
 
 onMounted(() => {
   useCreateShortcut("ArrowRight", () => {
-    if (nextVerse.value) {
-      emit("goto-verse", nextVerse.value, selectedBibleVersion.value)
-    }
+    navigateToNextVerse()
   })
   useCreateShortcut("ArrowLeft", () => {
-    if (previousVerse.value) {
-      emit("goto-verse", previousVerse.value, selectedBibleVersion.value)
-    }
+    navigateToPreviousVerse()
   })
   
   // Listen for voice command events (next verse / previous verse)
   emitter.on(appWideActions.nextVerse, () => {
-    if (nextVerse.value) {
-      emit("goto-verse", nextVerse.value, selectedBibleVersion.value)
-    }
+    navigateToNextVerse()
   })
   emitter.on(appWideActions.previousVerse, () => {
-    if (previousVerse.value) {
-      emit("goto-verse", previousVerse.value, selectedBibleVersion.value)
-    }
+    navigateToPreviousVerse()
   })
 })
 
