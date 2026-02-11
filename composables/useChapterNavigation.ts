@@ -106,12 +106,18 @@ export default function useChapterNavigation() {
     // Try last chapter of previous book
     if (book > 1) {
       const prevBook = book - 1
-      // Find the last chapter of the previous book by checking backwards
-      for (let ch = 200; ch >= 1; ch--) { // Max chapters in any book is ~150
-        const maxVerse = await getMaxVerseInChapter(prevBook, ch, version)
-        if (maxVerse > 0) {
-          return `${prevBook}:${ch}:${maxVerse}`
-        }
+      
+      // Get all verses for the previous book in a single query
+      const bibleData = (await db.bibleAndHymns.get(version))?.data as unknown as BibleVerse[]
+      const prevBookVerses = bibleData?.filter(
+        (verse: BibleVerse) => Number(verse.book) === prevBook
+      )
+      
+      if (prevBookVerses && prevBookVerses.length > 0) {
+        // Find the maximum chapter number
+        const maxChapter = Math.max(...prevBookVerses.map(v => Number(v.chapter)))
+        const maxVerse = await getMaxVerseInChapter(prevBook, maxChapter, version)
+        return `${prevBook}:${maxChapter}:${maxVerse}`
       }
     }
     

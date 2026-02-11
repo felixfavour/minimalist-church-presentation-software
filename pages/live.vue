@@ -130,6 +130,9 @@ const checkFullScreen = () => {
   }
 }
 
+// Initialize composables at component level for performance
+const chapterNav = useChapterNavigation()
+
 // Swipe gesture support for navigation
 const { direction, lengthX } = useSwipe(liveDisplayEl, {
   threshold: 50, // Minimum swipe distance in pixels
@@ -153,7 +156,6 @@ const handleLiveNavigation = async (dir: 'next' | 'previous') => {
     return
   }
 
-  const chapterNav = useChapterNavigation()
   const currentVerse = mostUpdatedLiveSlide.value.title || '1:1:1'
   const scriptureLabel = useScriptureLabel(currentVerse)
   const version = mostUpdatedLiveSlide.value.slideStyle?.bibleVersion || 'KJV'
