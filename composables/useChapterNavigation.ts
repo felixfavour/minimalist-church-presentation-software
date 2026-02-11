@@ -21,8 +21,10 @@ export default function useChapterNavigation() {
     const data = (await db.bibleAndHymns.get(version))?.data as unknown as BibleVerse[]
     if (data) {
       bibleDataCache.set(version, data)
+    } else {
+      console.error(`Bible version '${version}' not found in database`)
     }
-    return data
+    return data || []
   }
 
   /**
@@ -159,6 +161,7 @@ export default function useChapterNavigation() {
     let verse = Number(parts[2])
     
     // Handle verse ranges (e.g., "1-5")
+    // For ranges, treat as a single unit - next after "1-5" should be verse 6 (after the range ends)
     if (parts[2]?.includes('-')) {
       const rangeParts = parts[2].split('-')
       verse = Number(rangeParts[1]) // Use end of range
@@ -187,7 +190,8 @@ export default function useChapterNavigation() {
     const chapter = Number(parts[1])
     let verse = Number(parts[2])
     
-    // Handle verse ranges (e.g., "1-5")
+    // Handle verse ranges (e.g., "3-7")
+    // For ranges, treat as a single unit - previous before "3-7" should be verse 2 (before the range starts)
     if (parts[2]?.includes('-')) {
       const rangeParts = parts[2].split('-')
       verse = Number(rangeParts[0]) // Use start of range
