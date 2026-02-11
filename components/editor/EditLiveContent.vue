@@ -80,9 +80,7 @@
                   variant="ghost"
                   class="p-1"
                   icon="i-bx-chevron-left"
-                  @click="
-                    $emit('goto-verse', previousVerse, selectedBibleVersion)
-                  "
+                  @click="handlePreviousVerse"
                 />
               </UTooltip>
               <UInput
@@ -112,7 +110,7 @@
                   variant="ghost"
                   class="p-1"
                   icon="i-bx-chevron-right"
-                  @click="$emit('goto-verse', nextVerse, selectedBibleVersion)"
+                  @click="handleNextVerse"
                 />
               </UTooltip>
               <UButton
@@ -440,16 +438,49 @@ watch(
   { immediate: true }
 )
 
+// Chapter navigation composable
+const chapterNav = useChapterNavigation()
+
+// Handle next verse navigation with chapter boundary support
+const handleNextVerse = async () => {
+  if (props.slide?.type === slideTypes.bible) {
+    const scriptureLabel = useScriptureLabel(verse.value || "1:1:1")
+    const nextRef = await chapterNav.getNextVerse(
+      scriptureLabel,
+      selectedBibleVersion.value
+    )
+    if (nextRef) {
+      emit("goto-verse", nextRef, selectedBibleVersion.value)
+    }
+  } else {
+    // For hymns and songs, use the old logic
+    emit("goto-verse", nextVerse.value, selectedBibleVersion.value)
+  }
+}
+
+// Handle previous verse navigation with chapter boundary support
+const handlePreviousVerse = async () => {
+  if (props.slide?.type === slideTypes.bible) {
+    const scriptureLabel = useScriptureLabel(verse.value || "1:1:1")
+    const prevRef = await chapterNav.getPreviousVerse(
+      scriptureLabel,
+      selectedBibleVersion.value
+    )
+    if (prevRef) {
+      emit("goto-verse", prevRef, selectedBibleVersion.value)
+    }
+  } else {
+    // For hymns and songs, use the old logic
+    emit("goto-verse", previousVerse.value, selectedBibleVersion.value)
+  }
+}
+
 onMounted(() => {
   useCreateShortcut("ArrowRight", () => {
-    if (nextVerse.value) {
-      emit("goto-verse", nextVerse.value, selectedBibleVersion.value)
-    }
+    handleNextVerse()
   })
   useCreateShortcut("ArrowLeft", () => {
-    if (previousVerse.value) {
-      emit("goto-verse", previousVerse.value, selectedBibleVersion.value)
-    }
+    handlePreviousVerse()
   })
 })
 
